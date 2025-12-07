@@ -95,9 +95,27 @@ const GetInTouch = () => {
   };
 
   return (
-    <footer id="contact" className="bg-primary text-white py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12">
+    <footer id="contact" className="bg-white py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16">
+      <div className="max-w-[1392px] mx-auto">
+        {/* Footer Container */}
+        <div 
+          className="text-white mx-auto"
+          style={{
+            width: '100%',
+            maxWidth: '1392px',
+            minHeight: '1001.0001220703125px',
+            gap: '120px',
+            paddingTop: '96px',
+            paddingRight: '96px',
+            paddingBottom: '64px',
+            paddingLeft: '96px',
+            borderRadius: '40px',
+            background: '#2A478B',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+        <div className="grid md:grid-cols-2 gap-12 flex-1" style={{ gap: '120px' }}>
           {/* Left Side - Image and Text */}
           <div>
             <p className="text-accent font-semibold mb-2">Get In Touch</p>
@@ -221,7 +239,7 @@ const GetInTouch = () => {
         </div>
 
         {/* Footer Section */}
-        <div className="mt-8 sm:mt-12 md:mt-16 pt-8 border-t border-white/20">
+        <div className="mt-auto pt-8 border-t border-white/20" style={{ marginTop: '120px' }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {/* Logos */}
             <div className="flex items-center gap-4 sm:gap-6">
@@ -308,6 +326,7 @@ const GetInTouch = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </footer>
