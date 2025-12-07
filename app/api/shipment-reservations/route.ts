@@ -3,7 +3,13 @@ import connectDB from "@/lib/mongodb";
 import ShipmentReservation from "@/models/ShipmentReservation";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization to avoid build errors when API key is missing
+const getResend = () => {
+  if (!process.env.RESEND_API_KEY) {
+    return null;
+  }
+  return new Resend(process.env.RESEND_API_KEY);
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -56,6 +62,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Send email notification to admin
+    const resend = getResend();
     if (process.env.ADMIN_EMAIL && resend) {
       try {
         await resend.emails.send({

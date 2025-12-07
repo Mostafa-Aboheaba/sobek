@@ -12,6 +12,7 @@ interface SafeImageProps {
   className?: string;
   priority?: boolean;
   sizes?: string;
+  style?: React.CSSProperties;
   onError?: () => void;
 }
 
@@ -24,6 +25,7 @@ const SafeImage = ({
   className = '',
   priority = false,
   sizes,
+  style,
   onError,
 }: SafeImageProps) => {
   const [imgSrc, setImgSrc] = useState<string>(src);
@@ -109,6 +111,7 @@ const SafeImage = ({
         className={className}
         priority={priority}
         sizes={sizes}
+        style={style}
         onError={handleError}
         unoptimized
       />
@@ -124,6 +127,7 @@ const SafeImage = ({
       className={className}
       priority={priority}
       sizes={sizes}
+      style={style}
       onError={handleError}
       unoptimized
     />
