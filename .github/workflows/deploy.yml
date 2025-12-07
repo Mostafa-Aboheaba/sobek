@@ -32,7 +32,16 @@ jobs:
         run: npm ci --legacy-peer-deps
       
       - name: Build with Next.js
-        run: npm run build
+        run: |
+          # Temporarily move API routes to exclude from static build
+          if [ -d "app/api" ]; then
+            mv app/api app/_api_backup
+          fi
+          npm run build
+          # Restore API routes
+          if [ -d "app/_api_backup" ]; then
+            mv app/_api_backup app/api
+          fi
         env:
           NODE_ENV: production
       

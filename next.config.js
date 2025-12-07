@@ -7,11 +7,17 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // Skip API routes during static export
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   // Only add basePath in production for GitHub Pages
   ...(isProd && {
     basePath: `/${repoName}`,
     assetPrefix: `/${repoName}`,
   }),
+  // Exclude API routes from build
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 }
 
 module.exports = nextConfig
