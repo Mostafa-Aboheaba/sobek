@@ -195,23 +195,25 @@ const GetInTouch = () => {
                 className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
               />
 
-              <div className="space-y-2">
+              <div>
                 <p className="text-gray-900 text-sm font-medium mb-2">What can we help you with?</p>
-                {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
-                  (option) => (
-                    <label key={option} className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="helpOptions"
-                        value={option}
-                        checked={formData.helpOptions?.includes(option) || false}
-                        onChange={() => handleCheckboxChange(option)}
-                        className="w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent"
-                      />
-                      <span className="text-gray-900">{option}</span>
-                    </label>
-                  )
-                )}
+                <div className="grid grid-cols-2 gap-2">
+                  {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
+                    (option) => (
+                      <label key={option} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="helpOptions"
+                          value={option}
+                          checked={formData.helpOptions?.includes(option) || false}
+                          onChange={() => handleCheckboxChange(option)}
+                          className="w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent"
+                        />
+                        <span className="text-gray-900">{option}</span>
+                      </label>
+                    )
+                  )}
+                </div>
               </div>
 
               {submitStatus.type && (
