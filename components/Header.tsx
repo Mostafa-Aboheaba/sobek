@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 
 const Header = () => {
   return (
@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex items-center gap-3 sm:gap-6">
           {/* Sobek Logo */}
           <div className="relative h-12 w-auto">
-            <Image
+            <SafeImage
               src="/logo/sobek.png"
               alt="Sobek Logo"
               width={120}
@@ -21,7 +21,7 @@ const Header = () => {
           
           {/* Right Line Logo */}
           <div className="relative h-12 w-auto">
-            <Image
+            <SafeImage
               src="/logo/right.png"
               alt="Right Line Logo"
               width={120}

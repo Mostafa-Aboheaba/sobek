@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import SafeImage from "./SafeImage";
 
 const AboutRightLine = () => {
   return (
@@ -27,7 +27,7 @@ const AboutRightLine = () => {
 
           {/* Right Side - Image */}
           <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
+            <SafeImage
               src="/images/about-sobek-ship.png"
               alt="Right Line shipping vessel"
               fill

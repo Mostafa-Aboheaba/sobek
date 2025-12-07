@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 
 const FindYourCargo = () => {
   const [bookingNumber, setBookingNumber] = useState("");
@@ -126,7 +126,7 @@ const FindYourCargo = () => {
 
           {/* Right Side - Image */}
           <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
+            <SafeImage
               src="/images/tracking-container-truck.png"
               alt="Shipping container on truck"
               fill

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 
 const IndustriesWeServe = () => {
   const industries = [
@@ -17,7 +17,7 @@ const IndustriesWeServe = () => {
         <div className="grid md:grid-cols-2 gap-12 items-end">
           {/* Left Side - Image */}
           <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
+            <SafeImage
               src="/images/industries-container.png"
               alt="Shipping containers for various industries"
               fill

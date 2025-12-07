@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import SafeImage from "./SafeImage";
 
 const AboutSobek = () => {
   return (
@@ -8,7 +8,7 @@ const AboutSobek = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Image */}
           <div className="relative h-[400px] rounded-lg overflow-hidden">
-            <Image
+            <SafeImage
               src="/images/right-line-containers.png"
               alt="Sobek shipping containers"
               fill

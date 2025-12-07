@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import SafeImage from "./SafeImage";
 
 const Hero = () => {
   return (
@@ -9,7 +9,7 @@ const Hero = () => {
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0 rounded-lg overflow-hidden">
-        <Image
+        <SafeImage
           src="/images/hero-ship-sea.png"
           alt="Cargo ship sailing on the sea"
           fill

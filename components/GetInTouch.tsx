@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import SafeImage from "./SafeImage";
 
 const GetInTouch = () => {
   const [formData, setFormData] = useState({
@@ -98,7 +98,7 @@ const GetInTouch = () => {
                 borderRadius: '20px',
               }}
             >
-              <Image
+              <SafeImage
                 src="/images/footer-bg.png"
                 alt="Cargo ship"
                 fill
@@ -216,7 +216,7 @@ const GetInTouch = () => {
             {/* Logos */}
             <div className="flex items-center gap-4 sm:gap-6">
               <div className="relative h-12 w-auto">
-                <Image
+                <SafeImage
                   src="/logo/sobek.png"
                   alt="Sobek Logo"
                   width={120}
@@ -225,7 +225,7 @@ const GetInTouch = () => {
                 />
               </div>
               <div className="relative h-12 w-auto">
-                <Image
+                <SafeImage
                   src="/logo/right.png"
                   alt="Right Line Logo"
                   width={120}
