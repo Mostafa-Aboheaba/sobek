@@ -200,7 +200,7 @@ const GetInTouch = () => {
                 <div className="grid grid-cols-2 gap-2">
                   {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
                     (option) => (
-                      <label key={option} className="flex items-center gap-2 cursor-pointer">
+                      <label key={option} className="flex items-center gap-2 cursor-pointer select-none">
                         <input
                           type="checkbox"
                           name="helpOptions"
@@ -212,7 +212,7 @@ const GetInTouch = () => {
                             accentColor: '#2A478B',
                           }}
                         />
-                        <span className="text-gray-900">{option}</span>
+                        <span className="text-gray-900 select-none">{option}</span>
                       </label>
                     )
                   )}
