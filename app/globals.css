@@ -1,0 +1,348 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-poppins: 'Poppins', sans-serif;
+  --font-manjari: 'Manjari', sans-serif;
+  
+  /* Colors */
+  --color-primary-900: #012C4E;
+  --color-primary-500: #2A478B;
+  --color-accent: #A6823A;
+  --color-neutral-dark: #212121;
+  --color-neutral-light: #757575;
+  --color-neutral-lighter: #BDBDBD;
+  --color-icon-gray: #737373;
+  --color-beige: #FAF7F0;
+  --color-white: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-poppins), sans-serif;
+}
+
+body {
+  color: #212121;
+  background: #FFFFFF;
+  font-family: var(--font-poppins), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Typography Classes */
+  
+  /* Section Label - Golden */
+  .section-label {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    color: var(--color-accent);
+  }
+  
+  /* Section Heading - Primary Dark */
+  .section-heading {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 130%;
+    letter-spacing: -0.03em;
+    color: var(--color-primary-900);
+  }
+  
+  @media (min-width: 768px) {
+    .section-heading {
+      font-size: 28px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-heading {
+      font-size: 32px;
+    }
+  }
+  
+  /* Section Heading with 140% line-height */
+  .section-heading-lg {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 140%;
+    letter-spacing: -0.03em;
+    color: var(--color-primary-900);
+  }
+  
+  @media (min-width: 768px) {
+    .section-heading-lg {
+      font-size: 28px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-heading-lg {
+      font-size: 32px;
+    }
+  }
+  
+  /* Hero Heading */
+  .hero-heading {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: -0.03em;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-heading {
+      font-size: 48px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-heading {
+      font-size: 72px;
+    }
+  }
+  
+  /* Hero Tagline */
+  .hero-tagline {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-tagline {
+      font-size: 32px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-tagline {
+      font-size: 40px;
+    }
+  }
+  
+  /* Hero Button */
+  .hero-button {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+  }
+  
+  /* Hero Paragraph */
+  .hero-paragraph {
+    font-family: var(--font-manjari), sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 0%;
+  }
+  
+  /* Feature Description */
+  .feature-description {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    color: var(--color-icon-gray);
+  }
+  
+  /* Highlight Span - Golden */
+  .text-highlight {
+    color: var(--color-accent);
+  }
+  
+  /* Hero Content Padding */
+  .hero-content {
+    padding-left: 24px;
+    padding-top: 40px;
+  }
+  
+  @media (min-width: 768px) {
+    .hero-content {
+      padding-left: 48px;
+      padding-top: 60px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-content {
+      padding-left: 82px;
+      padding-top: 106px;
+    }
+  }
+  
+  /* Feature Card */
+  .feature-card {
+    min-height: 193.5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    border-radius: 24px;
+    background-color: var(--color-beige);
+    gap: 23px;
+  }
+  
+  @media (min-width: 768px) {
+    .feature-card {
+      padding: 32px;
+    }
+  }
+  
+  /* Service Card Content Container */
+  .service-card-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  /* Service Card Heading */
+  .service-card-heading {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+  }
+  
+  /* Service Card Content */
+  .service-card-content {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 140%;
+    letter-spacing: -0.03em;
+  }
+  
+  /* Feature Icon */
+  .feature-icon {
+    color: var(--color-icon-gray);
+    width: 36px;
+    height: 36px;
+  }
+  
+  /* Service Card Number */
+  .service-number {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 140%;
+    letter-spacing: -0.03em;
+    color: var(--color-icon-gray);
+  }
+  
+  /* Tracking Form Input */
+  .tracking-input {
+    width: 100%;
+    max-width: 548px;
+    height: 50px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    border: 2px solid var(--color-primary-500);
+    border-radius: 50px;
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .tracking-input:focus {
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 2px rgba(42, 71, 139, 0.1);
+  }
+  
+  .tracking-input::placeholder {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+    color: #A3A3A3;
+  }
+  
+  /* Tracking Form Label */
+  .tracking-label {
+    display: block;
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0%;
+    color: #737373;
+    margin-bottom: 8px;
+  }
+  
+  /* Tracking Button */
+  .tracking-button {
+    padding: 12px 32px;
+    background-color: var(--color-primary-500);
+    color: var(--color-white);
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+  }
+  
+  .tracking-button:hover:not(:disabled) {
+    background-color: var(--color-primary-600);
+  }
+  
+  .tracking-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Industry List Item */
+  .industry-item {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 200%;
+    letter-spacing: 0%;
+    color: var(--color-icon-gray);
+  }
+  
+  /* Carousel Arrow Button Hover */
+  .carousel-arrow-left:hover svg path {
+    stroke: #ffffff;
+  }
+}
+
