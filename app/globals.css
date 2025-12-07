@@ -344,5 +344,45 @@ a {
   .carousel-arrow-left:hover svg path {
     stroke: #ffffff;
   }
+
+  /* Custom Checkbox Styles */
+  input[type="checkbox"].custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  input[type="checkbox"].custom-checkbox:checked {
+    background-color: white;
+    border-color: #2A478B;
+  }
+
+  input[type="checkbox"].custom-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232A478B' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  input[type="checkbox"].custom-checkbox:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #2A478B;
+  }
 }
 

@@ -207,7 +207,10 @@ const GetInTouch = () => {
                           value={option}
                           checked={formData.helpOptions?.includes(option) || false}
                           onChange={() => handleCheckboxChange(option)}
-                          className="w-4 h-4 text-accent border-gray-300 rounded focus:ring-accent"
+                          className="custom-checkbox w-4 h-4 border-gray-300 rounded focus:ring-primary-500 focus:ring-2"
+                          style={{
+                            accentColor: '#2A478B',
+                          }}
                         />
                         <span className="text-gray-900">{option}</span>
                       </label>
