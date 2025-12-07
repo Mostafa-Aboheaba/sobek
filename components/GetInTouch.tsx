@@ -243,7 +243,8 @@ const GetInTouch = () => {
         </div>
 
         {/* Footer Section */}
-        <div className="mt-auto border-t border-white/20" style={{ paddingTop: '92px', paddingBottom: '92px' }}>
+        <div className="mt-auto" style={{ paddingTop: '92px' }}>
+          <div className="border-t border-white/20" style={{ paddingTop: '92px', paddingBottom: '92px' }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
             {/* Logos */}
             <div className="flex items-center gap-4 sm:gap-6">
@@ -334,6 +335,7 @@ const GetInTouch = () => {
                 </svg>
               </a>
             </div>
+          </div>
           </div>
         </div>
         </div>
