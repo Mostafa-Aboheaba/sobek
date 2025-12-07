@@ -248,26 +248,22 @@ const GetInTouch = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
             {/* Logos */}
             <div className="flex items-center gap-4 sm:gap-6">
-              <div className="relative overflow-hidden" style={{ width: '202.2701416015625px', height: '92.28339385986328px', borderRadius: '12px' }}>
-                <SafeImage
-                  src="/logo/sobek-white.png"
-                  alt="Sobek Logo"
-                  width={202.2701416015625}
-                  height={92.28339385986328}
-                  className="object-contain"
-                  style={{ borderRadius: '12px' }}
-                />
-              </div>
-              <div className="relative overflow-hidden" style={{ width: '202.2701416015625px', height: '92.28339385986328px', borderRadius: '12px' }}>
-                <SafeImage
-                  src="/logo/right-white.png"
-                  alt="Right Line Logo"
-                  width={202.2701416015625}
-                  height={92.28339385986328}
-                  className="object-contain"
-                  style={{ borderRadius: '12px' }}
-                />
-              </div>
+              <SafeImage
+                src="/logo/sobek-white.png"
+                alt="Sobek Logo"
+                width={202}
+                height={92}
+                className="object-contain"
+                style={{ borderRadius: '12px' }}
+              />
+              <SafeImage
+                src="/logo/right-white.png"
+                alt="Right Line Logo"
+                width={202}
+                height={92}
+                className="object-contain"
+                style={{ borderRadius: '12px' }}
+              />
             </div>
 
             {/* Navigation Links */}
