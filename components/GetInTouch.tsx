@@ -267,12 +267,20 @@ const GetInTouch = () => {
             </div>
 
             {/* Navigation Links */}
-            <nav>
-              <h3 className="text-white font-semibold mb-2">Home</h3>
-              <ul className="space-y-2">
+            <nav 
+              className="footer-links-container"
+              style={{
+                width: '687px',
+                height: '106px',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3 className="footer-links-heading">Home</h3>
+              <ul className="space-y-2" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {["About", "Services", "Contact"].map((link) => (
                   <li key={link}>
-                    <a href={`#${link.toLowerCase()}`} className="text-white/80 hover:text-accent transition-colors">
+                    <a href={`#${link.toLowerCase()}`} className="footer-links-text">
                       {link}
                     </a>
                   </li>

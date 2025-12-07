@@ -384,5 +384,38 @@ a {
     ring: 2px;
     ring-color: #2A478B;
   }
+
+  /* Footer Links Container */
+  .footer-links-container {
+    width: 687px;
+    height: 106px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-links-heading {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -1%;
+    color: white;
+  }
+
+  .footer-links-text {
+    font-family: var(--font-poppins), sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -1%;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.2s;
+  }
+
+  .footer-links-text:hover {
+    color: var(--color-accent);
+  }
 }
 
