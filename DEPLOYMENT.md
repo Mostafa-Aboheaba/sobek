@@ -15,11 +15,21 @@
 
 ### 1. Enable GitHub Pages
 
+**IMPORTANT:** You must enable GitHub Pages before the workflow can run successfully.
+
 1. Go to your repository on GitHub: `https://github.com/Mostafa-Aboheaba/sobek`
-2. Click **Settings** → **Pages**
-3. Under **Source**, select:
-   - **Source**: `GitHub Actions`
-4. Save the settings
+2. Click **Settings** (top menu bar)
+3. Scroll down to **Pages** in the left sidebar
+4. Under **Source**, select:
+   - **Source**: `GitHub Actions` (NOT "Deploy from a branch")
+5. Click **Save**
+
+**Note:** If you don't see the Pages option:
+- Make sure you're the repository owner or have admin access
+- The repository must be public, or you need GitHub Pro/Team/Enterprise for private repos
+- Try refreshing the page
+
+After enabling Pages, the workflow will automatically enable Pages if needed using the `enablement: true` parameter.
 
 ### 2. Repository Name Configuration
 
