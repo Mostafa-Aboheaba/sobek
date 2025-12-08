@@ -8,7 +8,7 @@ const ContactHero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden" style={{ borderRadius: '40px' }}>
         <SafeImage
-          src="/images/hero-ship-sea.png"
+          src="/images/contact-hero-ship.png"
           alt="Cargo ship sailing on the sea"
           fill
           className="object-cover"
@@ -16,6 +16,9 @@ const ContactHero = () => {
           sizes="100vw"
         />
       </div>
+
+      {/* Overlay Effect */}
+      <div className="absolute inset-0 z-[1] overflow-hidden" style={{ borderRadius: '40px', backgroundColor: '#00000066' }} />
 
       {/* Overlay Text */}
       <div className="relative z-10">

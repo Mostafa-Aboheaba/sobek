@@ -5,7 +5,6 @@ import FindYourCargo from "@/components/FindYourCargo";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
 import Testimonials from "@/components/Testimonials";
 import GetInTouch from "@/components/GetInTouch";
-import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -37,9 +36,6 @@ export default function ServicesPage() {
 
       {/* Get In Touch Section */}
       <GetInTouch />
-
-      {/* Footer */}
-      <Footer />
     </main>
   );
 }
