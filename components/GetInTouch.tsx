@@ -214,22 +214,22 @@ const GetInTouch = () => {
 
               <div>
                 <p className="text-gray-900 text-sm font-medium mb-2">What can we help you with?</p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
                     (option) => (
-                      <label key={option} className="flex items-center gap-2 cursor-pointer select-none">
+                      <label key={option} className="flex items-start sm:items-center gap-2 cursor-pointer select-none min-w-0">
                         <input
                           type="checkbox"
                           name="helpOptions"
                           value={option}
                           checked={formData.helpOptions?.includes(option) || false}
                           onChange={() => handleCheckboxChange(option)}
-                          className="custom-checkbox w-4 h-4 border-gray-300 rounded focus:ring-primary-500 focus:ring-2"
+                          className="custom-checkbox w-4 h-4 border-gray-300 rounded focus:ring-primary-500 focus:ring-2 flex-shrink-0 mt-0.5 sm:mt-0"
                           style={{
                             accentColor: '#2A478B',
                           }}
                         />
-                        <span className="text-gray-900 select-none">{option}</span>
+                        <span className="select-none text-xs sm:text-sm break-words min-w-0 flex-1" style={{ color: '#2A478B' }}>{option}</span>
                       </label>
                     )
                   )}
@@ -262,31 +262,55 @@ const GetInTouch = () => {
         {/* Footer Section */}
         <div className="mt-auto" style={{ paddingTop: 'clamp(48px, 8vw, 92px)' }}>
           <div className="border-t border-white/20" style={{ paddingTop: 'clamp(48px, 8vw, 92px)' }}>
-            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 md:gap-8">
-              {/* Logos */}
-              <div className="flex items-center gap-4 sm:gap-6 flex-nowrap">
-                <SafeImage
-                  src="/logo/sobek-white.png"
-                  alt="Sobek Logo"
-                  width={202}
-                  height={92}
-                  className="object-contain max-w-full"
-                  style={{ borderRadius: '12px' }}
-                />
-                <SafeImage
-                  src="/logo/right-white.png"
-                  alt="Right Line Logo"
-                  width={202}
-                  height={92}
-                  className="object-contain max-w-full"
-                  style={{ borderRadius: '12px' }}
-                />
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 md:gap-8 overflow-hidden">
+              {/* Small & Medium screens: Logos and Links Vertically */}
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-0 w-full lg:w-auto">
+                {/* Logos */}
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-6 flex-wrap sm:flex-nowrap lg:mr-8">
+                  <SafeImage
+                    src="/logo/sobek-white.png"
+                    alt="Sobek Logo"
+                    width={202}
+                    height={92}
+                    className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-full h-auto flex-shrink-0"
+                    style={{ borderRadius: '12px' }}
+                  />
+                  <SafeImage
+                    src="/logo/right-white.png"
+                    alt="Right Line Logo"
+                    width={202}
+                    height={92}
+                    className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-full h-auto flex-shrink-0"
+                    style={{ borderRadius: '12px' }}
+                  />
+                </div>
+
+                {/* Navigation Links - Vertical on small & medium screens, hidden on large */}
+                <nav className="min-w-0 lg:hidden">
+                  <ul className="space-y-2" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {[
+                      { name: "Home", path: "/" },
+                      { name: "About", path: "/about" },
+                      { name: "Services", path: "/services" },
+                      { name: "Contact", path: "/contact" },
+                    ].map((link) => (
+                      <li key={link.name}>
+                        <Link 
+                          href={link.path} 
+                          className="footer-links-text hover:text-white/90 transition-colors"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
               </div>
 
               {/* Text Sections Group */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-start gap-6 md:gap-8 flex-wrap lg:flex-nowrap">
-                {/* Navigation Links */}
-                <nav className="min-w-0">
+              <div className="flex flex-col md:flex-row items-start md:items-start gap-4 sm:gap-6 md:gap-8 flex-wrap lg:flex-nowrap w-full lg:w-auto min-w-0">
+                {/* Navigation Links - Hidden on small & medium screens, shown on large */}
+                <nav className="hidden lg:block min-w-0 flex-shrink-0">
                   <ul className="space-y-2" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     {[
                       { name: "Home", path: "/" },
@@ -307,7 +331,7 @@ const GetInTouch = () => {
                 </nav>
 
                 {/* Location */}
-                <div className="min-w-0">
+                <div className="min-w-0 flex-shrink-0">
                   <h3 className="text-white font-semibold mb-2">Locations</h3>
                   <p className="text-white/80">
                     36 Banni Abbas street, Al Azarita
@@ -321,17 +345,17 @@ const GetInTouch = () => {
                 </div>
 
                 {/* Contact */}
-                <div className="min-w-0">
+                <div className="min-w-0 flex-shrink-0">
                   <h3 className="text-white font-semibold mb-2">Get in Touch</h3>
                   <p className="text-white/80">Phone: +201016078688</p>
                   <p className="text-white/80">cs@sobekegy.com</p>
                 </div>
 
-                {/* Social Media Icons - Stacked Vertically */}
-                <div className="flex flex-col gap-2">
+                {/* Social Media Icons - Row on small & medium screens, column on large */}
+                <div className="flex flex-row lg:flex-col gap-2 flex-shrink-0">
                   <a 
                     href="#" 
-                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
+                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="LinkedIn"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -340,7 +364,7 @@ const GetInTouch = () => {
                   </a>
                   <a 
                     href="#" 
-                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
+                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="Instagram"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -349,7 +373,7 @@ const GetInTouch = () => {
                   </a>
                   <a 
                     href="#" 
-                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
+                    className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="Facebook"
                   >
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">

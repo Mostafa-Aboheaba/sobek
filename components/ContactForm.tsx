@@ -158,19 +158,19 @@ const ContactForm = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
               (option) => (
-                <label key={option} className="flex items-center gap-2 cursor-pointer select-none">
+                <label key={option} className="flex items-start sm:items-center gap-2 cursor-pointer select-none min-w-0">
                   <input
                     type="checkbox"
                     name="helpOptions"
                     value={option}
                     checked={formData.helpOptions?.includes(option) || false}
                     onChange={() => handleCheckboxChange(option)}
-                    className="custom-checkbox w-4 h-4 border-gray-300 rounded focus:ring-primary-500 focus:ring-2"
+                    className="custom-checkbox w-4 h-4 border-gray-300 rounded focus:ring-primary-500 focus:ring-2 flex-shrink-0 mt-0.5 sm:mt-0"
                     style={{
                       accentColor: '#2A478B',
                     }}
                   />
-                  <span className="text-gray-900 select-none text-sm">{option}</span>
+                  <span className="select-none text-xs sm:text-sm break-words min-w-0 flex-1" style={{ color: '#2A478B' }}>{option}</span>
                 </label>
               )
             )}
