@@ -14,7 +14,7 @@ const GetInTouchLeftContent = () => {
       className={`scroll-animate-left ${isVisible ? 'visible' : ''}`}
     >
       <p className="text-white font-semibold mb-2">Get In Touch</p>
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-white leading-tight">
         Got questions? <span style={{ color: '#EAD292' }}>Just fill out</span> <span style={{ color: '#EAD292' }}>the form</span> and one of our specialists will give you a <span style={{ color: '#EAD292' }}>quick call</span> to help with anything you need.
       </h2>
       
@@ -136,21 +136,21 @@ const GetInTouch = () => {
         {/* Footer Container */}
         <div 
           className="text-white mx-auto overflow-hidden"
-          style={{
+            style={{
             width: '100%',
             maxWidth: '1392px',
-            minHeight: '1001.0001220703125px',
-            paddingTop: '96px',
+            minHeight: 'auto',
+            paddingTop: 'clamp(48px, 8vw, 96px)',
             paddingRight: 'clamp(16px, 6vw, 96px)',
-            paddingBottom: '64px',
+            paddingBottom: 'clamp(32px, 6vw, 64px)',
             paddingLeft: 'clamp(16px, 6vw, 96px)',
-            borderRadius: '40px',
+            borderRadius: 'clamp(20px, 4vw, 40px)',
             background: '#2A478B',
             display: 'flex',
             flexDirection: 'column',
           }}
         >
-        <div className="grid md:grid-cols-2 gap-12 flex-1">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 flex-1">
           {/* Left Side - Image and Text */}
           <GetInTouchLeftContent />
 
@@ -159,7 +159,7 @@ const GetInTouch = () => {
             ref={formRef}
             className={`scroll-animate-right ${formVisible ? 'visible' : ''}`}
           >
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 space-y-4 hover-lift">
+            <form id="contact-form" onSubmit={handleSubmit} className="bg-white rounded-lg p-4 sm:p-6 space-y-4 hover-lift">
               <p className="text-gray-500 text-sm mb-4">* all fields are required</p>
               
               <input
@@ -260,8 +260,8 @@ const GetInTouch = () => {
         </div>
 
         {/* Footer Section */}
-        <div className="mt-auto" style={{ paddingTop: '92px' }}>
-          <div className="border-t border-white/20" style={{ paddingTop: '92px' }}>
+        <div className="mt-auto" style={{ paddingTop: 'clamp(48px, 8vw, 92px)' }}>
+          <div className="border-t border-white/20" style={{ paddingTop: 'clamp(48px, 8vw, 92px)' }}>
             <div className="flex flex-col lg:flex-row items-start justify-between gap-6 md:gap-8">
               {/* Logos */}
               <div className="flex items-center gap-4 sm:gap-6 flex-nowrap">
@@ -322,7 +322,7 @@ const GetInTouch = () => {
 
                 {/* Contact */}
                 <div className="min-w-0">
-                  <h3 className="text-white font-semibold mb-2">Contact Us</h3>
+                  <h3 className="text-white font-semibold mb-2">Get in Touch</h3>
                   <p className="text-white/80">Phone: +201016078688</p>
                   <p className="text-white/80">cs@sobekegy.com</p>
                 </div>

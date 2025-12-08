@@ -40,11 +40,11 @@ const IndustriesWeServe = () => {
   return (
     <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-end">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-end">
           {/* Left Side - Image */}
           <div 
             ref={imageRef}
-            className={`relative h-[400px] rounded-lg overflow-hidden scroll-animate-left hover-lift ${imageVisible ? 'visible' : ''}`}
+            className={`relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg overflow-hidden scroll-animate-left hover-lift ${imageVisible ? 'visible' : ''}`}
           >
             <SafeImage
               src="/images/industries-container.png"

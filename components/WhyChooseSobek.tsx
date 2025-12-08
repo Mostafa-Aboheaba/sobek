@@ -130,13 +130,13 @@ const WhyChooseSobek = () => {
           <p className="mb-2 section-label">
             Why Choose Sobek Shipping Agency?
           </p>
-          <h2 className="mb-6 section-heading-lg">
+          <h2 className="mb-4 sm:mb-6 section-heading-lg">
             We are the only authorized agent for <span className="text-highlight">Right Line</span>, ensuring clients receive <span className="text-highlight">genuine,</span><br />
             <span className="text-highlight">direct shipping</span> services with no intermediaries.
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {features.map((feature, index) => (
             <FeatureCard key={index} feature={feature} index={index} />
           ))}

@@ -11,20 +11,20 @@ const Footer = () => {
   });
   
   return (
-    <footer className="bg-primary py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16">
+    <footer className="bg-primary py-12 sm:py-16 md:py-20 lg:py-[120px] px-4 md:px-8 lg:px-16">
       <div className="max-w-[1392px] mx-auto">
         <div 
           ref={ref}
           className={`flex flex-col lg:flex-row items-start justify-between gap-6 md:gap-8 overflow-hidden scroll-animate-up ${isVisible ? 'visible' : ''}`}
         >
           {/* Logos */}
-          <div className="flex items-center gap-4 sm:gap-6 flex-nowrap">
+          <div className="flex items-center gap-3 sm:gap-4 md:gap-6 flex-wrap sm:flex-nowrap">
             <SafeImage
               src="/logo/sobek-white.png"
               alt="Sobek Logo"
               width={202}
               height={92}
-              className="object-contain max-w-full"
+              className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-full h-auto"
               style={{ borderRadius: '12px' }}
             />
             <SafeImage
@@ -32,7 +32,7 @@ const Footer = () => {
               alt="Right Line Logo"
               width={202}
               height={92}
-              className="object-contain max-w-full"
+              className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-full h-auto"
               style={{ borderRadius: '12px' }}
             />
           </div>
@@ -76,7 +76,7 @@ const Footer = () => {
 
             {/* Contact */}
             <div className="min-w-0">
-              <h3 className="text-white font-semibold mb-2">Contact Us</h3>
+              <h3 className="text-white font-semibold mb-2">Get in Touch</h3>
               <p className="text-white/80">Phone: +201016078688</p>
               <p className="text-white/80">cs@sobekegy.com</p>
             </div>

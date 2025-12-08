@@ -23,7 +23,7 @@ const TestimonialCard = ({ testimonial, index, uniqueKey, renderStars }: Testimo
     <div
       ref={ref}
       key={uniqueKey}
-      className={`scroll-animate-up hover-lift bg-white rounded-2xl border border-gray-200 flex flex-col overflow-hidden w-full ${isVisible ? 'visible' : ''}`}
+      className={`scroll-animate-up hover-lift bg-white rounded-2xl border border-gray-200 flex flex-col overflow-hidden w-full sm:w-full ${isVisible ? 'visible' : ''}`}
       style={{
         minHeight: '265px',
         padding: '24px',
@@ -209,15 +209,15 @@ const Testimonials = () => {
           ref={sectionRef}
           className={`flex flex-col sm:flex-row items-start justify-between mb-12 gap-4 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
         >
-          <div className="text-start flex-1">
+          <div className="text-start flex-1 mb-4 sm:mb-0">
             <p className="mb-2 section-label">Testimonials</p>
-            <h2 className="section-heading">
+            <h2 className="section-heading text-lg sm:text-xl md:text-2xl lg:text-3xl">
               What Our Clients Say About Our Services
             </h2>
           </div>
           
-          {/* Navigation Arrows */}
-          <div className="flex gap-4 flex-shrink-0">
+          {/* Navigation Arrows - Hidden on mobile, visible on larger screens */}
+          <div className="hidden sm:flex gap-2 sm:gap-4 flex-shrink-0">
             <button
               onClick={handlePrevious}
               className="carousel-arrow-left w-12 h-12 rounded-full border-2 border-primary-500 flex items-center justify-center hover:bg-primary-500 transition-all duration-300 hover:scale-110 hover:shadow-lg"
@@ -242,7 +242,24 @@ const Testimonials = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Mobile: Horizontal Scroll Container */}
+        <div className="sm:hidden overflow-x-auto -mx-4 px-4 pb-4 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div className="flex gap-4" style={{ width: 'max-content' }}>
+            {testimonials.map((testimonial, index) => (
+              <div key={`mobile-testimonial-${index}`} className="flex-shrink-0" style={{ width: 'calc(100vw - 32px)', maxWidth: '320px' }}>
+                <TestimonialCard 
+                  testimonial={testimonial} 
+                  index={index}
+                  uniqueKey={`mobile-testimonial-${index}`}
+                  renderStars={renderStars}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: Grid Layout with Navigation */}
+        <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {visibleTestimonials.map((testimonial, index) => (
             <TestimonialCard 
               key={`testimonial-${currentIndex}-${index}`} 

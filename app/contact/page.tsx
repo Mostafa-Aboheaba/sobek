@@ -21,9 +21,9 @@ export default function ContactPage() {
       </div>
 
       {/* Main Content - Two Columns */}
-      <div className="px-4 md:px-8 lg:px-16 pb-16 md:pb-20">
+      <div className="px-4 md:px-8 lg:px-16 pb-12 sm:pb-16 md:pb-20">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
             {/* Left Column - Contact Info */}
             <ContactInfo />
 

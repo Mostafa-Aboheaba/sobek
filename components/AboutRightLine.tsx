@@ -9,13 +9,13 @@ const AboutRightLine = () => {
   return (
     <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-start">
           {/* Left Side - Heading */}
           <div 
             ref={contentRef}
             className={`scroll-animate-left ${contentVisible ? 'visible' : ''}`}
           >
-            <h2 className="mb-6 section-heading">
+            <h2 className="mb-4 sm:mb-6 section-heading">
               Right Line is a trusted name in global maritime transport, known for its <span className="text-highlight">reliability, strong fleet capacity, and consistent service performance</span>.
             </h2>
           </div>

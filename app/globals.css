@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 :root {
   --font-poppins: 'Poppins', sans-serif;
   --font-manjari: 'Manjari', sans-serif;
@@ -109,12 +119,18 @@ a {
   .hero-heading {
     font-family: var(--font-poppins), sans-serif;
     font-weight: 600;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 110%;
     letter-spacing: -0.03em;
   }
   
   @media (min-width: 640px) {
+    .hero-heading {
+      font-size: 36px;
+    }
+  }
+  
+  @media (min-width: 768px) {
     .hero-heading {
       font-size: 48px;
     }
@@ -130,14 +146,20 @@ a {
   .hero-tagline {
     font-family: var(--font-poppins), sans-serif;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 14px;
     line-height: 100%;
     letter-spacing: -0.03em;
   }
   
   @media (min-width: 640px) {
     .hero-tagline {
-      font-size: 32px;
+      font-size: 20px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .hero-tagline {
+      font-size: 28px;
     }
   }
   
@@ -160,9 +182,21 @@ a {
   .hero-paragraph {
     font-family: var(--font-manjari), sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 150%;
     letter-spacing: 0%;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-paragraph {
+      font-size: 16px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-paragraph {
+      font-size: 18px;
+    }
   }
   
   /* Feature Description */
@@ -182,14 +216,27 @@ a {
   
   /* Hero Content Padding */
   .hero-content {
-    padding-left: 24px;
-    padding-top: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  @media (min-width: 640px) {
+    .hero-content {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
   }
   
   @media (min-width: 768px) {
     .hero-content {
       padding-left: 48px;
+      padding-right: 0;
       padding-top: 60px;
+      padding-bottom: 0;
     }
   }
   

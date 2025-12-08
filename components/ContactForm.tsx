@@ -100,7 +100,7 @@ const ContactForm = () => {
       ref={formRef}
       className={`scroll-animate-right ${formVisible ? 'visible' : ''}`}
     >
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 space-y-4 hover-lift shadow-lg">
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-4 sm:p-6 space-y-4 hover-lift shadow-lg">
         <p className="text-gray-500 text-sm mb-4">* all fields are required</p>
         
         <input
@@ -155,7 +155,7 @@ const ContactForm = () => {
 
         <div>
           <p className="text-gray-900 text-sm font-medium mb-2">What can we help you with?</p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {["Cargo Booking", "Customs Documentation", "Port & Vessel Operations", "Others"].map(
               (option) => (
                 <label key={option} className="flex items-center gap-2 cursor-pointer select-none">

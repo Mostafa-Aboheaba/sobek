@@ -58,7 +58,7 @@ const FindYourCargo = () => {
   return (
     <section id="tracking" className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-end">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-end">
           {/* Left Side - Form */}
           <div 
             ref={formRef}
@@ -131,13 +131,22 @@ const FindYourCargo = () => {
           {/* Right Side - Image */}
           <div 
             ref={imageRef}
-            className={`relative h-[400px] rounded-lg overflow-hidden scroll-animate-right hover-lift ${imageVisible ? 'visible' : ''}`}
+            className={`relative w-full rounded-lg scroll-animate-right hover-lift ${imageVisible ? 'visible' : ''}`}
+            style={{ 
+              minHeight: '250px',
+              height: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
           >
             <SafeImage
               src="/images/tracking-container-truck.png"
               alt="Shipping container on truck"
-              fill
-              className="object-contain rounded-lg"
+              width={600}
+              height={400}
+              className="object-contain rounded-lg w-full h-auto"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         </div>

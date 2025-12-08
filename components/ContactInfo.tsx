@@ -11,11 +11,10 @@ const ContactInfo = () => {
       className={`scroll-animate-left ${isVisible ? 'visible' : ''}`}
     >
       <h2 
-        className="mb-6"
+        className="mb-4 sm:mb-6 text-base sm:text-lg md:text-xl"
         style={{
           fontFamily: 'var(--font-poppins), Poppins, sans-serif',
           fontWeight: 500,
-          fontSize: '20px',
           lineHeight: '100%',
           letterSpacing: '-2%',
           textTransform: 'capitalize',
@@ -26,11 +25,10 @@ const ContactInfo = () => {
       </h2>
       
       <p 
-        className="mb-8"
+        className="mb-6 sm:mb-8 text-lg sm:text-2xl md:text-3xl lg:text-[32px]"
         style={{
           fontFamily: 'var(--font-poppins), Poppins, sans-serif',
           fontWeight: 600,
-          fontSize: '32px',
           lineHeight: '130%',
           letterSpacing: '0%',
           color: '#012C4E',
