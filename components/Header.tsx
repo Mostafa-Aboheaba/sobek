@@ -26,11 +26,11 @@ const Header = () => {
 
   return (
     <header className="bg-white text-neutral-dark px-4 sm:px-6 py-4 sticky top-0 z-50 shadow-sm animate-fade-in">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between flex-wrap gap-4">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Left Side - Logos */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-3 md:gap-6">
+        <Link href="/" className="flex items-center gap-1 sm:gap-2 md:gap-6 flex-shrink-0">
           {/* Sobek Logo */}
-          <div className="relative h-8 sm:h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
+          <div className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
             <SafeImage
               src="/logo/sobek.png"
               alt="Sobek Logo"
@@ -42,7 +42,7 @@ const Header = () => {
           </div>
           
           {/* Right Line Logo */}
-          <div className="relative h-8 sm:h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
+          <div className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
             <SafeImage
               src="/logo/right.png"
               alt="Right Line Logo"
@@ -91,7 +91,7 @@ const Header = () => {
         </nav>
 
         {/* Right Side - Language & CTA */}
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-6">
+        <div className="flex items-center gap-1.5 sm:gap-3 md:gap-6 flex-shrink-0">
           <Link href="#" className="text-sm text-neutral-dark hover:text-accent transition-all duration-300 font-medium hidden sm:block hover:scale-105">
             RUS
           </Link>
@@ -105,16 +105,16 @@ const Header = () => {
                   element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
               }}
-              className="bg-primary text-white px-3 sm:px-4 md:px-6 py-2 rounded-[50px] hover:bg-primary-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg cursor-pointer"
+              className="bg-accent text-white px-2 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-[50px] hover:bg-accent-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg cursor-pointer whitespace-nowrap"
             >
-              Get a Free Quote
+              Get Quote
             </a>
           ) : (
             <Link 
               href="/#contact-form" 
-              className="bg-primary text-white px-3 sm:px-4 md:px-6 py-2 rounded-[50px] hover:bg-primary-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg"
+              className="bg-accent text-white px-2 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-[50px] hover:bg-accent-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg whitespace-nowrap"
             >
-              Get a Free Quote
+              Get Quote
             </Link>
           )}
           

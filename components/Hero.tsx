@@ -32,12 +32,19 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-row gap-2 sm:gap-[10px] mt-1.5 sm:mt-2 md:mt-4 animate-fade-in-up delay-300">
-            <Link
-              href="#contact"
-              className="bg-accent text-white px-3 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 rounded-[50px] hover:bg-accent-dark transition-all duration-300 hover:scale-105 hover:shadow-lg text-center hero-button text-xs sm:text-sm md:text-base flex-1 sm:flex-initial"
+            <a
+              href="#contact-form"
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById('contact-form');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+              className="bg-accent text-white px-3 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 rounded-[50px] hover:bg-accent-dark transition-all duration-300 hover:scale-105 hover:shadow-lg text-center hero-button text-xs sm:text-sm md:text-base flex-1 sm:flex-initial cursor-pointer"
             >
               Get Quote
-            </Link>
+            </a>
             <Link
               href="#services"
               className="border-2 border-white text-white px-3 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 rounded-[50px] hover:bg-white/10 transition-all duration-300 hover:scale-105 text-center bg-transparent hero-button text-xs sm:text-sm md:text-base flex-1 sm:flex-initial whitespace-nowrap"
