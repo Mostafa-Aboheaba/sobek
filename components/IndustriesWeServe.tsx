@@ -44,7 +44,7 @@ const IndustriesWeServe = () => {
           {/* Left Side - Image */}
           <div 
             ref={imageRef}
-            className={`relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg overflow-hidden scroll-animate-left hover-lift ${imageVisible ? 'visible' : ''}`}
+            className={`relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg overflow-hidden scroll-animate-left ${imageVisible ? 'visible' : ''}`}
           >
             <SafeImage
               src="/images/industries-container.png"
