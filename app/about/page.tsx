@@ -22,10 +22,10 @@ export default function AboutPage() {
       </div>
 
       {/* About Sobek Section */}
-      <AboutSobek />
+      <AboutSobek showImage={false} />
 
       {/* About Right Line Section */}
-      <AboutRightLine />
+      <AboutRightLine showImage={false} />
 
       {/* Why Choose Sobek Section */}
       <WhyChooseSobek />
