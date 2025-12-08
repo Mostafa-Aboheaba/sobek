@@ -1,4 +1,43 @@
+"use client";
+
+import { useScrollAnimation } from "@/lib/useScrollAnimation";
+
+interface FeatureCardProps {
+  feature: {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+  };
+  index: number;
+}
+
+const FeatureCard = ({ feature, index }: FeatureCardProps) => {
+  const { ref, isVisible } = useScrollAnimation();
+  
+  return (
+    <div
+      ref={ref}
+      className={`scroll-animate-up hover-lift feature-card ${isVisible ? 'visible' : ''}`}
+      style={{ transitionDelay: `${index * 0.15}s` }}
+    >
+      <div className="feature-icon transition-transform duration-300 hover:scale-110">
+        {feature.icon}
+      </div>
+      <div>
+        <h3 className="text-xl font-semibold text-accent mb-3">
+          {feature.title}
+        </h3>
+        <p className="feature-description">
+          {feature.description}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const WhyChooseSobek = () => {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+
   const features = [
     {
       icon: (
@@ -84,7 +123,10 @@ const WhyChooseSobek = () => {
   return (
     <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-start mb-12">
+        <div 
+          ref={sectionRef}
+          className={`text-start mb-12 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
+        >
           <p className="mb-2 section-label">
             Why Choose Sobek Shipping Agency?
           </p>
@@ -96,22 +138,7 @@ const WhyChooseSobek = () => {
 
         <div className="grid md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="hover:shadow-lg transition-shadow feature-card"
-            >
-              <div className="feature-icon">
-                {feature.icon}
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-accent mb-3">
-                  {feature.title}
-                </h3>
-                <p className="feature-description">
-                  {feature.description}
-                </p>
-              </div>
-            </div>
+            <FeatureCard key={index} feature={feature} index={index} />
           ))}
         </div>
       </div>

@@ -1,9 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useScrollAnimation } from "@/lib/useScrollAnimation";
+
+interface TestimonialCardProps {
+  testimonial: {
+    rating: number;
+    quote: string;
+    name: string;
+    title: string;
+  };
+  index: number;
+  uniqueKey: string;
+  renderStars: (rating: number) => React.ReactNode;
+}
+
+const TestimonialCard = ({ testimonial, index, uniqueKey, renderStars }: TestimonialCardProps) => {
+  const { ref, isVisible } = useScrollAnimation();
+  
+  return (
+    <div
+      ref={ref}
+      key={uniqueKey}
+      className={`scroll-animate-up hover-lift bg-white rounded-2xl border border-gray-200 flex flex-col overflow-hidden w-full ${isVisible ? 'visible' : ''}`}
+      style={{
+        minHeight: '265px',
+        padding: '24px',
+        justifyContent: 'space-between',
+        transitionDelay: `${index * 0.15}s`,
+      }}
+    >
+      <div className="flex-shrink-0">
+        {renderStars(testimonial.rating)}
+      </div>
+      <p className="text-neutral-dark leading-relaxed flex-1 overflow-hidden text-ellipsis" style={{ marginTop: '16px', marginBottom: '16px' }}>
+        &quot;{testimonial.quote}&quot;
+      </p>
+      <div className="flex-shrink-0">
+        <p className="font-semibold text-primary-900 mb-1">
+          {testimonial.name}
+        </p>
+        <p className="text-neutral-light text-sm">
+          {testimonial.title}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const Testimonials = () => {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
   const testimonials = [
     {
       rating: 4.7,
@@ -158,7 +205,10 @@ const Testimonials = () => {
   return (
     <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row items-start justify-between mb-12 gap-4">
+        <div 
+          ref={sectionRef}
+          className={`flex flex-col sm:flex-row items-start justify-between mb-12 gap-4 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
+        >
           <div className="text-start flex-1">
             <p className="mb-2 section-label">Testimonials</p>
             <h2 className="section-heading">
@@ -170,7 +220,7 @@ const Testimonials = () => {
           <div className="flex gap-4 flex-shrink-0">
             <button
               onClick={handlePrevious}
-              className="carousel-arrow-left w-12 h-12 rounded-full border-2 border-primary-500 flex items-center justify-center hover:bg-primary-500 transition-colors"
+              className="carousel-arrow-left w-12 h-12 rounded-full border-2 border-primary-500 flex items-center justify-center hover:bg-primary-500 transition-all duration-300 hover:scale-110 hover:shadow-lg"
               aria-label="Previous testimonials"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +230,7 @@ const Testimonials = () => {
             </button>
             <button
               onClick={handleNext}
-              className="w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary-600 transition-colors"
+              className="w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary-600 transition-all duration-300 hover:scale-110 hover:shadow-lg"
               style={{ backgroundColor: '#2A478B' }}
               aria-label="Next testimonials"
             >
@@ -194,30 +244,13 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visibleTestimonials.map((testimonial, index) => (
-            <div
-              key={currentIndex + index}
-              className="bg-white rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow flex flex-col overflow-hidden w-full"
-              style={{
-                minHeight: '265px',
-                padding: '24px',
-                justifyContent: 'space-between',
-              }}
-            >
-              <div className="flex-shrink-0">
-                {renderStars(testimonial.rating)}
-              </div>
-              <p className="text-neutral-dark leading-relaxed flex-1 overflow-hidden text-ellipsis" style={{ marginTop: '16px', marginBottom: '16px' }}>
-                &quot;{testimonial.quote}&quot;
-              </p>
-              <div className="flex-shrink-0">
-                <p className="font-semibold text-primary-900 mb-1">
-                  {testimonial.name}
-                </p>
-                <p className="text-neutral-light text-sm">
-                  {testimonial.title}
-                </p>
-              </div>
-            </div>
+            <TestimonialCard 
+              key={`testimonial-${currentIndex}-${index}`} 
+              testimonial={testimonial} 
+              index={index}
+              uniqueKey={`testimonial-${currentIndex}-${index}`}
+              renderStars={renderStars}
+            />
           ))}
         </div>
       </div>

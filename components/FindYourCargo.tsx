@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import SafeImage from "./SafeImage";
+import { useScrollAnimation } from "@/lib/useScrollAnimation";
 
 const FindYourCargo = () => {
+  const { ref: formRef, isVisible: formVisible } = useScrollAnimation();
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation();
   const [bookingNumber, setBookingNumber] = useState("");
   const [contactInfo, setContactInfo] = useState("");
 
@@ -57,7 +60,10 @@ const FindYourCargo = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-end">
           {/* Left Side - Form */}
-          <div>
+          <div 
+            ref={formRef}
+            className={`scroll-animate-left ${formVisible ? 'visible' : ''}`}
+          >
             <p className="mb-2 section-label">Find Your Cargo</p>
             <h2 className="mb-6 section-heading-lg">
               Drop your <span className="text-highlight">Booking number and</span><br />
@@ -96,7 +102,7 @@ const FindYourCargo = () => {
                   <button
                     type="submit"
                     disabled={isTracking}
-                    className="tracking-button w-full sm:w-auto"
+                    className="tracking-button w-full sm:w-auto transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isTracking ? "Tracking..." : "Track"}
                   </button>
@@ -125,7 +131,10 @@ const FindYourCargo = () => {
           </div>
 
           {/* Right Side - Image */}
-          <div className="relative h-[400px] rounded-lg overflow-hidden">
+          <div 
+            ref={imageRef}
+            className={`relative h-[400px] rounded-lg overflow-hidden scroll-animate-right hover-lift ${imageVisible ? 'visible' : ''}`}
+          >
             <SafeImage
               src="/images/tracking-container-truck.png"
               alt="Shipping container on truck"

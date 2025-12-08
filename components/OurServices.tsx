@@ -1,4 +1,41 @@
+"use client";
+
+import { useScrollAnimation } from "@/lib/useScrollAnimation";
+
+interface ServiceCardProps {
+  service: {
+    number: string;
+    title: string;
+    description: string;
+  };
+  index: number;
+}
+
+const ServiceCard = ({ service, index }: ServiceCardProps) => {
+  const { ref, isVisible } = useScrollAnimation();
+  
+  return (
+    <div
+      ref={ref}
+      className={`scroll-animate-up hover-lift feature-card ${isVisible ? 'visible' : ''}`}
+      style={{ transitionDelay: `${index * 0.1}s` }}
+    >
+      <div className="service-number">
+        {service.number}.
+      </div>
+      <div className="service-card-content-wrapper">
+        <h3 className="service-card-heading text-accent">
+          {service.title}
+        </h3>
+        <p className="service-card-content">{service.description}</p>
+      </div>
+    </div>
+  );
+};
+
 const OurServices = () => {
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+
   const services = [
     {
       number: "1",
@@ -35,7 +72,10 @@ const OurServices = () => {
   return (
     <section id="services" className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-start mb-12">
+        <div 
+          ref={sectionRef}
+          className={`text-start mb-12 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
+        >
           <p className="mb-2 section-label">
             Our Services
           </p>
@@ -47,20 +87,7 @@ const OurServices = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="hover:shadow-lg transition-shadow feature-card"
-            >
-              <div className="service-number">
-                {service.number}.
-              </div>
-              <div className="service-card-content-wrapper">
-                <h3 className="service-card-heading text-accent">
-                  {service.title}
-                </h3>
-                <p className="service-card-content">{service.description}</p>
-              </div>
-            </div>
+            <ServiceCard key={index} service={service} index={index} />
           ))}
         </div>
       </div>

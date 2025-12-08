@@ -1,13 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import SafeImage from "./SafeImage";
+import { useScrollAnimation } from "@/lib/useScrollAnimation";
 
 const AboutRightLine = () => {
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation();
+
   return (
     <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Content */}
-          <div>
+          <div 
+            ref={contentRef}
+            className={`scroll-animate-right ${contentVisible ? 'visible' : ''}`}
+          >
             <p className="mb-2 section-label">
               About Right Line
             </p>
@@ -19,19 +28,22 @@ const AboutRightLine = () => {
             </p>
             <Link
               href="#about"
-              className="inline-block bg-primary text-white px-8 py-3 rounded-[50px] hover:bg-primary-dark transition-colors"
+              className="inline-block bg-primary text-white px-8 py-3 rounded-[50px] hover:bg-primary-dark transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               Read More
             </Link>
           </div>
 
           {/* Right Side - Image */}
-          <div className="relative h-[400px] rounded-lg overflow-hidden">
+          <div 
+            ref={imageRef}
+            className={`relative h-[400px] rounded-lg overflow-hidden scroll-animate-left hover-lift ${imageVisible ? 'visible' : ''}`}
+          >
             <SafeImage
               src="/images/about-sobek-ship.png"
               alt="Right Line shipping vessel"
               fill
-              className="object-contain rounded-lg"
+              className="object-contain rounded-lg animate-float"
             />
           </div>
         </div>
