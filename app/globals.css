@@ -365,6 +365,19 @@ a {
     border-color: #2A478B;
   }
 
+  input[type="checkbox"].custom-checkbox:checked:hover {
+    background-color: white;
+    border-color: #2A478B;
+  }
+
+  input[type="checkbox"].custom-checkbox:checked:focus {
+    background-color: white;
+    border-color: #2A478B;
+    outline: none;
+    ring: 2px;
+    ring-color: #2A478B;
+  }
+
   input[type="checkbox"].custom-checkbox:checked::after {
     content: '';
     position: absolute;
@@ -379,7 +392,7 @@ a {
     background-position: center;
   }
 
-  input[type="checkbox"].custom-checkbox:focus {
+  input[type="checkbox"].custom-checkbox:focus:not(:checked) {
     outline: none;
     ring: 2px;
     ring-color: #2A478B;

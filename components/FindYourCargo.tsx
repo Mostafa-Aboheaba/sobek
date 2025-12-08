@@ -66,9 +66,7 @@ const FindYourCargo = () => {
           >
             <p className="mb-2 section-label">Find Your Cargo</p>
             <h2 className="mb-6 section-heading-lg">
-              Drop your <span className="text-highlight">Booking number and</span><br />
-              <span className="text-highlight">contact method</span>. We&apos;ll track it and<br />
-              send you the <span className="text-highlight">latest update</span>.
+              Drop your <span className="text-highlight">Booking number</span> and <span className="text-highlight">contact method</span>. We&apos;ll track it and send you the latest update.
             </h2>
             
             <form onSubmit={handleSubmit} className="mt-8" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

@@ -80,8 +80,7 @@ const OurServices = () => {
             Our Services
           </p>
           <h2 className="mb-6 section-heading-lg">
-            As the <span className="text-highlight">sole representative of Right Line in the region</span>,<br />
-            we manage all <span className="text-highlight">shipping line operations</span> with precision and professionalism.
+            As the <span className="text-highlight">sole representative of Right Line in the region</span>, we manage all <span className="text-highlight">shipping line operations</span> with precision and professionalism.
           </h2>
         </div>
 
