@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, RefObject } from "react";
 
-export const useScrollAnimation = (options?: IntersectionObserverInit) => {
+export const useScrollAnimation = <T extends HTMLElement = HTMLDivElement>(
+  options?: IntersectionObserverInit
+) => {
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

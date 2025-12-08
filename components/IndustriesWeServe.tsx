@@ -9,7 +9,7 @@ interface IndustryItemProps {
 }
 
 const IndustryItem = ({ industry, index }: IndustryItemProps) => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation<HTMLLIElement>();
   
   return (
     <li 
@@ -25,8 +25,8 @@ const IndustryItem = ({ industry, index }: IndustryItemProps) => {
 };
 
 const IndustriesWeServe = () => {
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation();
-  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>();
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation<HTMLDivElement>();
   const industries = [
     "Agriculture & Food Products",
     "Construction Materials",

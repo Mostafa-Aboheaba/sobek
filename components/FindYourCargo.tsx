@@ -5,8 +5,8 @@ import SafeImage from "./SafeImage";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
 
 const FindYourCargo = () => {
-  const { ref: formRef, isVisible: formVisible } = useScrollAnimation();
-  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation();
+  const { ref: formRef, isVisible: formVisible } = useScrollAnimation<HTMLDivElement>();
+  const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>();
   const [bookingNumber, setBookingNumber] = useState("");
   const [contactInfo, setContactInfo] = useState("");
 

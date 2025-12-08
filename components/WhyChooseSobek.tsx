@@ -12,7 +12,7 @@ interface FeatureCardProps {
 }
 
 const FeatureCard = ({ feature, index }: FeatureCardProps) => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
   
   return (
     <div
@@ -36,7 +36,7 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
 };
 
 const WhyChooseSobek = () => {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
 
   const features = [
     {

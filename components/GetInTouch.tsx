@@ -5,7 +5,7 @@ import SafeImage from "./SafeImage";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
 
 const GetInTouchLeftContent = () => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
   
   return (
     <div 
@@ -38,7 +38,7 @@ const GetInTouchLeftContent = () => {
 };
 
 const FooterContent = () => {
-  const { ref, isVisible } = useScrollAnimation({ 
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>({ 
     threshold: 0.01,
     rootMargin: '0px 0px -100px 0px'
   });
@@ -144,7 +144,7 @@ const FooterContent = () => {
 };
 
 const GetInTouch = () => {
-  const { ref: formRef, isVisible: formVisible } = useScrollAnimation();
+  const { ref: formRef, isVisible: formVisible } = useScrollAnimation<HTMLDivElement>();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",

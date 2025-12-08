@@ -12,7 +12,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ service, index }: ServiceCardProps) => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
   
   return (
     <div
@@ -34,7 +34,7 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
 };
 
 const OurServices = () => {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
 
   const services = [
     {

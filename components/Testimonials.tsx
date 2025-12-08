@@ -17,7 +17,7 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard = ({ testimonial, index, uniqueKey, renderStars }: TestimonialCardProps) => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>();
   
   return (
     <div
@@ -50,7 +50,7 @@ const TestimonialCard = ({ testimonial, index, uniqueKey, renderStars }: Testimo
 };
 
 const Testimonials = () => {
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
   const testimonials = [
     {
       rating: 4.7,
