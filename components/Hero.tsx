@@ -24,7 +24,7 @@ const Hero = () => {
       {/* Content Container - Max width 1440px with 24px padding */}
       <div className="relative z-10 w-full h-full flex">
         <div className="max-w-2xl flex flex-col gap-[10px] hero-content">
-          <h1 className="text-white hero-heading animate-fade-in-up">
+          <h1 className="text-white hero-heading animate-fade-in-up whitespace-nowrap">
             Ship smarter with Sobek
           </h1>
           <p className="text-white hero-tagline animate-fade-in-up delay-200">

@@ -4,7 +4,6 @@ import AboutSobek from "@/components/AboutSobek";
 import AboutRightLine from "@/components/AboutRightLine";
 import WhyChooseSobek from "@/components/WhyChooseSobek";
 import GetInTouch from "@/components/GetInTouch";
-import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,9 +32,6 @@ export default function AboutPage() {
 
       {/* Get In Touch Section */}
       <GetInTouch />
-
-      {/* Footer */}
-      <Footer />
     </main>
   );
 }

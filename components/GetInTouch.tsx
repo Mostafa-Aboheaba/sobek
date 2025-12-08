@@ -15,7 +15,7 @@ const GetInTouchLeftContent = () => {
     >
       <p className="text-white font-semibold mb-2">Get In Touch</p>
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-white">
-        Got questions? <span style={{ color: '#A6823A' }}>Just fill out</span> <span style={{ color: '#A6823A' }}>the form</span> and one of our specialists will give you a <span style={{ color: '#A6823A' }}>quick call</span> to help with anything you need.
+        Got questions? <span style={{ color: '#EAD292' }}>Just fill out</span> <span style={{ color: '#EAD292' }}>the form</span> and one of our specialists will give you a <span style={{ color: '#EAD292' }}>quick call</span> to help with anything you need.
       </h2>
       
       {/* Image */}
