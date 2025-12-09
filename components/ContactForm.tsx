@@ -100,48 +100,58 @@ const ContactForm = () => {
       ref={formRef}
       className={`scroll-animate-right ${formVisible ? 'visible' : ''}`}
     >
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-4 sm:p-6 space-y-4 hover-lift shadow-lg">
+      <form onSubmit={handleSubmit} className="bg-white p-4 sm:p-6 space-y-4 hover-lift shadow-lg" style={{ borderRadius: '20px' }}>
         <p className="text-gray-500 text-sm mb-4">* all fields are required</p>
         
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
+        {/* Name and Phone Row */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            style={{ borderRadius: '50px' }}
+          />
+          
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            style={{ borderRadius: '50px' }}
+          />
+        </div>
         
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
-        
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
-        
-        <input
-          type="email"
-          name="email"
-          placeholder="E-Mail"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-        />
+        {/* Address and Email Row */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            style={{ borderRadius: '50px' }}
+          />
+          
+          <input
+            type="email"
+            name="email"
+            placeholder="E-Mail"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            style={{ borderRadius: '50px' }}
+          />
+        </div>
         
         <textarea
           name="message"
@@ -150,7 +160,8 @@ const ContactForm = () => {
           onChange={handleChange}
           rows={4}
           required
-          className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+          className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+          style={{ borderRadius: '24px' }}
         />
 
         <div>
