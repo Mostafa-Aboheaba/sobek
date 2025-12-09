@@ -9,13 +9,13 @@ const Hero = () => {
       id="home"
       className="relative w-full max-w-[1440px] mx-auto h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px] xl:h-[617px] flex items-center px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden"
     >
-      {/* Background Image with floating animation */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <SafeImage
           src="/images/hero-ship-sea.png"
           alt="Cargo ship sailing on the sea"
           fill
-          className="object-cover animate-float"
+          className="object-cover lg:object-contain"
           priority
           sizes="100vw"
         />
@@ -25,8 +25,8 @@ const Hero = () => {
       <div className="relative z-10 w-full h-full flex items-center justify-center sm:items-start sm:justify-start">
         <div className="w-full max-w-2xl flex flex-col gap-4 sm:gap-3 md:gap-4 lg:gap-5 hero-content items-center sm:items-start text-center sm:text-left px-2 sm:px-0">
           <h1 className="text-white hero-heading animate-fade-in-up leading-tight">
-            Right line sails ....<br className="hidden sm:block" />
-            <span className="sm:inline-block">SOBEK delivers</span>
+          Right Line Sails,<br className="hidden sm:block" />
+            <span className="sm:inline-block">Sobec Delivers</span>
           </h1>
           <p className="text-white hero-tagline animate-fade-in-up delay-200 leading-tight">
             Fast reliable sea freight solution
