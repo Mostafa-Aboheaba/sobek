@@ -19,9 +19,24 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
           {/* Left Side - Image or Content */}
           {showImage ? (
             <>
+              {/* Left Side - Image */}
+              <div 
+                ref={imageRef}
+                className={`relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden scroll-animate-left ${imageVisible ? 'visible' : ''}`}
+              >
+                <SafeImage
+                  src="/images/right-line-containers.png"
+                  alt="Right Line shipping containers"
+                  fill
+                  className="object-contain rounded-lg"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+
+              {/* Right Side - Content */}
               <div 
                 ref={contentRef}
-                className={`scroll-animate-left ${contentVisible ? 'visible' : ''}`}
+                className={`scroll-animate-right ${contentVisible ? 'visible' : ''}`}
               >
                 <p className="mb-2 section-label">About Sobek</p>
                 <h2 className="mb-4 sm:mb-6 section-heading">
@@ -36,20 +51,6 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                 >
                   Read More
                 </Link>
-              </div>
-
-              {/* Right Side - Image */}
-              <div 
-                ref={imageRef}
-                className={`relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden scroll-animate-right ${imageVisible ? 'visible' : ''}`}
-              >
-                <SafeImage
-                  src="/images/right-line-containers.png"
-                  alt="Right Line shipping containers"
-                  fill
-                  className="object-contain rounded-lg"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
               </div>
             </>
           ) : (

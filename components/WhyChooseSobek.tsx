@@ -17,7 +17,7 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
   return (
     <div
       ref={ref}
-      className={`scroll-animate-up hover-lift feature-card ${isVisible ? 'visible' : ''}`}
+      className={`scroll-animate-up feature-card ${isVisible ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 0.15}s` }}
     >
       <div className="feature-icon transition-transform duration-300 hover:scale-110">

@@ -17,7 +17,7 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
   return (
     <div
       ref={ref}
-      className={`scroll-animate-up hover-lift feature-card ${isVisible ? 'visible' : ''}`}
+      className={`scroll-animate-up feature-card ${isVisible ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
       <div className="service-number">
