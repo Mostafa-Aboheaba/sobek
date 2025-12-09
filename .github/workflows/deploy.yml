@@ -33,11 +33,13 @@ jobs:
       
       - name: Build with Next.js
         run: |
+          # Extract repository name from GITHUB_REPOSITORY (format: username/repo-name)
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           # Temporarily move API routes to exclude from static build
           if [ -d "app/api" ]; then
             mv app/api app/_api_backup
           fi
-          npm run build
+          GITHUB_REPOSITORY_NAME="/${REPO_NAME}" npm run build
           # Restore API routes
           if [ -d "app/_api_backup" ]; then
             mv app/_api_backup app/api
