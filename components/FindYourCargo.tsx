@@ -131,13 +131,11 @@ const FindYourCargo = () => {
           {/* Right Side - Image */}
           <div 
             ref={imageRef}
-            className={`relative w-full rounded-lg scroll-animate-right hover-lift ${imageVisible ? 'visible' : ''}`}
+            className={`relative w-full scroll-animate-right hover-lift ${imageVisible ? 'visible' : ''}`}
             style={{ 
-              minHeight: '250px',
-              height: 'auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              borderRadius: '40px',
+              overflow: 'hidden',
+              minHeight: '250px'
             }}
           >
             <SafeImage
@@ -145,7 +143,8 @@ const FindYourCargo = () => {
               alt="Shipping container on truck"
               width={600}
               height={400}
-              className="object-contain rounded-lg w-full h-auto"
+              className="w-full h-auto object-contain"
+              style={{ borderRadius: '40px' }}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
