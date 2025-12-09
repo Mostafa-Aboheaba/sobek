@@ -11,7 +11,8 @@ const AboutHero = () => {
           src="/images/about-hero-ship.png"
           alt="Cargo ship sailing on the sea"
           fill
-          className="object-cover"
+          className="object-cover w-full h-full"
+          style={{ objectPosition: 'center' }}
           priority
           sizes="100vw"
         />

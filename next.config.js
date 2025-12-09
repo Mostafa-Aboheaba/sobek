@@ -7,10 +7,18 @@
 // For local builds, update the default value below to match your repo name
 const repoName = process.env.GITHUB_REPOSITORY_NAME || '/sobek_v2';
 
+// Only use basePath in production builds (not in dev mode)
+// In development, basePath should be empty so the app works locally
+const isProduction = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   output: 'export',
-  basePath: repoName,
-  assetPrefix: repoName,
+  // Only set basePath and assetPrefix for production builds
+  // This ensures dev server works without basePath, but builds include it for GitHub Pages
+  ...(isProduction ? {
+    basePath: repoName,
+    assetPrefix: repoName,
+  } : {}),
   trailingSlash: true,
   images: {
     unoptimized: true,
