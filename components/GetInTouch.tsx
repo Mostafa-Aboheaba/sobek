@@ -365,7 +365,9 @@ const GetInTouch = () => {
                 {/* Social Media Icons - Row on small & medium screens, column on large */}
                 <div className="flex flex-row lg:flex-col gap-2 flex-shrink-0">
                   <a 
-                    href="#" 
+                    href="https://www.linkedin.com/company/sobek-agency/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="LinkedIn"
                   >
@@ -374,7 +376,9 @@ const GetInTouch = () => {
                     </svg>
                   </a>
                   <a 
-                    href="#" 
+                    href="https://www.instagram.com/sobek_agency?igsh=MWQweTRkNXNpMjh3dQ==" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="Instagram"
                   >
@@ -383,7 +387,9 @@ const GetInTouch = () => {
                     </svg>
                   </a>
                   <a 
-                    href="#" 
+                    href="https://www.facebook.com/share/17kwUY7fqR/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors flex-shrink-0" 
                     aria-label="Facebook"
                   >

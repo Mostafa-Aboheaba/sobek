@@ -84,7 +84,9 @@ const Footer = () => {
             {/* Social Media Icons - Stacked Vertically */}
             <div className="flex flex-col gap-2">
               <a 
-                href="#" 
+                href="https://www.linkedin.com/company/sobek-agency/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
                 aria-label="LinkedIn"
               >
@@ -93,7 +95,9 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="#" 
+                href="https://www.instagram.com/sobek_agency?igsh=MWQweTRkNXNpMjh3dQ==" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
                 aria-label="Instagram"
               >
@@ -102,7 +106,9 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="#" 
+                href="https://www.facebook.com/share/17kwUY7fqR/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-primary-500 hover:bg-primary-600 flex items-center justify-center transition-colors" 
                 aria-label="Facebook"
               >
