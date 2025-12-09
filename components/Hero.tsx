@@ -23,10 +23,10 @@ const Hero = () => {
 
       {/* Content Container */}
       <div className="relative z-10 w-full h-full flex items-center justify-center sm:items-start sm:justify-start">
-        <div className="w-[343px] sm:w-full max-w-2xl flex flex-col gap-12 sm:gap-3 md:gap-4 lg:gap-5 hero-content items-center sm:items-start text-center sm:text-left pr-4 pb-12 pl-4 sm:pr-0 sm:pb-0 sm:pl-0">
+        <div className="w-[343px] sm:w-full max-w-2xl flex flex-col gap-6 sm:gap-3 md:gap-4 lg:gap-5 hero-content items-center sm:items-start text-center sm:text-left pr-4 pb-12 pl-4 sm:pr-0 sm:pb-0 sm:pl-0">
           <h1 className="text-white hero-heading animate-fade-in-up leading-tight">
-          Right Line Sails,<br className="hidden sm:block" />
-            <span className="sm:inline-block">Sobek Delivers</span>
+            Right Line Sails,<br />
+            Sobek Delivers
           </h1>
           <p className="text-white hero-tagline animate-fade-in-up delay-200 leading-tight">
             Fast reliable sea freight solution
