@@ -121,7 +121,7 @@ const WhyChooseSobek = () => {
   ];
 
   return (
-    <section className="py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16 bg-white">
+    <section className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
         <div 
           ref={sectionRef}

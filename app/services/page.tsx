@@ -3,7 +3,6 @@ import ServicesHero from "@/components/ServicesHero";
 import OurServices from "@/components/OurServices";
 import FindYourCargo from "@/components/FindYourCargo";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
-import Testimonials from "@/components/Testimonials";
 import GetInTouch from "@/components/GetInTouch";
 import type { Metadata } from "next";
 
@@ -30,9 +29,6 @@ export default function ServicesPage() {
 
       {/* Industries We Serve Section */}
       <IndustriesWeServe />
-
-      {/* Testimonials Section */}
-      <Testimonials />
 
       {/* Get In Touch Section */}
       <GetInTouch />

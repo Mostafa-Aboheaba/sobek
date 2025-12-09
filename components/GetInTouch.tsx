@@ -131,7 +131,7 @@ const GetInTouch = () => {
   };
 
   return (
-    <footer id="contact" className="bg-white py-16 sm:py-20 md:py-[120px] px-4 md:px-8 lg:px-16">
+    <footer id="contact" className="bg-white py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1392px] mx-auto">
         {/* Footer Container */}
         <div 
@@ -150,7 +150,7 @@ const GetInTouch = () => {
             flexDirection: 'column',
           }}
         >
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 flex-1">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 flex-1 items-end">
           {/* Left Side - Image and Text */}
           <GetInTouchLeftContent />
 
@@ -159,48 +159,58 @@ const GetInTouch = () => {
             ref={formRef}
             className={`scroll-animate-right ${formVisible ? 'visible' : ''}`}
           >
-            <form id="contact-form" onSubmit={handleSubmit} className="bg-white rounded-lg p-4 sm:p-6 space-y-4 hover-lift">
+            <form id="contact-form" onSubmit={handleSubmit} className="bg-white p-4 sm:p-6 space-y-4 hover-lift" style={{ borderRadius: '20px' }}>
               <p className="text-gray-500 text-sm mb-4">* all fields are required</p>
               
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
+              {/* Name and Phone Row */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  style={{ borderRadius: '50px' }}
+                />
+                
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  style={{ borderRadius: '50px' }}
+                />
+              </div>
               
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
-              
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
-              
-              <input
-                type="email"
-                name="email"
-                placeholder="E-Mail"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
-              />
+              {/* Address and Email Row */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  style={{ borderRadius: '50px' }}
+                />
+                
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="E-Mail"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                  style={{ borderRadius: '50px' }}
+                />
+              </div>
               
               <textarea
                 name="message"
@@ -209,7 +219,8 @@ const GetInTouch = () => {
                 onChange={handleChange}
                 rows={4}
                 required
-                className="w-full px-4 py-3 bg-white border border-gray-300 rounded text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
+                className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-none"
+                style={{ borderRadius: '24px' }}
               />
 
               <div>
