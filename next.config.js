@@ -15,13 +15,11 @@ const repoName = process.env.GITHUB_REPOSITORY_NAME || '/sobek_v2';
 
 // Only use basePath when explicitly building for GitHub Pages
 // Check if GITHUB_REPOSITORY_NAME is set (which happens in GitHub Actions)
-// OR if we're running in GitHub Actions (fallback detection)
 // This ensures:
 // - Dev mode works without basePath (localhost)
 // - Local builds work without basePath (for testing)
 // - GitHub Pages builds work with basePath
-const isGitHubActions = !!process.env.GITHUB_ACTIONS;
-const useBasePath = !!process.env.GITHUB_REPOSITORY_NAME || (isGitHubActions && process.env.NODE_ENV === 'production');
+const useBasePath = !!process.env.GITHUB_REPOSITORY_NAME;
 
 // Debug logging (only in CI/CD)
 if (process.env.CI || process.env.GITHUB_ACTIONS) {

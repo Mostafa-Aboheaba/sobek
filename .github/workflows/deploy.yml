@@ -32,9 +32,15 @@ jobs:
         run: npm ci --legacy-peer-deps
       
       - name: Build with Next.js
+        env:
+          NODE_ENV: production
+          # Set basePath for GitHub Pages (format: /repo-name)
+          GITHUB_REPOSITORY_NAME: /${{ github.event.repository.name }}
         run: |
-          echo "Repository name: ${{ github.event.repository.name }}"
-          echo "GITHUB_REPOSITORY_NAME is set to: ${GITHUB_REPOSITORY_NAME}"
+          echo "🔧 Build Configuration:"
+          echo "  Repository name: ${{ github.event.repository.name }}"
+          echo "  GITHUB_REPOSITORY_NAME: ${GITHUB_REPOSITORY_NAME}"
+          echo "  NODE_ENV: ${NODE_ENV}"
           # Temporarily move API routes to exclude from static build
           if [ -d "app/api" ]; then
             mv app/api app/_api_backup
@@ -44,10 +50,12 @@ jobs:
           if [ -d "app/_api_backup" ]; then
             mv app/_api_backup app/api
           fi
-        env:
-          NODE_ENV: production
-          # Set basePath for GitHub Pages (format: /repo-name)
-          GITHUB_REPOSITORY_NAME: /${{ github.event.repository.name }}
+          # Verify basePath was applied by checking the built files
+          echo "✅ Build completed"
+          if [ -d "out" ]; then
+            echo "  Checking out directory structure..."
+            ls -la out/ | head -10
+          fi
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
