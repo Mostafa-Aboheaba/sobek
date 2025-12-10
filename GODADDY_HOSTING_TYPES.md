@@ -146,3 +146,4 @@ The plans you're seeing (Basic/Premium) are **Website Builder** plans - these ar
 - Traditional "Web Hosting" plan with cPanel
 - OR use Vercel (free) and point your GoDaddy domain
 
+

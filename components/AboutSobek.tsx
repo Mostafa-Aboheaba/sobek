@@ -28,7 +28,7 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                   src="/images/right-line-containers.png"
                   alt="Right Line shipping containers"
                   fill
-                  className="object-contain rounded-lg"
+                  className="object-fill rounded-lg"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>

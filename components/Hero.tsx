@@ -7,15 +7,17 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative w-full max-w-[1440px] mx-auto h-[575px] sm:h-[400px] md:h-[500px] lg:h-[550px] xl:h-[617px] flex items-center px-4 md:px-8 lg:px-16 overflow-hidden rounded-[20px] sm:rounded-none"
+      className="relative w-full max-w-[1440px] mx-auto h-[575px] sm:h-[400px] md:h-[500px] lg:h-[550px] xl:h-[617px] flex items-center px-4 md:px-8 lg:px-16 overflow-hidden"
+      style={{ borderRadius: '40px' }}
     >
       {/* Background Image */}
-      <div className="absolute top-0 bottom-0 left-4 right-4 sm:left-6 sm:right-6 z-0 overflow-hidden rounded-[20px] sm:rounded-none">
+      <div className="absolute top-0 bottom-0 left-4 right-4 sm:left-6 sm:right-6 z-0 overflow-hidden" style={{ borderRadius: '40px' }}>
         <SafeImage
           src="/images/hero-ship-sea.png"
           alt="Cargo ship sailing on the sea"
           fill
-          className="object-cover lg:object-contain"
+          className="lg:object-contain"
+          style={{ borderRadius: '40px' }}
           priority
           sizes="100vw"
         />
