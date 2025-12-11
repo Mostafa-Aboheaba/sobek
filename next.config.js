@@ -9,7 +9,8 @@
 // 
 // HOW IT WORKS:
 // - Development (npm run dev): No basePath - works on localhost
-// - Local build (npm run build): No basePath - for testing locally
+// - Local build (npm run build): No basePath - for cPanel/GoDaddy root domain
+// - cPanel build (npm run build:cpanel): Explicitly no basePath - for sobek-egy.com
 // - GitHub Pages build: Uses basePath from GITHUB_REPOSITORY_NAME env var
 const repoName = process.env.GITHUB_REPOSITORY_NAME || '/sobek_v2';
 

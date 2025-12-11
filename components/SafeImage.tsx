@@ -36,13 +36,16 @@ const SafeImage = ({
     // Detect basePath from current URL or use default for GitHub Pages
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
-      // Check if we're on GitHub Pages (pathname starts with /sobek)
-      if (pathname.startsWith('/sobek')) {
-        setBasePath('/sobek');
-      } else if (process.env.NODE_ENV === 'production') {
-        // In production, assume GitHub Pages basePath
-        setBasePath('/sobek');
+      const hostname = window.location.hostname;
+      
+      // Check if we're on GitHub Pages (pathname starts with /sobek or /sobek_v2)
+      if (pathname.startsWith('/sobek') || pathname.startsWith('/sobek_v2')) {
+        setBasePath(pathname.split('/')[1] ? `/${pathname.split('/')[1]}` : '');
+      } else if (hostname.includes('github.io')) {
+        // GitHub Pages domain - use basePath
+        setBasePath('/sobek_v2');
       } else {
+        // cPanel/GoDaddy root domain - no basePath
         setBasePath('');
       }
     }
