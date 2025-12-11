@@ -31,12 +31,21 @@ const SafeImage = ({
   const [imgSrc, setImgSrc] = useState<string>(src);
   const [hasError, setHasError] = useState<boolean>(false);
   const [basePath, setBasePath] = useState<string>('');
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setIsMounted(true);
     // Detect basePath from current URL or use default for GitHub Pages
+    // Only run on client-side after mount to avoid hydration issues
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       const hostname = window.location.hostname;
+      
+      // In development (localhost), always use empty basePath
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        setBasePath('');
+        return;
+      }
       
       // Check if we're on GitHub Pages (pathname starts with /sobek or /sobek_v2)
       if (pathname.startsWith('/sobek') || pathname.startsWith('/sobek_v2')) {
@@ -96,11 +105,14 @@ const SafeImage = ({
 
   // Ensure src has correct basePath for GitHub Pages
   // For static export, Next.js Image doesn't automatically prepend basePath, so we do it manually
+  // Only apply basePath after component has mounted to avoid hydration mismatch
   let finalSrc = imgSrc;
   
-  if (!imgSrc.startsWith('http') && !imgSrc.startsWith('data:') && !imgSrc.startsWith('//')) {
-    // Apply basePath if detected and not already present
-    if (basePath && !imgSrc.startsWith(basePath)) {
+  // During SSR and initial render, use the original src to match server/client
+  // Only apply basePath after mount to prevent hydration errors
+  if (isMounted && basePath && !imgSrc.startsWith('http') && !imgSrc.startsWith('data:') && !imgSrc.startsWith('//')) {
+    // Apply basePath if detected and not already present (only after mount)
+    if (!imgSrc.startsWith(basePath)) {
       finalSrc = `${basePath}${imgSrc.startsWith('/') ? imgSrc : `/${imgSrc}`}`;
     }
   }

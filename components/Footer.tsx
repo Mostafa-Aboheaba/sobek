@@ -27,14 +27,22 @@ const Footer = () => {
               className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-full h-auto"
               style={{ borderRadius: '12px' }}
             />
-            <SafeImage
-              src="/logo/right-white.png"
-              alt="Right Line Logo"
-              width={202}
-              height={92}
-              className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-full h-auto"
-              style={{ borderRadius: '12px' }}
-            />
+            <a 
+              href="https://vr-tamozhnya.ru/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 hover:scale-105 cursor-pointer"
+              aria-label="Visit Right Line website"
+            >
+              <SafeImage
+                src="/logo/right-white.png"
+                alt="Right Line Logo"
+                width={202}
+                height={92}
+                className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-full h-auto"
+                style={{ borderRadius: '12px' }}
+              />
+            </a>
           </div>
 
           {/* Text Sections Group */}

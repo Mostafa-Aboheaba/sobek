@@ -28,9 +28,9 @@ const Header = () => {
     <header className="bg-white text-neutral-dark px-4 sm:px-6 py-4 sticky top-0 z-50 shadow-sm animate-fade-in">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Left Side - Logos */}
-        <Link href="/" className="flex items-center gap-1 sm:gap-2 md:gap-6 flex-shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2 md:gap-6 flex-shrink-0">
           {/* Sobek Logo */}
-          <div className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
+          <Link href="/" className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
             <SafeImage
               src="/logo/sobek.png"
               alt="Sobek Logo"
@@ -39,10 +39,16 @@ const Header = () => {
               className="h-full w-auto object-contain"
               priority
             />
-          </div>
+          </Link>
           
           {/* Right Line Logo */}
-          <div className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105">
+          <a 
+            href="https://vr-tamozhnya.ru/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105 cursor-pointer"
+            aria-label="Visit Right Line website"
+          >
             <SafeImage
               src="/logo/right.png"
               alt="Right Line Logo"
@@ -51,8 +57,8 @@ const Header = () => {
               className="h-full w-auto object-contain"
               priority
             />
-          </div>
-        </Link>
+          </a>
+        </div>
 
         {/* Center - Navigation (Desktop) */}
         <nav className="hidden md:flex items-center gap-6 mx-auto">
@@ -92,9 +98,10 @@ const Header = () => {
 
         {/* Right Side - Language & CTA */}
         <div className="flex items-center gap-1.5 sm:gap-3 md:gap-6 flex-shrink-0">
-          <Link href="#" className="text-sm text-neutral-dark hover:text-accent transition-all duration-300 font-medium hidden sm:block hover:scale-105">
+          {/* RUS button hidden - future feature */}
+          {/* <Link href="#" className="text-sm text-neutral-dark hover:text-accent transition-all duration-300 font-medium hidden sm:block hover:scale-105">
             RUS
-          </Link>
+          </Link> */}
           {pathname === "/" ? (
             <a 
               href="#contact-form"
