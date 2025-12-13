@@ -23,8 +23,15 @@ const FindYourCargo = () => {
     setTrackingResult(null);
 
     try {
+      const params = new URLSearchParams({
+        bookingNumber: bookingNumber,
+      });
+      if (contactInfo) {
+        params.append('contactInfo', contactInfo);
+      }
+      
       const response = await fetch(
-        `/api/shipment-reservations?bookingNumber=${encodeURIComponent(bookingNumber)}`
+        `/api/shipment-reservations?${params.toString()}`
       );
 
       const data = await response.json();
