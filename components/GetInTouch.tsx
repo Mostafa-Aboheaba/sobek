@@ -499,7 +499,7 @@ const GetInTouch = () => {
                 <div className="min-w-0 flex-shrink-0">
                   <h3 className="text-white font-semibold mb-2">Get in Touch</h3>
                   <p className="text-white/80">Phone: +201016078688</p>
-                  <p className="text-white/80">cs@sobekegy.com</p>
+                  <p className="text-white/80">info@sobekegy.com</p>
                 </div>
 
                 {/* Social Media Icons - Row on small & medium screens, column on large */}

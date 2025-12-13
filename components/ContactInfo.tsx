@@ -68,10 +68,10 @@ const ContactInfo = () => {
           <div>
             <p className="text-neutral-dark font-medium mb-1">Chat with us</p>
             <a 
-              href="mailto:cs@sobekegy.com" 
+              href="mailto:info@sobekegy.com" 
               className="text-primary hover:text-primary-dark transition-colors"
             >
-              cs@sobekegy.com
+              info@sobekegy.com
             </a>
           </div>
         </div>

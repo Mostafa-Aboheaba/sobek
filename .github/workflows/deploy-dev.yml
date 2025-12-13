@@ -1,0 +1,79 @@
+name: Deploy Dev to GitHub Pages
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-dev"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      
+      - name: Build with Next.js
+        env:
+          NODE_ENV: production
+          # Set basePath for GitHub Pages (format: /repo-name)
+          GITHUB_REPOSITORY_NAME: /${{ github.event.repository.name }}
+        run: |
+          echo "🔧 Build Configuration (Dev Branch):"
+          echo "  Repository name: ${{ github.event.repository.name }}"
+          echo "  GITHUB_REPOSITORY_NAME: ${GITHUB_REPOSITORY_NAME}"
+          echo "  NODE_ENV: ${NODE_ENV}"
+          # Temporarily move API routes to exclude from static build
+          if [ -d "app/api" ]; then
+            mv app/api app/_api_backup
+          fi
+          npm run build
+          # Restore API routes
+          if [ -d "app/_api_backup" ]; then
+            mv app/_api_backup app/api
+          fi
+          echo "✅ Build completed"
+          if [ -d "out" ]; then
+            echo "  Checking out directory structure..."
+            ls -la out/ | head -10
+          fi
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          enablement: true
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    environment:
+      name: github-pages-dev
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

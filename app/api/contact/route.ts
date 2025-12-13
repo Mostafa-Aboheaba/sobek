@@ -165,43 +165,73 @@ export async function POST(request: NextRequest) {
         
         let customerResult;
         try {
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
+          const logoUrl = `${siteUrl}/logo/sobek.png`;
+          
           customerResult = await resend.emails.send({
             from: fromEmail,
             to: email,
             subject: `Thank You for Contacting Sobek Shipping Agency`,
             html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <div style="text-align: center; margin-bottom: 30px;">
-                  <h1 style="color: #2A478B; margin: 0;">Thank You, ${escapeHtml(name)}!</h1>
+              <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
+                <!-- Header with Logo -->
+                <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
+                  <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                 </div>
                 
-                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                  <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                    We have received your message and appreciate you reaching out to Sobek Shipping Agency.
-                  </p>
+                <!-- Main Content -->
+                <div style="padding: 40px 30px;">
+                  <div style="text-align: center; margin-bottom: 35px;">
+                    <h1 style="color: #2A478B; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">Thank You, ${escapeHtml(name)}!</h1>
+                    <p style="color: #666; margin: 0; font-size: 16px;">We appreciate your interest in Sobek Shipping Agency</p>
+                  </div>
                   
-                  <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                    Our team will review your inquiry and get back to you very soon. We typically respond within 24 hours.
-                  </p>
+                  <div style="background-color: #f8f9fa; padding: 25px; border-radius: 8px; margin: 25px 0; border: 1px solid #e9ecef;">
+                    <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0 0 15px 0;">
+                      Dear ${escapeHtml(name)},
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0 0 15px 0;">
+                      We have received your message and would like to express our sincere gratitude for reaching out to Sobek Shipping Agency. Your inquiry is important to us, and we are committed to providing you with exceptional service.
+                    </p>
+                    
+                    <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0;">
+                      Our dedicated team of shipping specialists will carefully review your inquiry and respond to you promptly. We typically respond within 24 hours during business days.
+                    </p>
+                    
+                    ${safeHelpOption ? `
+                      <div style="margin: 25px 0 0 0; padding: 20px; background-color: #e8f4f8; border-left: 4px solid #2A478B; border-radius: 4px;">
+                        <p style="margin: 0 0 8px 0; font-weight: 600; color: #2A478B; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Your Inquiry</p>
+                        <p style="margin: 0; color: #333; font-size: 16px; font-weight: 500;">${safeHelpOption}</p>
+                      </div>
+                    ` : ""}
+                  </div>
                   
-                  ${safeHelpOption ? `
-                    <div style="margin: 20px 0; padding: 15px; background-color: #e8f4f8; border-left: 4px solid #2A478B; border-radius: 4px;">
-                      <p style="margin: 0; font-weight: bold; color: #2A478B;">Your Inquiry:</p>
-                      <p style="margin: 5px 0 0 0; color: #333;">${safeHelpOption}</p>
+                  <!-- Contact Information -->
+                  <div style="border-top: 2px solid #e9ecef; padding-top: 25px; margin-top: 35px;">
+                    <p style="margin: 0 0 12px 0; color: #333; font-size: 15px; font-weight: 600;">Best regards,</p>
+                    <p style="margin: 0 0 20px 0; color: #2A478B; font-size: 16px; font-weight: 600;">Sobek Shipping Agency Team</p>
+                    
+                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                      <p style="margin: 8px 0; color: #555; font-size: 14px;">
+                        <strong style="color: #333;">Phone:</strong> 
+                        <a href="tel:+201016078688" style="color: #2A478B; text-decoration: none;">+20 10 1607 8688</a>
+                      </p>
+                      <p style="margin: 8px 0; color: #555; font-size: 14px;">
+                        <strong style="color: #333;">Email:</strong> 
+                        <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                      </p>
                     </div>
-                  ` : ""}
+                  </div>
                 </div>
                 
-                <div style="border-top: 1px solid #ddd; padding-top: 20px; margin-top: 30px;">
-                  <p style="margin: 5px 0; color: #666; font-size: 14px;"><strong>Best regards,</strong></p>
-                  <p style="margin: 5px 0; color: #666; font-size: 14px;">Sobek Shipping Agency Team</p>
-                  <p style="margin: 5px 0; color: #666; font-size: 14px;">Phone: +201016078688</p>
-                  <p style="margin: 5px 0; color: #666; font-size: 14px;">Email: cs@sobekegy.com</p>
+                <!-- Footer -->
+                <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
+                  <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
+                    This is an automated confirmation email. Please do not reply to this message.<br/>
+                    For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                  </p>
                 </div>
-                
-                <p style="color: #999; font-size: 12px; margin-top: 30px; text-align: center;">
-                  This is an automated confirmation email. Please do not reply to this message.
-                </p>
               </div>
             `,
           });
@@ -217,43 +247,73 @@ export async function POST(request: NextRequest) {
             console.warn(`Domain ${fromEmail} not verified. Falling back to onboarding@resend.dev`);
             fromEmail = "onboarding@resend.dev";
             
+            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
+            const logoUrl = `${siteUrl}/logo/sobek.png`;
+            
             customerResult = await resend.emails.send({
               from: fromEmail,
               to: email,
               subject: `Thank You for Contacting Sobek Shipping Agency`,
               html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                  <div style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="color: #2A478B; margin: 0;">Thank You, ${escapeHtml(name)}!</h1>
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
+                  <!-- Header with Logo -->
+                  <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
+                    <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                   </div>
                   
-                  <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                      We have received your message and appreciate you reaching out to Sobek Shipping Agency.
-                    </p>
+                  <!-- Main Content -->
+                  <div style="padding: 40px 30px;">
+                    <div style="text-align: center; margin-bottom: 35px;">
+                      <h1 style="color: #2A478B; margin: 0 0 10px 0; font-size: 28px; font-weight: 600;">Thank You, ${escapeHtml(name)}!</h1>
+                      <p style="color: #666; margin: 0; font-size: 16px;">We appreciate your interest in Sobek Shipping Agency</p>
+                    </div>
                     
-                    <p style="font-size: 16px; line-height: 1.6; color: #333;">
-                      Our team will review your inquiry and get back to you very soon. We typically respond within 24 hours.
-                    </p>
+                    <div style="background-color: #f8f9fa; padding: 25px; border-radius: 8px; margin: 25px 0; border: 1px solid #e9ecef;">
+                      <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0 0 15px 0;">
+                        Dear ${escapeHtml(name)},
+                      </p>
+                      
+                      <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0 0 15px 0;">
+                        We have received your message and would like to express our sincere gratitude for reaching out to Sobek Shipping Agency. Your inquiry is important to us, and we are committed to providing you with exceptional service.
+                      </p>
+                      
+                      <p style="font-size: 16px; line-height: 1.8; color: #333; margin: 0;">
+                        Our dedicated team of shipping specialists will carefully review your inquiry and respond to you promptly. We typically respond within 24 hours during business days.
+                      </p>
+                      
+                      ${safeHelpOption ? `
+                        <div style="margin: 25px 0 0 0; padding: 20px; background-color: #e8f4f8; border-left: 4px solid #2A478B; border-radius: 4px;">
+                          <p style="margin: 0 0 8px 0; font-weight: 600; color: #2A478B; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Your Inquiry</p>
+                          <p style="margin: 0; color: #333; font-size: 16px; font-weight: 500;">${safeHelpOption}</p>
+                        </div>
+                      ` : ""}
+                    </div>
                     
-                    ${safeHelpOption ? `
-                      <div style="margin: 20px 0; padding: 15px; background-color: #e8f4f8; border-left: 4px solid #2A478B; border-radius: 4px;">
-                        <p style="margin: 0; font-weight: bold; color: #2A478B;">Your Inquiry:</p>
-                        <p style="margin: 5px 0 0 0; color: #333;">${safeHelpOption}</p>
+                    <!-- Contact Information -->
+                    <div style="border-top: 2px solid #e9ecef; padding-top: 25px; margin-top: 35px;">
+                      <p style="margin: 0 0 12px 0; color: #333; font-size: 15px; font-weight: 600;">Best regards,</p>
+                      <p style="margin: 0 0 20px 0; color: #2A478B; font-size: 16px; font-weight: 600;">Sobek Shipping Agency Team</p>
+                      
+                      <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                        <p style="margin: 8px 0; color: #555; font-size: 14px;">
+                          <strong style="color: #333;">Phone:</strong> 
+                          <a href="tel:+201016078688" style="color: #2A478B; text-decoration: none;">+20 10 1607 8688</a>
+                        </p>
+                        <p style="margin: 8px 0; color: #555; font-size: 14px;">
+                          <strong style="color: #333;">Email:</strong> 
+                          <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                        </p>
                       </div>
-                    ` : ""}
+                    </div>
                   </div>
                   
-                  <div style="border-top: 1px solid #ddd; padding-top: 20px; margin-top: 30px;">
-                    <p style="margin: 5px 0; color: #666; font-size: 14px;"><strong>Best regards,</strong></p>
-                    <p style="margin: 5px 0; color: #666; font-size: 14px;">Sobek Shipping Agency Team</p>
-                    <p style="margin: 5px 0; color: #666; font-size: 14px;">Phone: +201016078688</p>
-                    <p style="margin: 5px 0; color: #666; font-size: 14px;">Email: cs@sobekegy.com</p>
+                  <!-- Footer -->
+                  <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
+                    <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
+                      This is an automated confirmation email. Please do not reply to this message.<br/>
+                      For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                    </p>
                   </div>
-                  
-                  <p style="color: #999; font-size: 12px; margin-top: 30px; text-align: center;">
-                    This is an automated confirmation email. Please do not reply to this message.
-                  </p>
                 </div>
               `,
             });

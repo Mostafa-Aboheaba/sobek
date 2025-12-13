@@ -161,4 +161,4 @@ Private - Sobek Shipping Agency
 
 ## Contact
 
-For questions or support, contact: cs@sobekegy.com
+For questions or support, contact: info@sobekegy.com
