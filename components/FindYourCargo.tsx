@@ -23,8 +23,15 @@ const FindYourCargo = () => {
     setTrackingResult(null);
 
     try {
+      const params = new URLSearchParams({
+        bookingNumber: bookingNumber,
+      });
+      if (contactInfo) {
+        params.append('contactInfo', contactInfo);
+      }
+      
       const response = await fetch(
-        `/api/shipment-reservations?bookingNumber=${encodeURIComponent(bookingNumber)}`
+        `/api/shipment-reservations?${params.toString()}`
       );
 
       const data = await response.json();
@@ -33,18 +40,12 @@ const FindYourCargo = () => {
         throw new Error(data.error || "Failed to track shipment");
       }
 
-      if (data) {
-        setTrackingResult({
-          found: true,
-          data,
-          message: `Status: ${data.status.toUpperCase()}`,
-        });
-      } else {
-        setTrackingResult({
-          found: false,
-          message: "No reservation found with this booking number.",
-        });
-      }
+      // Success - emails have been sent
+      setTrackingResult({
+        found: true,
+        data,
+        message: data.message || "Tracking request received! We'll send you an update shortly.",
+      });
     } catch (error: any) {
       setTrackingResult({
         found: false,
@@ -115,13 +116,9 @@ const FindYourCargo = () => {
                       : "bg-yellow-100 text-yellow-800"
                   }`}
                 >
-                  {trackingResult.message}
-                  {trackingResult.found && trackingResult.data && (
-                    <div className="mt-2 text-sm">
-                      <p>Origin: {trackingResult.data.origin}</p>
-                      <p>Destination: {trackingResult.data.destination}</p>
-                      <p>Cargo Type: {trackingResult.data.cargoType}</p>
-                    </div>
+                  <p className="font-semibold">{trackingResult.message}</p>
+                  {trackingResult.found && trackingResult.data?.note && (
+                    <p className="mt-2 text-sm opacity-90">{trackingResult.data.note}</p>
                   )}
                 </div>
               )}
