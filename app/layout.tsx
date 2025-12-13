@@ -19,6 +19,17 @@ const manjari = Manjari({
 export const metadata: Metadata = {
   title: "Sobek Shipping Agency - Exclusive Agent of Right Line",
   description: "Fast, reliable sea freight solutions. Sobek Shipping Agency is the exclusive agent of Right Line - Russian Shipping Line, providing global maritime and logistics services.",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({

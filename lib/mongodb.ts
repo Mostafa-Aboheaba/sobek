@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // Don't throw error during build time (static export)
+// MongoDB is optional - form works without it
 if (!MONGODB_URI && typeof window === 'undefined' && process.env.NODE_ENV !== 'production') {
-  console.warn("MONGODB_URI environment variable is not defined. API routes will not work.");
+  // Silent - MongoDB is optional for contact form
 }
 
 interface MongooseCache {

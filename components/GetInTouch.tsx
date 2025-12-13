@@ -89,21 +89,152 @@ const GetInTouch = () => {
     setSubmitStatus({ type: null, message: "" });
 
     try {
-      const response = await fetch("/api/contact", {
+      // Try API first (works in development)
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/contact";
+      let response: Response;
+      let data: any;
+
+      try {
+        // Try API route first
+        response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            helpOption: formData.helpOptions?.join(', ') || '',
+          }),
+        });
+
+        data = await response.json();
+
+        if (response.ok) {
+          // API worked!
+          setSubmitStatus({
+            type: "success",
+            message: "Thank you! We'll contact you soon.",
+          });
+
+          // Reset form
+          setFormData({
+            name: "",
+            phone: "",
+            address: "",
+            email: "",
+            message: "",
+            helpOptions: ["Cargo Booking"],
+          });
+          setIsSubmitting(false);
+          return;
+        }
+      } catch (apiError) {
+        // API failed, try FormSubmit
+        console.log("API not available, using FormSubmit...");
+      }
+
+      // Fallback: Use Web3Forms (more reliable than FormSubmit)
+      const web3formsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_WEB3FORMS_KEY";
+      const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "info@sobek-egy.com";
+      
+      // Try Web3Forms first (more reliable)
+      if (web3formsAccessKey && web3formsAccessKey !== "YOUR_WEB3FORMS_KEY") {
+        try {
+          const web3formsData = {
+            access_key: web3formsAccessKey,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address || "",
+            message: formData.message || "",
+            helpOption: formData.helpOptions?.join(', ') || "",
+            subject: `New Contact Form Submission from ${formData.name}`,
+            from_name: formData.name,
+            to: adminEmail,
+          };
+
+          console.log("Sending form to Web3Forms...");
+          
+          response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(web3formsData),
+          });
+
+          data = await response.json();
+          console.log("Web3Forms response:", data);
+
+          if (data.success) {
+            setSubmitStatus({
+              type: "success",
+              message: "Thank you! We'll contact you soon.",
+            });
+
+            setFormData({
+              name: "",
+              phone: "",
+              address: "",
+              email: "",
+              message: "",
+              helpOptions: ["Cargo Booking"],
+            });
+            setIsSubmitting(false);
+            return;
+          }
+        } catch (web3Error) {
+          console.log("Web3Forms failed, trying FormSubmit...", web3Error);
+        }
+      }
+
+      // Fallback: Use FormSubmit
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("address", formData.address || "");
+      formDataToSend.append("message", formData.message || "");
+      formDataToSend.append("helpOption", formData.helpOptions?.join(', ') || "");
+      formDataToSend.append("_subject", `New Contact Form Submission from ${formData.name}`);
+      formDataToSend.append("_replyto", formData.email);
+      formDataToSend.append("_template", "box");
+      formDataToSend.append("_captcha", "false");
+      formDataToSend.append("_autoresponse", `Thank you ${formData.name} for contacting Sobek Shipping Agency. We'll get back to you soon!`);
+
+      console.log("Sending form to FormSubmit:", adminEmail);
+      
+      response = await fetch(`https://formsubmit.co/ajax/${adminEmail}`, {
         method: "POST",
+        body: formDataToSend,
         headers: {
-          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          helpOption: formData.helpOptions?.join(', ') || '',
-        }),
       });
 
-      const data = await response.json();
+      const responseText = await response.text();
+      console.log("FormSubmit response status:", response.status);
+      console.log("FormSubmit response:", responseText);
+      
+      try {
+        data = JSON.parse(responseText);
+      } catch (e) {
+        // FormSubmit sometimes returns HTML instead of JSON
+        if (response.ok || response.status === 200) {
+          // Success - FormSubmit accepted the form
+          data = { success: true };
+        } else {
+          throw new Error("Failed to submit form");
+        }
+      }
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to submit form");
+      // FormSubmit returns success even if email needs confirmation
+      // So we show success message
+      if (response.ok || response.status === 200 || data.success) {
+        console.log("Form submitted successfully");
+      } else {
+        throw new Error(data.message || "Failed to submit form");
       }
 
       setSubmitStatus({
@@ -121,6 +252,7 @@ const GetInTouch = () => {
         helpOptions: ["Cargo Booking"],
       });
     } catch (error: any) {
+      console.error("Form submission error:", error);
       setSubmitStatus({
         type: "error",
         message: error.message || "Failed to submit form. Please try again.",
