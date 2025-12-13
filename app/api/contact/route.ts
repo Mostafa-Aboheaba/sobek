@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import ContactSubmission from "@/models/ContactSubmission";
 import { Resend } from "resend";
+import { SOBEK_LOGO_BASE64 } from "@/lib/emailLogo";
 
 // Lazy initialization to avoid build errors when API key is missing
 const getResend = () => {
@@ -165,9 +166,6 @@ export async function POST(request: NextRequest) {
         
         let customerResult;
         try {
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
-          const logoUrl = `${siteUrl}/logo/sobek.png`;
-          
           customerResult = await resend.emails.send({
             from: fromEmail,
             to: email,
@@ -176,7 +174,7 @@ export async function POST(request: NextRequest) {
               <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
                 <!-- Header with Logo -->
                 <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                  <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
+                  <img src="data:image/png;base64,${SOBEK_LOGO_BASE64}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                 </div>
                 
                 <!-- Main Content -->
@@ -247,9 +245,6 @@ export async function POST(request: NextRequest) {
             console.warn(`Domain ${fromEmail} not verified. Falling back to onboarding@resend.dev`);
             fromEmail = "onboarding@resend.dev";
             
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
-            const logoUrl = `${siteUrl}/logo/sobek.png`;
-            
             customerResult = await resend.emails.send({
               from: fromEmail,
               to: email,
@@ -258,7 +253,7 @@ export async function POST(request: NextRequest) {
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
                   <!-- Header with Logo -->
                   <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                    <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
+                    <img src="data:image/png;base64,${SOBEK_LOGO_BASE64}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px;" />
                   </div>
                   
                   <!-- Main Content -->
