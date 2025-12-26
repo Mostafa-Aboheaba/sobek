@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     if (process.env.ADMIN_EMAIL && resend) {
       try {
         await resend.emails.send({
-          from: "noreply@sobekegy.com",
+          from: "noreply@sobek-egy.com",
           to: process.env.ADMIN_EMAIL,
           subject: `New Shipment Reservation - ${bookingNumber}`,
           html: `
@@ -150,10 +150,12 @@ export async function GET(request: NextRequest) {
     };
 
     const getFromEmail = () => {
+      // Always use noreply@sobek-egy.com (fix any typos in env vars)
       const customEmail = process.env.RESEND_FROM_EMAIL;
-      if (customEmail) {
+      if (customEmail && customEmail.includes('noreply') && !customEmail.includes('noreoly')) {
         return customEmail;
       }
+      // Default to correct email address
       return "noreply@sobek-egy.com";
     };
 
@@ -161,6 +163,7 @@ export async function GET(request: NextRequest) {
     if (resend && customerEmail) {
       try {
         let fromEmail = getFromEmail();
+        console.log(`Sending customer email from: ${fromEmail}`);
         
         try {
           await resend.emails.send({
