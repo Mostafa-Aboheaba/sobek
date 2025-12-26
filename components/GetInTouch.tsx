@@ -485,21 +485,24 @@ const GetInTouch = () => {
                 <div className="min-w-0 flex-shrink-0">
                   <h3 className="text-white font-semibold mb-2">Locations</h3>
                   <p className="text-white/80">
-                    36 Banni Abbas street, Al Azarita
-                  </p>
-                  <p className="text-white/80">
-                    Bab sharq, Apartment 1,
-                  </p>
-                  <p className="text-white/80">
-                    Alexandria, Egypt
-                  </p>
+              36 Bani Al-Abbas Street
+              </p>
+              <p className="text-white/80">
+                Bab sharq, Apartment 1,Apartment 1, Ground Floor
+              </p>
+              <p className="text-white/80">
+              Al-Azareeta, Bab Sharq District
+              </p>
+              <p className="text-white/80">
+                Alexandria, Egypt
+              </p>
                 </div>
 
                 {/* Contact */}
                 <div className="min-w-0 flex-shrink-0">
                   <h3 className="text-white font-semibold mb-2">Get in Touch</h3>
-                  <p className="text-white/80">Phone: +201016078688</p>
-                  <p className="text-white/80">info@sobekegy.com</p>
+                  <p className="text-white/80">Phone: +20 101 607 8688</p>
+                  <p className="text-white/80">info@sobek-egy.com</p>
                 </div>
 
                 {/* Social Media Icons - Row on small & medium screens, column on large */}

@@ -154,7 +154,7 @@ export async function GET(request: NextRequest) {
       if (customEmail) {
         return customEmail;
       }
-      return "onboarding@resend.dev";
+      return "noreply@sobek-egy.com";
     };
 
     // Email 1: Send confirmation to customer (only if email provided)
@@ -217,7 +217,7 @@ export async function GET(request: NextRequest) {
                       </p>
                       <p style="margin: 8px 0; color: #555; font-size: 14px;">
                         <strong style="color: #333;">Email:</strong> 
-                        <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                        <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                       </p>
                     </div>
                   </div>
@@ -227,7 +227,7 @@ export async function GET(request: NextRequest) {
                 <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                   <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
                     This is an automated confirmation email. Please do not reply to this message.<br/>
-                    For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                    For inquiries, please contact us at <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                   </p>
                 </div>
               </div>
@@ -235,8 +235,8 @@ export async function GET(request: NextRequest) {
           });
         } catch (domainError: any) {
           if (domainError.message?.includes('not verified') || domainError.error?.message?.includes('not verified')) {
-            console.warn(`Domain ${fromEmail} not verified. Falling back to onboarding@resend.dev`);
-            fromEmail = "onboarding@resend.dev";
+            console.warn(`Domain ${fromEmail} not verified. Falling back to noreply@sobek-egy.com`);
+            fromEmail = "noreply@sobek-egy.com";
             
             await resend.emails.send({
               from: fromEmail,
@@ -292,7 +292,7 @@ export async function GET(request: NextRequest) {
                         </p>
                         <p style="margin: 8px 0; color: #555; font-size: 14px;">
                           <strong style="color: #333;">Email:</strong> 
-                          <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                          <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                         </p>
                       </div>
                     </div>
@@ -302,7 +302,7 @@ export async function GET(request: NextRequest) {
                   <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                     <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
                       This is an automated confirmation email. Please do not reply to this message.<br/>
-                      For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                      For inquiries, please contact us at <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                     </p>
                   </div>
                 </div>

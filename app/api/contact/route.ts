@@ -220,7 +220,7 @@ export async function POST(request: NextRequest) {
                       </p>
                       <p style="margin: 8px 0; color: #555; font-size: 14px;">
                         <strong style="color: #333;">Email:</strong> 
-                        <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                        <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                       </p>
                     </div>
                   </div>
@@ -230,7 +230,7 @@ export async function POST(request: NextRequest) {
                 <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                   <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
                     This is an automated confirmation email. Please do not reply to this message.<br/>
-                    For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                    For inquiries, please contact us at <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                   </p>
                 </div>
               </div>
@@ -303,7 +303,7 @@ export async function POST(request: NextRequest) {
                         </p>
                         <p style="margin: 8px 0; color: #555; font-size: 14px;">
                           <strong style="color: #333;">Email:</strong> 
-                          <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                          <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                         </p>
                       </div>
                     </div>
@@ -313,7 +313,7 @@ export async function POST(request: NextRequest) {
                   <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
                     <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">
                       This is an automated confirmation email. Please do not reply to this message.<br/>
-                      For inquiries, please contact us at <a href="mailto:info@sobekegy.com" style="color: #2A478B; text-decoration: none;">info@sobekegy.com</a>
+                      For inquiries, please contact us at <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a>
                     </p>
                   </div>
                 </div>
