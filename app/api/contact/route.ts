@@ -72,7 +72,9 @@ export async function POST(request: NextRequest) {
     const getFromEmail = () => {
       const customEmail = process.env.RESEND_FROM_EMAIL;
       if (customEmail) {
-        return customEmail;
+        // Fix common typos: noreloy -> noreply, noreoly -> noreply
+        const fixedEmail = customEmail.replace(/noreloy|noreoly/gi, 'noreply');
+        return fixedEmail;
       }
       return "onboarding@resend.dev";
     };

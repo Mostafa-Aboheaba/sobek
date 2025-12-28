@@ -152,8 +152,12 @@ export async function GET(request: NextRequest) {
     const getFromEmail = () => {
       // Always use noreply@sobek-egy.com (fix any typos in env vars)
       const customEmail = process.env.RESEND_FROM_EMAIL;
-      if (customEmail && customEmail.includes('noreply') && !customEmail.includes('noreoly')) {
-        return customEmail;
+      if (customEmail) {
+        // Fix common typos: noreloy -> noreply, noreoly -> noreply
+        const fixedEmail = customEmail.replace(/noreloy|noreoly/gi, 'noreply');
+        if (fixedEmail.includes('noreply')) {
+          return fixedEmail;
+        }
       }
       // Default to correct email address
       return "noreply@sobek-egy.com";
