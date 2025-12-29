@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 interface TestimonialCardProps {
   testimonial: {
@@ -51,7 +52,9 @@ const TestimonialCard = ({ testimonial, index, uniqueKey, renderStars }: Testimo
 
 const Testimonials = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
-  const testimonials = [
+  const { getSection, getSectionWithFallback } = useCMSContent();
+
+  const defaultTestimonials = [
     {
       rating: 4.7,
       quote: "The tracking service was quick and accurate. I received an update within minutes and found exactly where my shipment was.",
@@ -107,6 +110,20 @@ const Testimonials = () => {
       title: "Operations Executive, Americana Group",
     },
   ];
+
+  // Get testimonials from CMS (JSON array)
+  const testimonialsJSON = getSection("testimonials-list");
+  let testimonials = defaultTestimonials;
+  if (testimonialsJSON) {
+    try {
+      testimonials = JSON.parse(testimonialsJSON);
+    } catch (e) {
+      console.error("Error parsing testimonials JSON:", e);
+    }
+  }
+
+  const sectionLabel = getSectionWithFallback("testimonials-label", "Testimonials");
+  const heading = getSectionWithFallback("testimonials-heading", "What Our Clients Say About Our Services");
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const cardsPerPage = 3;
@@ -210,9 +227,9 @@ const Testimonials = () => {
           className={`flex flex-col sm:flex-row items-start justify-between mb-12 gap-4 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
         >
           <div className="text-start flex-1 mb-4 sm:mb-0">
-            <p className="mb-2 section-label">Testimonials</p>
+            <p className="mb-2 section-label">{sectionLabel}</p>
             <h2 className="section-heading text-lg sm:text-xl md:text-2xl lg:text-3xl">
-              What Our Clients Say About Our Services
+              {heading}
             </h2>
           </div>
           

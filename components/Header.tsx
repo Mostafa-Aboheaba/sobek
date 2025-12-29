@@ -1,19 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 import SafeImage from "./SafeImage";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Header = () => {
   const pathname = usePathname();
+  const t = useTranslations("header.nav");
+  const tCommon = useTranslations("common");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Remove locale from pathname for active check
+  const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(\/|$)/, '/') || '/';
 
   const isActive = (path: string) => {
     if (path === "/") {
-      return pathname === "/";
+      return pathWithoutLocale === "/";
     }
-    return pathname.startsWith(path);
+    return pathWithoutLocale.startsWith(path);
   };
 
   const toggleMobileMenu = () => {
@@ -68,7 +74,7 @@ const Header = () => {
               isActive("/") ? "text-accent" : "text-neutral-dark hover:text-accent"
             }`}
           >
-            Home
+            {t("home")}
           </Link>
           <Link 
             href="/about" 
@@ -76,7 +82,7 @@ const Header = () => {
               isActive("/about") ? "text-accent" : "text-neutral-dark hover:text-accent"
             }`}
           >
-            About
+            {t("about")}
           </Link>
           <Link 
             href="/services" 
@@ -84,7 +90,7 @@ const Header = () => {
               isActive("/services") ? "text-accent" : "text-neutral-dark hover:text-accent"
             }`}
           >
-            Services
+            {t("services")}
           </Link>
           <Link 
             href="/contact" 
@@ -92,17 +98,16 @@ const Header = () => {
               isActive("/contact") ? "text-accent" : "text-neutral-dark hover:text-accent"
             }`}
           >
-            Contact
+            {t("contact")}
           </Link>
         </nav>
 
-        {/* Right Side - Language & CTA */}
+        {/* Right Side - Language Switcher & CTA */}
         <div className="flex items-center gap-1.5 sm:gap-3 md:gap-6 flex-shrink-0">
-          {/* RUS button hidden - future feature */}
-          {/* <Link href="#" className="text-sm text-neutral-dark hover:text-accent transition-all duration-300 font-medium hidden sm:block hover:scale-105">
-            RUS
-          </Link> */}
-          {pathname === "/" ? (
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+          
+          {pathWithoutLocale === "/" ? (
             <a 
               href="#contact-form"
               onClick={(e) => {
@@ -114,14 +119,14 @@ const Header = () => {
               }}
               className="bg-accent text-white px-2 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-[50px] hover:bg-accent-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg cursor-pointer whitespace-nowrap"
             >
-              Get Quote
+              {tCommon("getQuote")}
             </a>
           ) : (
             <Link 
               href="/#contact-form" 
               className="bg-accent text-white px-2 sm:px-4 md:px-6 py-1.5 sm:py-2 rounded-[50px] hover:bg-accent-dark transition-all duration-300 font-medium text-xs sm:text-sm md:text-base hover:scale-105 hover:shadow-lg whitespace-nowrap"
             >
-              Get Quote
+              {tCommon("getQuote")}
             </Link>
           )}
           
@@ -161,7 +166,7 @@ const Header = () => {
                 isActive("/") ? "text-accent" : "text-neutral-dark hover:text-accent"
               }`}
             >
-              Home
+              {t("home")}
             </Link>
             <Link 
               href="/about" 
@@ -170,7 +175,7 @@ const Header = () => {
                 isActive("/about") ? "text-accent" : "text-neutral-dark hover:text-accent"
               }`}
             >
-              About
+              {t("about")}
             </Link>
             <Link 
               href="/services" 
@@ -179,7 +184,7 @@ const Header = () => {
                 isActive("/services") ? "text-accent" : "text-neutral-dark hover:text-accent"
               }`}
             >
-              Services
+              {t("services")}
             </Link>
             <Link 
               href="/contact" 
@@ -188,8 +193,15 @@ const Header = () => {
                 isActive("/contact") ? "text-accent" : "text-neutral-dark hover:text-accent"
               }`}
             >
-              Contact
+              {t("contact")}
             </Link>
+            {/* Language Switcher in Mobile Menu */}
+            <div className="pt-4 border-t border-gray-200">
+              <div className="text-sm font-medium text-neutral-light mb-2">
+                {tCommon("language")}
+              </div>
+              <LanguageSwitcher />
+            </div>
           </div>
         </nav>
       )}
@@ -198,4 +210,3 @@ const Header = () => {
 };
 
 export default Header;
-

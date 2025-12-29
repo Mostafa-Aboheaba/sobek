@@ -3,6 +3,7 @@
 import Link from "next/link";
 import SafeImage from "./SafeImage";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 interface AboutSobekProps {
   showImage?: boolean;
@@ -11,6 +12,19 @@ interface AboutSobekProps {
 const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation<HTMLDivElement>();
   const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>();
+  const { getSectionWithFallback } = useCMSContent();
+
+  const sectionLabel = getSectionWithFallback("about-sobek-label", "About Sobek");
+  const heading = getSectionWithFallback(
+    "about-sobek-title",
+    "Sobek Shipping Agency, <span class=\"text-highlight\">The Exclusive Agent of Right Line</span> – Russian Shipping Line, Your Trusted Partner in Global Maritime Logistics."
+  );
+  const text = getSectionWithFallback(
+    "about-sobek-text",
+    "At Sobek, we offer more than just shipping services, we build bridges of trust and efficiency across global markets. We are your dependable logistics partner, connecting you to the world through precise, secure, and fast shipping lines, with a special focus on major Russian ports."
+  );
+  const buttonText = getSectionWithFallback("about-sobek-button", "Read More");
+  const imageURL = getSectionWithFallback("about-sobek-image", "/images/right-line-containers.png");
 
   return (
     <section id="about" className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
@@ -25,7 +39,7 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                 className={`relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden scroll-animate-left ${imageVisible ? 'visible' : ''}`}
               >
                 <SafeImage
-                  src="/images/right-line-containers.png"
+                  src={imageURL}
                   alt="Right Line shipping containers"
                   fill
                   className="object-fill rounded-lg"
@@ -38,18 +52,19 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                 ref={contentRef}
                 className={`scroll-animate-right ${contentVisible ? 'visible' : ''}`}
               >
-                <p className="mb-2 section-label">About Sobek</p>
-                <h2 className="mb-4 sm:mb-6 section-heading">
-                  Sobek Shipping Agency, <span className="text-highlight">The Exclusive Agent of Right Line</span> – Russian Shipping Line, Your Trusted Partner in Global Maritime Logistics.
-                </h2>
+                <p className="mb-2 section-label">{sectionLabel}</p>
+                <h2 
+                  className="mb-4 sm:mb-6 section-heading"
+                  dangerouslySetInnerHTML={{ __html: heading }}
+                />
                 <p className="text-neutral-dark mb-6 leading-relaxed">
-                  At Sobek, we offer more than just shipping services, we build bridges of trust and efficiency across global markets. We are your dependable logistics partner, connecting you to the world through precise, secure, and fast shipping lines, with a special focus on major Russian ports.
+                  {text}
                 </p>
                 <Link
                   href="/about"
                   className="inline-block bg-primary text-white px-6 py-3 rounded-[50px] hover:bg-primary-dark transition-all duration-300 hover:scale-105 hover:shadow-lg font-semibold"
                 >
-                  Read More
+                  {buttonText}
                 </Link>
               </div>
             </>
@@ -60,10 +75,11 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                 ref={contentRef}
                 className={`scroll-animate-left ${contentVisible ? 'visible' : ''}`}
               >
-                <p className="mb-2 section-label">About Sobek</p>
-                <h2 className="mb-4 sm:mb-6 section-heading">
-                  Sobek Shipping Agency, <span className="text-highlight">The Exclusive Agent of Right Line</span> – Russian Shipping Line, Your Trusted Partner in Global Maritime Logistics.
-                </h2>
+                <p className="mb-2 section-label">{sectionLabel}</p>
+                <h2 
+                  className="mb-4 sm:mb-6 section-heading"
+                  dangerouslySetInnerHTML={{ __html: heading }}
+                />
               </div>
 
               {/* Right Side - Content */}

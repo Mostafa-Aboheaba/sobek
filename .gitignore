@@ -36,3 +36,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Database
+*.db
+*.db-journal
+prisma/dev.db*
+
+# Uploads (user-generated content)
+/public/uploads

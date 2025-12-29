@@ -1,10 +1,11 @@
 "use client";
 
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 interface FeatureCardProps {
   feature: {
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
     title: string;
     description: string;
   };
@@ -20,9 +21,11 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
       className={`scroll-animate-up feature-card ${isVisible ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 0.15}s` }}
     >
-      <div className="feature-icon transition-transform duration-300 hover:scale-110">
-        {feature.icon}
-      </div>
+      {feature.icon && (
+        <div className="feature-icon transition-transform duration-300 hover:scale-110">
+          {feature.icon}
+        </div>
+      )}
       <div>
         <h3 className="text-xl font-semibold text-accent mb-3">
           {feature.title}
@@ -37,8 +40,10 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
 
 const WhyChooseSobek = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
+  const { getSection, getSectionWithFallback } = useCMSContent();
 
-  const features = [
+  // Default features with icons (icons can't be stored in CMS easily, so keep defaults)
+  const defaultFeatures = [
     {
       icon: (
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '36px', height: '36px' }}>
@@ -120,6 +125,30 @@ const WhyChooseSobek = () => {
     },
   ];
 
+  // Get features from CMS (JSON array)
+  const featuresJSON = getSection("why-choose-features");
+  let features = defaultFeatures;
+  if (featuresJSON) {
+    try {
+      const parsed = JSON.parse(featuresJSON);
+      // Merge with default icons if structure is compatible
+      if (Array.isArray(parsed)) {
+        features = parsed.map((f: any, idx: number) => ({
+          ...f,
+          icon: defaultFeatures[idx]?.icon || f.icon,
+        }));
+      }
+    } catch (e) {
+      console.error("Error parsing features JSON:", e);
+    }
+  }
+
+  const sectionLabel = getSectionWithFallback("why-choose-label", "Why Choose Sobek Shipping Agency?");
+  const heading = getSectionWithFallback(
+    "why-choose-heading",
+    "We are the only authorized agent for <span class=\"text-highlight\">Right Line</span>, ensuring clients receive <span class=\"text-highlight\">genuine,</span><br /><span class=\"text-highlight\">direct shipping</span> services with no intermediaries."
+  );
+
   return (
     <section className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -128,12 +157,12 @@ const WhyChooseSobek = () => {
           className={`text-start mb-12 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
         >
           <p className="mb-2 section-label">
-            Why Choose Sobek Shipping Agency?
+            {sectionLabel}
           </p>
-          <h2 className="mb-4 sm:mb-6 section-heading-lg">
-            We are the only authorized agent for <span className="text-highlight">Right Line</span>, ensuring clients receive <span className="text-highlight">genuine,</span><br />
-            <span className="text-highlight">direct shipping</span> services with no intermediaries.
-          </h2>
+          <h2 
+            className="mb-4 sm:mb-6 section-heading-lg"
+            dangerouslySetInnerHTML={{ __html: heading }}
+          />
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">

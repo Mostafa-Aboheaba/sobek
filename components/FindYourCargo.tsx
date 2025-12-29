@@ -3,12 +3,26 @@
 import { useState } from "react";
 import SafeImage from "./SafeImage";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 const FindYourCargo = () => {
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation<HTMLDivElement>();
   const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>();
+  const { getSectionWithFallback } = useCMSContent();
   const [bookingNumber, setBookingNumber] = useState("");
   const [contactInfo, setContactInfo] = useState("");
+
+  const sectionLabel = getSectionWithFallback("tracking-label", "Find Your Cargo");
+  const heading = getSectionWithFallback(
+    "tracking-heading",
+    "Drop your <span class=\"text-highlight\">Booking number</span> and <span class=\"text-highlight\">contact method</span>. We'll track it and send you the latest update."
+  );
+  const bookingLabel = getSectionWithFallback("tracking-booking-label", "Enter your Booking number or Bill of lading number");
+  const contactLabel = getSectionWithFallback("tracking-contact-label", "Enter your Phone number or Email");
+  const bookingPlaceholder = getSectionWithFallback("tracking-booking-placeholder", "ex: RDEDK/ALYNVS1125001234");
+  const contactPlaceholder = getSectionWithFallback("tracking-contact-placeholder", "+201233445566 / user@mail.com");
+  const buttonText = getSectionWithFallback("tracking-button", "Track");
+  const imageURL = getSectionWithFallback("tracking-image", "/images/tracking-container-truck.png");
 
   const [isTracking, setIsTracking] = useState(false);
   const [trackingResult, setTrackingResult] = useState<{
@@ -65,29 +79,30 @@ const FindYourCargo = () => {
             ref={formRef}
             className={`scroll-animate-left ${formVisible ? 'visible' : ''}`}
           >
-            <p className="mb-2 section-label">Find Your Cargo</p>
-            <h2 className="mb-6 section-heading-lg">
-              Drop your <span className="text-highlight">Booking number</span> and <span className="text-highlight">contact method</span>. We&apos;ll track it and send you the latest update.
-            </h2>
+            <p className="mb-2 section-label">{sectionLabel}</p>
+            <h2 
+              className="mb-6 section-heading-lg"
+              dangerouslySetInnerHTML={{ __html: heading }}
+            />
             
             <form onSubmit={handleSubmit} className="mt-8" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div>
                 <label htmlFor="booking" className="tracking-label">
-                  Enter your Booking number or Bill of lading number
+                  {bookingLabel}
                 </label>
                 <input
                   type="text"
                   id="booking"
                   value={bookingNumber}
                   onChange={(e) => setBookingNumber(e.target.value)}
-                  placeholder="ex: RDEDK/ALYNVS1125001234"
+                  placeholder={bookingPlaceholder}
                   className="tracking-input"
                 />
               </div>
               
               <div>
                 <label htmlFor="contact" className="tracking-label">
-                  Enter your Phone number or Email
+                  {contactLabel}
                 </label>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <input
@@ -95,7 +110,7 @@ const FindYourCargo = () => {
                     id="contact"
                     value={contactInfo}
                     onChange={(e) => setContactInfo(e.target.value)}
-                    placeholder="+201233445566 / user@mail.com"
+                    placeholder={contactPlaceholder}
                     className="tracking-input flex-1"
                   />
                   <button
@@ -103,7 +118,7 @@ const FindYourCargo = () => {
                     disabled={isTracking}
                     className="tracking-button w-full sm:w-auto transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isTracking ? "Tracking..." : "Track"}
+                    {isTracking ? "Tracking..." : buttonText}
                   </button>
                 </div>
               </div>
@@ -135,7 +150,7 @@ const FindYourCargo = () => {
             }}
           >
             <SafeImage
-              src="/images/tracking-container-truck.png"
+              src={imageURL}
               alt="Shipping container on truck"
               width={600}
               height={400}
