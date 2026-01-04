@@ -87,6 +87,14 @@ const Header = () => {
             Services
           </Link>
           <Link 
+            href="/schedule" 
+            className={`transition-all duration-300 font-medium hover:scale-105 ${
+              isActive("/schedule") ? "text-accent" : "text-neutral-dark hover:text-accent"
+            }`}
+          >
+            Ship Schedule
+          </Link>
+          <Link 
             href="/contact" 
             className={`transition-all duration-300 font-medium hover:scale-105 ${
               isActive("/contact") ? "text-accent" : "text-neutral-dark hover:text-accent"
@@ -180,6 +188,15 @@ const Header = () => {
               }`}
             >
               Services
+            </Link>
+            <Link 
+              href="/schedule" 
+              onClick={closeMobileMenu}
+              className={`transition-all duration-300 font-medium py-2 ${
+                isActive("/schedule") ? "text-accent" : "text-neutral-dark hover:text-accent"
+              }`}
+            >
+              Ship Schedule
             </Link>
             <Link 
               href="/contact" 

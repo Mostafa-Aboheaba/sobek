@@ -19,22 +19,6 @@ const ShipSchedule = () => {
 
   const schedules: ScheduleColumn[] = [
     {
-      title: "S. Kuznetsov in Novorossiysk",
-      items: [
-        { voyage: "13", date: "22. 12. 2025", day: "Monday" },
-        { voyage: "14", date: "08. 01. 2026", day: "Thursday" },
-        { voyage: "15", date: "26. 01. 2026", day: "Monday" },
-      ],
-    },
-    {
-      title: "Barents in Novorossiysk",
-      items: [
-        { voyage: "02", date: "13. 01. 2026", day: "Tuesday" },
-        { voyage: "03", date: "31. 01. 2026", day: "Saturday" },
-        { voyage: "04", date: "18. 02. 2026", day: "Wednesday" },
-      ],
-    },
-    {
       title: "S. Kuznetsov in El Dekheila / Alexandria",
       items: [
         { voyage: "13N", date: "31. 12. 2025", day: "Wednesday" },
@@ -43,11 +27,27 @@ const ShipSchedule = () => {
       ],
     },
     {
+      title: "S. Kuznetsov in Novorossiysk",
+      items: [
+        { voyage: "13", date: "22. 12. 2025", day: "Monday" },
+        { voyage: "14", date: "08. 01. 2026", day: "Thursday" },
+        { voyage: "15", date: "26. 01. 2026", day: "Monday" },
+      ],
+    },
+    {
       title: "Barents in El Dekheila / Alexandria",
       items: [
         { voyage: "01N", date: "05. 01. 2026", day: "Monday" },
         { voyage: "02N", date: "23. 01. 2026", day: "Friday" },
         { voyage: "03N", date: "10. 02. 2026", day: "Tuesday" },
+      ],
+    },
+    {
+      title: "Barents in Novorossiysk",
+      items: [
+        { voyage: "02", date: "13. 01. 2026", day: "Tuesday" },
+        { voyage: "03", date: "31. 01. 2026", day: "Saturday" },
+        { voyage: "04", date: "18. 02. 2026", day: "Wednesday" },
       ],
     },
   ];
@@ -92,31 +92,97 @@ const ShipSchedule = () => {
           </p>
         </div>
 
-        {/* Schedule Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mt-8 sm:mt-12">
-          {schedules.map((schedule, index) => (
+        {/* Schedule Grid - 2x2 Layout */}
+        <div className="flex justify-center mt-8 sm:mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12 w-full max-w-4xl">
+            {/* Top Left - 1: S. Kuznetsov in El Dekheila / Alexandria */}
             <div
-              key={index}
-              className="scroll-animate-up"
+              className="scroll-animate-up text-center sm:text-left"
               style={{ 
-                transitionDelay: `${index * 0.1}s`,
+                transitionDelay: '0s',
                 opacity: sectionVisible ? 1 : 0,
                 transform: sectionVisible ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
               }}
             >
-              <h3 className="text-white font-semibold text-base sm:text-lg mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
-                {schedule.title}
+              <h3 className="text-white font-semibold text-base sm:text-lg md:text-xl mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                {schedules[0].title}
               </h3>
               <ul className="space-y-3 sm:space-y-4">
-                {schedule.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-white text-sm sm:text-base" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                {schedules[0].items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-white text-sm sm:text-base md:text-lg" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
                     <span className="font-semibold">{item.voyage}</span> – {item.date} ({item.day})
                   </li>
                 ))}
               </ul>
             </div>
-          ))}
+
+            {/* Top Right - 3: Barents in El Dekheila / Alexandria */}
+            <div
+              className="scroll-animate-up text-center sm:text-left"
+              style={{ 
+                transitionDelay: '0.2s',
+                opacity: sectionVisible ? 1 : 0,
+                transform: sectionVisible ? 'translateY(0)' : 'translateY(30px)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+              }}
+            >
+              <h3 className="text-white font-semibold text-base sm:text-lg md:text-xl mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                {schedules[2].title}
+              </h3>
+              <ul className="space-y-3 sm:space-y-4">
+                {schedules[2].items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-white text-sm sm:text-base md:text-lg" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                    <span className="font-semibold">{item.voyage}</span> – {item.date} ({item.day})
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Bottom Left - 2: S. Kuznetsov in Novorossiysk */}
+            <div
+              className="scroll-animate-up text-center sm:text-left"
+              style={{ 
+                transitionDelay: '0.1s',
+                opacity: sectionVisible ? 1 : 0,
+                transform: sectionVisible ? 'translateY(0)' : 'translateY(30px)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+              }}
+            >
+              <h3 className="text-white font-semibold text-base sm:text-lg md:text-xl mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                {schedules[1].title}
+              </h3>
+              <ul className="space-y-3 sm:space-y-4">
+                {schedules[1].items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-white text-sm sm:text-base md:text-lg" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                    <span className="font-semibold">{item.voyage}</span> – {item.date} ({item.day})
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Bottom Right - 4: Barents in Novorossiysk */}
+            <div
+              className="scroll-animate-up text-center sm:text-left"
+              style={{ 
+                transitionDelay: '0.3s',
+                opacity: sectionVisible ? 1 : 0,
+                transform: sectionVisible ? 'translateY(0)' : 'translateY(30px)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+              }}
+            >
+              <h3 className="text-white font-semibold text-base sm:text-lg md:text-xl mb-4 sm:mb-6" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                {schedules[3].title}
+              </h3>
+              <ul className="space-y-3 sm:space-y-4">
+                {schedules[3].items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-white text-sm sm:text-base md:text-lg" style={{ fontFamily: 'var(--font-poppins), sans-serif' }}>
+                    <span className="font-semibold">{item.voyage}</span> – {item.date} ({item.day})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>

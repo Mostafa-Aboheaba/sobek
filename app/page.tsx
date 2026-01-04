@@ -5,7 +5,6 @@ import WhyChooseSobek from "@/components/WhyChooseSobek";
 import AboutRightLine from "@/components/AboutRightLine";
 import OurServices from "@/components/OurServices";
 import FindYourCargo from "@/components/FindYourCargo";
-import ShipSchedule from "@/components/ShipSchedule";
 import IndustriesWeServe from "@/components/IndustriesWeServe";
 import GetInTouch from "@/components/GetInTouch";
 
@@ -19,7 +18,6 @@ export default function Home() {
       <AboutRightLine />
       <OurServices />
       <FindYourCargo />
-      <ShipSchedule />
       <IndustriesWeServe />
       <GetInTouch />
     </main>
