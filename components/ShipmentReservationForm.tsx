@@ -159,7 +159,7 @@ const ShipmentReservationForm = () => {
             value={formData.origin}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
             aria-label="Origin port"
           >
             <option value="">Select origin port</option>
@@ -181,7 +181,7 @@ const ShipmentReservationForm = () => {
             value={formData.destination}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
             aria-label="Destination port"
           >
             <option value="">Select destination port</option>
@@ -205,7 +205,7 @@ const ShipmentReservationForm = () => {
             value={formData.cargoType}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
           >
             <option value="">Select cargo type</option>
             <option value="Agriculture & Food Products">Agriculture & Food Products</option>
