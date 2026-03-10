@@ -209,10 +209,14 @@ export default function AdminSchedulesPage() {
         const res = await fetch("/api/schedules");
         const data = await res.json();
         const existingList: ScheduleRow[] = res.ok && data.schedules ? data.schedules : [];
-        const toKey = (v: string, p: string, d: string, etd: string) =>
-          `${String(v).trim().toUpperCase()}|${p}|${d}|${etd}`;
+        const toKey = (v: string, p: string, d: string, eta: string, etd: string) =>
+          `${String(v).trim().toUpperCase()}|${p}|${d}|${eta}|${etd}`;
         const existingKeys = new Set(
-          existingList.map((s) => toKey(s.vesselName, s.polCode, s.podCode, (s.etd as string).slice(0, 10)))
+          existingList.map((s) => {
+            const etaStr = typeof s.eta === "string" ? s.eta.slice(0, 10) : new Date(s.eta).toISOString().slice(0, 10);
+            const etdStr = typeof s.etd === "string" ? s.etd.slice(0, 10) : new Date(s.etd).toISOString().slice(0, 10);
+            return toKey(s.vesselName, s.polCode, s.podCode, etaStr, etdStr);
+          })
         );
         const cols = parseCsvRow(lines[0]);
         const vesselIdx = cols.findIndex((c) => /vessel|name/i.test(c));
@@ -249,7 +253,7 @@ export default function AdminSchedulesPage() {
           };
           eta = parseDate(eta);
           etd = parseDate(etd);
-          const rowKey = toKey(vesselName, polCode, podCode, etd);
+          const rowKey = toKey(vesselName, polCode, podCode, eta, etd);
           if (existingKeys.has(rowKey) || importedKeysThisRun.has(rowKey)) {
             skipped += 1;
             continue;
@@ -303,7 +307,7 @@ export default function AdminSchedulesPage() {
         return;
       }
       if (editingId) {
-        const res = await fetch(`/api/schedules/${editingId}`, {
+        const res = await fetch(`/api/schedules/${editingId}/`, {
           method: "PUT",
           headers: getHeaders(secret),
           body: JSON.stringify(body),
@@ -362,13 +366,20 @@ export default function AdminSchedulesPage() {
     setSubmitting(true);
     setError(null);
     try {
-      const res = await fetch(`/api/schedules/${id}`, {
+      const res = await fetch(`/api/schedules/${String(id)}/`, {
         method: "DELETE",
         headers: getHeaders(secret),
       });
       if (!res.ok) {
-        const data = await res.json();
-        setError(data.error || "Delete failed");
+        let message = "Delete failed";
+        try {
+          const data = await res.json();
+          if (data?.error) message = data.error;
+        } catch {
+          const text = await res.text();
+          if (text) message = text.slice(0, 100);
+        }
+        setError(message);
         setSubmitting(false);
         setDeleteConfirm(null);
         return;
@@ -376,7 +387,7 @@ export default function AdminSchedulesPage() {
       setDeleteConfirm(null);
       await fetchSchedules();
     } catch (e) {
-      setError("Request failed");
+      setError("Request failed. Check the console for details.");
     } finally {
       setSubmitting(false);
     }
@@ -631,7 +642,7 @@ export default function AdminSchedulesPage() {
           {importResult !== null && (
             <div className="px-4 py-2 bg-gray-50 border-b border-gray-200 text-sm text-gray-700">
               Import complete: {importResult.success} added, {importResult.failed} failed
-              {importResult.skipped > 0 ? `, ${importResult.skipped} skipped (duplicates)` : ""}.
+              {importResult.skipped > 0 ? `, ${importResult.skipped} skipped (same sailing: same vessel, route & dates)` : ""}.
             </div>
           )}
           <div className="overflow-x-auto">
