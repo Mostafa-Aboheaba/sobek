@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 
 const ADMIN_SECRET_KEY = "sobek_admin_secret";
+const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes inactivity
 
 type ScheduleRow = {
   _id: string;
@@ -49,6 +50,7 @@ const getHeaders = (secret: string) => ({
 
 export default function AdminSchedulesPage() {
   const [secret, setSecretState] = useState("");
+  const [showSecret, setShowSecret] = useState(false);
   const [schedules, setSchedules] = useState<ScheduleRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,6 +58,9 @@ export default function AdminSchedulesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState<{ success: number; failed: number; skipped: number } | null>(null);
+  const sessionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const setSecret = useCallback((s: string) => {
     setSecretState(s);
@@ -95,6 +100,31 @@ export default function AdminSchedulesPage() {
     if (secret) fetchSchedules();
   }, [secret, fetchSchedules]);
 
+  const resetSessionTimer = useCallback(() => {
+    if (!secret) return;
+    if (sessionTimeoutRef.current) clearTimeout(sessionTimeoutRef.current);
+    sessionTimeoutRef.current = setTimeout(() => {
+      setSecret("");
+      if (typeof window !== "undefined") window.sessionStorage.removeItem(ADMIN_SECRET_KEY);
+      sessionTimeoutRef.current = null;
+    }, SESSION_TIMEOUT_MS);
+  }, [secret, setSecret]);
+
+  useEffect(() => {
+    if (!secret) return;
+    resetSessionTimer();
+    const handleActivity = () => resetSessionTimer();
+    window.addEventListener("mousedown", handleActivity);
+    window.addEventListener("keydown", handleActivity);
+    window.addEventListener("scroll", handleActivity);
+    return () => {
+      window.removeEventListener("mousedown", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+      if (sessionTimeoutRef.current) clearTimeout(sessionTimeoutRef.current);
+    };
+  }, [secret, resetSessionTimer]);
+
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
     const input = (e.target as HTMLFormElement).querySelector<HTMLInputElement>('input[name="secret"]');
@@ -103,12 +133,154 @@ export default function AdminSchedulesPage() {
   };
 
   const handleLogout = () => {
+    if (sessionTimeoutRef.current) clearTimeout(sessionTimeoutRef.current);
+    sessionTimeoutRef.current = null;
     setSecret("");
     setSchedules([]);
     setFormData(defaultForm);
     setEditingId(null);
     setError(null);
+    setImportResult(null);
   };
+
+  const handleExportCsv = useCallback(() => {
+    if (schedules.length === 0) return;
+    const escape = (v: string) => (v.includes(",") || v.includes('"') ? `"${String(v).replace(/"/g, '""')}"` : v);
+    const toIso = (d: string | Date) => {
+      const date = typeof d === "string" ? new Date(d) : d;
+      return isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
+    };
+    const header = "Vessel Name,POL,POL Code,POD,POD Code,ETA,ETD";
+    const rows = schedules.map((s) =>
+      [escape(s.vesselName), escape(s.pol), escape(s.polCode), escape(s.pod), escape(s.podCode), toIso(s.eta), toIso(s.etd)].join(",")
+    );
+    const csv = [header, ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `schedules-export-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [schedules]);
+
+  const parseCsvRow = (line: string): string[] => {
+    const out: string[] = [];
+    let i = 0;
+    while (i < line.length) {
+      if (line[i] === '"') {
+        let end = i + 1;
+        while (end < line.length) {
+          if (line[end] === '"' && line[end + 1] !== '"') break;
+          if (line[end] === '"' && line[end + 1] === '"') end += 1;
+          end += 1;
+        }
+        out.push(line.slice(i + 1, end).replace(/""/g, '"'));
+        i = line[end] === "," ? end + 1 : end;
+      } else {
+        const comma = line.indexOf(",", i);
+        const end = comma === -1 ? line.length : comma;
+        out.push(line.slice(i, end).trim());
+        i = comma === -1 ? line.length : comma + 1;
+      }
+    }
+    return out;
+  };
+
+  const handleImportCsv = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file || !secret) return;
+      e.target.value = "";
+      setImporting(true);
+      setError(null);
+      setImportResult(null);
+      let success = 0;
+      let failed = 0;
+      let skipped = 0;
+      try {
+        const text = await file.text();
+        const lines = text.split(/\r?\n/).filter((l) => l.trim());
+        if (lines.length < 2) {
+          setError("CSV must have a header row and at least one data row.");
+          setImporting(false);
+          return;
+        }
+        const res = await fetch("/api/schedules");
+        const data = await res.json();
+        const existingList: ScheduleRow[] = res.ok && data.schedules ? data.schedules : [];
+        const toKey = (v: string, p: string, d: string, etd: string) =>
+          `${String(v).trim().toUpperCase()}|${p}|${d}|${etd}`;
+        const existingKeys = new Set(
+          existingList.map((s) => toKey(s.vesselName, s.polCode, s.podCode, (s.etd as string).slice(0, 10)))
+        );
+        const cols = parseCsvRow(lines[0]);
+        const vesselIdx = cols.findIndex((c) => /vessel|name/i.test(c));
+        const polIdx = cols.findIndex((c) => /^pol$/i.test(c) || (c.toLowerCase().includes("pol") && !c.toLowerCase().includes("code")));
+        const polCodeIdx = cols.findIndex((c) => /pol\s*code|polcode/i.test(c));
+        const podIdx = cols.findIndex((c) => /^pod$/i.test(c) || (c.toLowerCase().includes("pod") && !c.toLowerCase().includes("code")));
+        const podCodeIdx = cols.findIndex((c) => /pod\s*code|podcode/i.test(c));
+        const etaIdx = cols.findIndex((c) => /eta/i.test(c));
+        const etdIdx = cols.findIndex((c) => /etd/i.test(c));
+        if (vesselIdx === -1 || polIdx === -1 || polCodeIdx === -1 || podIdx === -1 || podCodeIdx === -1 || etaIdx === -1 || etdIdx === -1) {
+          setError("CSV must have columns: Vessel Name, POL, POL Code, POD, POD Code, ETA, ETD.");
+          setImporting(false);
+          return;
+        }
+        const importedKeysThisRun = new Set<string>();
+        for (let i = 1; i < lines.length; i++) {
+          const cells = parseCsvRow(lines[i]);
+          const vesselName = (cells[vesselIdx] ?? "").trim();
+          const pol = (cells[polIdx] ?? "").trim();
+          const polCode = (cells[polCodeIdx] ?? "").trim().toUpperCase();
+          const pod = (cells[podIdx] ?? "").trim();
+          const podCode = (cells[podCodeIdx] ?? "").trim().toUpperCase();
+          let eta = (cells[etaIdx] ?? "").trim();
+          let etd = (cells[etdIdx] ?? "").trim();
+          if (!vesselName || !pol || !polCode || !pod || !podCode || !eta || !etd) {
+            failed += 1;
+            continue;
+          }
+          const parseDate = (d: string): string => {
+            const dmY = d.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+            if (dmY) return `${dmY[3]}-${dmY[2].padStart(2, "0")}-${dmY[1].padStart(2, "0")}`;
+            if (/^\d{4}-\d{2}-\d{2}/.test(d)) return d.slice(0, 10);
+            return d;
+          };
+          eta = parseDate(eta);
+          etd = parseDate(etd);
+          const rowKey = toKey(vesselName, polCode, podCode, etd);
+          if (existingKeys.has(rowKey) || importedKeysThisRun.has(rowKey)) {
+            skipped += 1;
+            continue;
+          }
+          try {
+            const postRes = await fetch("/api/schedules", {
+              method: "POST",
+              headers: getHeaders(secret),
+              body: JSON.stringify({ vesselName, pol, polCode, pod, podCode, eta, etd }),
+            });
+            if (postRes.ok) {
+              success += 1;
+              existingKeys.add(rowKey);
+              importedKeysThisRun.add(rowKey);
+            } else {
+              failed += 1;
+            }
+          } catch {
+            failed += 1;
+          }
+        }
+        setImportResult({ success, failed, skipped });
+        if (success > 0) await fetchSchedules();
+      } catch {
+        setError("Failed to read or parse CSV.");
+      } finally {
+        setImporting(false);
+      }
+    },
+    [secret, fetchSchedules]
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -223,22 +395,46 @@ export default function AdminSchedulesPage() {
           <form onSubmit={handleUnlock} className="space-y-4">
             <label className="block">
               <span className="tracking-label">Admin secret</span>
-              <input
-                type="password"
-                name="secret"
-                autoComplete="current-password"
-                placeholder="Enter secret"
-                className="tracking-input"
-                aria-label="Admin secret"
-              />
+              <div className="relative">
+                <input
+                  type={showSecret ? "text" : "password"}
+                  name="secret"
+                  autoComplete="current-password"
+                  placeholder="Enter secret"
+                  className="tracking-input pr-12"
+                  aria-label="Admin secret"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowSecret((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-500 hover:text-gray-700 rounded"
+                  aria-label={showSecret ? "Hide secret" : "Show secret"}
+                  tabIndex={0}
+                >
+                  {showSecret ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </label>
             <button type="submit" className="tracking-button w-full">
               Unlock
             </button>
           </form>
           <p className="mt-6 text-sm text-gray-500">
+            <Link href="/admin/" className="text-[var(--color-primary-500)] hover:underline">
+              ← Back to Admin
+            </Link>
+            {" · "}
             <Link href="/schedule/" className="text-[var(--color-primary-500)] hover:underline">
-              ← Back to Ship Schedule
+              Ship Schedule
             </Link>
           </p>
         </div>
@@ -270,6 +466,9 @@ export default function AdminSchedulesPage() {
             Re-enter secret
           </button>
         </div>
+        <p className="text-sm text-gray-500 mb-4">
+          Session expires after 30 minutes of inactivity. You will need to re-enter the secret.
+        </p>
 
         {error && (
           <div
@@ -393,20 +592,48 @@ export default function AdminSchedulesPage() {
 
         {/* List */}
         <div className="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
-          <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+          <div className="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-lg font-semibold text-[var(--color-primary-900)]">
               All schedules
             </h2>
-            <button
-              type="button"
-              onClick={fetchSchedules}
-              disabled={loading}
-              className="text-sm text-[var(--color-primary-500)] hover:underline disabled:opacity-50"
-              aria-label="Refresh list"
-            >
-              {loading ? "Loading…" : "Refresh"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={handleExportCsv}
+                disabled={loading || schedules.length === 0}
+                className="text-sm px-3 py-1.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                aria-label="Export as CSV"
+              >
+                Export CSV
+              </button>
+              <label className="text-sm px-3 py-1.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 cursor-pointer disabled:opacity-50">
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={handleImportCsv}
+                  disabled={loading || importing}
+                  className="sr-only"
+                  aria-label="Import from CSV"
+                />
+                {importing ? "Importing…" : "Import CSV"}
+              </label>
+              <button
+                type="button"
+                onClick={fetchSchedules}
+                disabled={loading}
+                className="text-sm text-[var(--color-primary-500)] hover:underline disabled:opacity-50"
+                aria-label="Refresh list"
+              >
+                {loading ? "Loading…" : "Refresh"}
+              </button>
+            </div>
           </div>
+          {importResult !== null && (
+            <div className="px-4 py-2 bg-gray-50 border-b border-gray-200 text-sm text-gray-700">
+              Import complete: {importResult.success} added, {importResult.failed} failed
+              {importResult.skipped > 0 ? `, ${importResult.skipped} skipped (duplicates)` : ""}.
+            </div>
+          )}
           <div className="overflow-x-auto">
             {loading && schedules.length === 0 ? (
               <p className="p-8 text-center text-gray-500">Loading…</p>
@@ -488,8 +715,12 @@ export default function AdminSchedulesPage() {
         </div>
 
         <p className="mt-6 text-sm text-gray-500">
+          <Link href="/admin/" className="text-[var(--color-primary-500)] hover:underline">
+            ← Back to Admin
+          </Link>
+          {" · "}
           <Link href="/schedule/" className="text-[var(--color-primary-500)] hover:underline">
-            ← Back to Ship Schedule (public)
+            Ship Schedule (public)
           </Link>
         </p>
       </div>
