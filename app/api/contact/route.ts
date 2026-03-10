@@ -167,19 +167,15 @@ export async function POST(request: NextRequest) {
         
         let customerResult;
         try {
-          // Use publicly accessible URL for logo (most reliable for email clients)
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
-          const logoUrl = `${siteUrl}/logo/sobek.png`;
-          
           customerResult = await resend.emails.send({
             from: fromEmail,
             to: email,
             subject: `Thank You for Contacting Sobek Shipping Agency`,
             html: `
               <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
-                <!-- Header with Logo -->
+                <!-- Header -->
                 <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                  <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
+                  <p style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
                 </div>
                 
                 <!-- Main Content -->
@@ -250,19 +246,15 @@ export async function POST(request: NextRequest) {
             console.warn(`Domain ${fromEmail} not verified. Falling back to onboarding@resend.dev`);
             fromEmail = "onboarding@resend.dev";
             
-            // Use publicly accessible URL for logo (most reliable for email clients)
-            const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
-            const logoUrl = `${siteUrl}/logo/sobek.png`;
-            
             customerResult = await resend.emails.send({
               from: fromEmail,
               to: email,
               subject: `Thank You for Contacting Sobek Shipping Agency`,
               html: `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
-                  <!-- Header with Logo -->
+                  <!-- Header -->
                   <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                    <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
+                    <p style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
                   </div>
                   
                   <!-- Main Content -->
