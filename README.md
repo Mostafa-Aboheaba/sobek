@@ -8,6 +8,7 @@ A modern, full-stack website for Sobek Shipping Agency, the exclusive agent of R
 - 📦 **Shipment Reservations**: Customers can reserve cargo space on ships
 - 📧 **Contact Forms**: Contact form with email notifications
 - 🔍 **Cargo Tracking**: Track shipments by booking number
+- 📅 **Vessel Schedules**: Maersk/MSC-style schedule search — filter by origin/destination port and date; view sailings (Vessel, POL, POD, ETA, ETD). Admin CRUD via API.
 - 🎨 **CMS Ready**: Database structure for dynamic content management
 - 📱 **Fully Responsive**: Works perfectly on mobile, tablet, and desktop
 
@@ -52,6 +53,10 @@ A modern, full-stack website for Sobek Shipping Agency, the exclusive agent of R
    RESEND_API_KEY=your_resend_api_key_here
    ADMIN_EMAIL=admin@sobekegy.com
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+   # Required for vessel schedules (Vercel): MongoDB must be set so API can store/fetch schedules.
+   # For admin CRUD (POST/PUT/DELETE schedules), set a secret and send it in the x-admin-secret header.
+   ADMIN_SECRET=your_admin_secret_here
    ```
 
 4. **Run the development server**
@@ -70,6 +75,7 @@ sobek_v2/
 ├── app/                    # Next.js App Router
 │   ├── api/               # API routes
 │   │   ├── contact/       # Contact form endpoint
+│   │   ├── schedules/     # Vessel schedules (GET list/filter, POST/PUT/DELETE admin)
 │   │   └── shipment-reservations/  # Reservation endpoints
 │   ├── reservation/       # Reservation page
 │   ├── globals.css        # Global styles
@@ -86,11 +92,13 @@ sobek_v2/
 │   ├── IndustriesWeServe.tsx
 │   ├── Testimonials.tsx
 │   ├── GetInTouch.tsx
-│   └── ShipmentReservationForm.tsx
+│   ├── ShipmentReservationForm.tsx
+│   └── ScheduleSearchCard.tsx   # Tracking & Schedules search (Maersk/MSC style)
 ├── lib/                   # Utility libraries
 │   └── mongodb.ts         # MongoDB connection
 ├── models/                # Mongoose models
 │   ├── ShipmentReservation.ts
+│   ├── VesselSchedule.ts
 │   ├── ContactSubmission.ts
 │   └── Content.ts
 └── public/                # Static assets
@@ -107,6 +115,15 @@ sobek_v2/
 - **GET** `/api/shipment-reservations` - Get all reservations (admin)
 - **GET** `/api/shipment-reservations?bookingNumber=XXX` - Track by booking number
 
+### Vessel Schedules (tracking & schedules module)
+- **GET** `/api/schedules` - List/filter schedules (public). Query: `pol`, `pod`, `vesselName`, `dateFrom`, `dateTo`
+- **POST** `/api/schedules` - Create schedule (admin: header `x-admin-secret`)
+- **GET** `/api/schedules/[id]` - Get one schedule (public)
+- **PUT** `/api/schedules/[id]` - Update schedule (admin: header `x-admin-secret`)
+- **DELETE** `/api/schedules/[id]` - Delete schedule (admin: header `x-admin-secret`)
+
+To seed sample data (dev server running): `ADMIN_SECRET=your_secret node scripts/seed-schedules.js`
+
 ## Database Models
 
 ### ShipmentReservation
@@ -117,6 +134,10 @@ sobek_v2/
 
 ### Content
 - CMS model for dynamic content management (section, key, content, type)
+
+### VesselSchedule
+- Vessel name, POL (port of loading), POD (port of discharge), ETA, ETD (dates)
+- Used by the Tracking & Schedules section on `/schedule`
 
 ## Adding Images
 
@@ -135,8 +156,11 @@ Update the image paths in the respective components.
 
 1. Push your code to GitHub
 2. Import project in Vercel
-3. Add environment variables
-4. Deploy!
+3. Add environment variables:
+   - **MONGODB_URI** (required for vessel schedules and other DB features)
+   - **ADMIN_SECRET** (optional; required for creating/editing/deleting schedules via API)
+   - RESEND_API_KEY, ADMIN_EMAIL, etc. as needed
+4. Deploy! Vercel does not use static export, so API routes (including `/api/schedules`) work. A small MongoDB database (e.g. MongoDB Atlas free tier) is enough for schedules and existing collections.
 
 ### Other Platforms
 
