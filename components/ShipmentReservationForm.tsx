@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { COMPANY_PORTS } from "@/lib/ports";
+import { useCompanyPorts } from "@/lib/useCompanyPorts";
 
 const ShipmentReservationForm = () => {
+  const { ports } = useCompanyPorts();
   const [formData, setFormData] = useState({
     bookingNumber: "",
     customerName: "",
@@ -162,7 +163,7 @@ const ShipmentReservationForm = () => {
             aria-label="Origin port"
           >
             <option value="">Select origin port</option>
-            {COMPANY_PORTS.map((port) => (
+            {ports.map((port) => (
               <option key={port.code} value={port.name}>
                 {port.name}
               </option>
@@ -184,7 +185,7 @@ const ShipmentReservationForm = () => {
             aria-label="Destination port"
           >
             <option value="">Select destination port</option>
-            {COMPANY_PORTS.map((port) => (
+            {ports.map((port) => (
               <option key={port.code} value={port.name}>
                 {port.name}
               </option>

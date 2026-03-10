@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import { COMPANY_PORTS, formatPortDisplay } from "@/lib/ports";
+import { useCompanyPorts } from "@/lib/useCompanyPorts";
+import { formatPortDisplay } from "@/lib/ports";
 
 type ScheduleRow = {
   _id: string;
@@ -26,6 +27,7 @@ const formatDate = (d: string | Date): string => {
 };
 
 const ScheduleSearchCard = () => {
+  const { ports } = useCompanyPorts();
   const [activeTab, setActiveTab] = useState<"tracking" | "schedules">("schedules");
   const [fromPort, setFromPort] = useState("");
   const [toPort, setToPort] = useState("");
@@ -155,7 +157,7 @@ const ScheduleSearchCard = () => {
               </p>
               <Link
                 href="/reservation/"
-                className="inline-flex items-center gap-2 bg-[var(--color-primary-500)] text-white px-6 py-3 rounded-full font-semibold hover:bg-[var(--color-primary-900)] transition-colors"
+                className="inline-flex items-center gap-2 bg-[var(--color-primary-500)] text-white px-6 py-3 rounded-full font-semibold hover:bg-[var(--color-accent)] transition-colors"
                 aria-label="Go to reservation and tracking page"
               >
                 Go to Reservation &amp; Tracking
@@ -181,7 +183,7 @@ const ScheduleSearchCard = () => {
                       aria-label="Origin port"
                     >
                       <option value="">Select origin port</option>
-                      {COMPANY_PORTS.map((port) => (
+                      {ports.map((port) => (
                         <option key={port.code} value={port.code}>
                           {port.name}
                         </option>
@@ -214,7 +216,7 @@ const ScheduleSearchCard = () => {
                         aria-label="Destination port"
                       >
                         <option value="">Select destination port</option>
-                        {COMPANY_PORTS.map((port) => (
+                        {ports.map((port) => (
                           <option key={port.code} value={port.code}>
                             {port.name}
                           </option>
@@ -261,7 +263,7 @@ const ScheduleSearchCard = () => {
                   type="button"
                   onClick={handleSearch}
                   disabled={loading}
-                  className="tracking-button flex items-center justify-center gap-2 w-full sm:w-auto min-w-[140px]"
+                  className="tracking-button flex items-center justify-center gap-2 w-full sm:w-auto min-w-[140px] hover:bg-[var(--color-accent)]"
                   aria-label="Search schedules"
                 >
                   {loading ? (

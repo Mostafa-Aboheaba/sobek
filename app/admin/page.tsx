@@ -14,6 +14,27 @@ export default function AdminDashboardPage() {
         </p>
         <div className="space-y-4">
           <Link
+            href="/admin/ports/"
+            className="block bg-white rounded-2xl shadow border border-gray-100 p-6 hover:border-[var(--color-primary-500)] hover:shadow-md transition-all group"
+            aria-label="Manage company ports"
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary-900)] text-white group-hover:bg-[var(--color-primary-500)] transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </span>
+              <span>
+                <span className="font-semibold text-[var(--color-primary-900)] block">Company Ports</span>
+                <span className="text-sm text-gray-500">Manage POL/POD options for schedules and reservation forms.</span>
+              </span>
+              <svg className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-primary-500)] ml-auto shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </Link>
+          <Link
             href="/admin/schedules/"
             className="block bg-white rounded-2xl shadow border border-gray-100 p-6 hover:border-[var(--color-primary-500)] hover:shadow-md transition-all group"
             aria-label="Manage vessel schedules"

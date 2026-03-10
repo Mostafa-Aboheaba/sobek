@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
-import { COMPANY_PORTS, formatPortDisplay } from "@/lib/ports";
+import { formatPortDisplay } from "@/lib/ports";
+import { useCompanyPorts } from "@/lib/useCompanyPorts";
 
 const ADMIN_SECRET_KEY = "sobek_admin_secret";
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes inactivity
@@ -50,6 +51,7 @@ const getHeaders = (secret: string) => ({
 });
 
 export default function AdminSchedulesPage() {
+  const { ports } = useCompanyPorts();
   const [secret, setSecretState] = useState("");
   const [showSecret, setShowSecret] = useState(false);
   const [schedules, setSchedules] = useState<ScheduleRow[]>([]);
@@ -515,7 +517,7 @@ export default function AdminSchedulesPage() {
                 value={formData.polCode}
                 onChange={(e) => {
                   const code = e.target.value;
-                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  const port = ports.find((p) => p.code === code);
                   if (port) setFormData((p) => ({ ...p, pol: port.name, polCode: port.code }));
                   else setFormData((p) => ({ ...p, polCode: code }));
                 }}
@@ -524,12 +526,12 @@ export default function AdminSchedulesPage() {
                 aria-label="Port of loading"
               >
                 <option value="">Select port...</option>
-                {COMPANY_PORTS.map((port) => (
+                {ports.map((port) => (
                   <option key={port.code} value={port.code}>
                     {port.name}
                   </option>
                 ))}
-                {formData.polCode && !COMPANY_PORTS.some((p) => p.code === formData.polCode) && (
+                {formData.polCode && !ports.some((p) => p.code === formData.polCode) && (
                   <option value={formData.polCode}>{formData.pol || formData.polCode}</option>
                 )}
               </select>
@@ -541,7 +543,7 @@ export default function AdminSchedulesPage() {
                 value={formData.polCode}
                 onChange={(e) => {
                   const code = e.target.value.toUpperCase();
-                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  const port = ports.find((p) => p.code === code);
                   setFormData((p) => ({
                     ...p,
                     polCode: code,
@@ -560,7 +562,7 @@ export default function AdminSchedulesPage() {
                 value={formData.podCode}
                 onChange={(e) => {
                   const code = e.target.value;
-                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  const port = ports.find((p) => p.code === code);
                   if (port) setFormData((p) => ({ ...p, pod: port.name, podCode: port.code }));
                   else setFormData((p) => ({ ...p, podCode: code }));
                 }}
@@ -569,12 +571,12 @@ export default function AdminSchedulesPage() {
                 aria-label="Port of discharge"
               >
                 <option value="">Select port...</option>
-                {COMPANY_PORTS.map((port) => (
+                {ports.map((port) => (
                   <option key={port.code} value={port.code}>
                     {port.name}
                   </option>
                 ))}
-                {formData.podCode && !COMPANY_PORTS.some((p) => p.code === formData.podCode) && (
+                {formData.podCode && !ports.some((p) => p.code === formData.podCode) && (
                   <option value={formData.podCode}>{formData.pod || formData.podCode}</option>
                 )}
               </select>
@@ -586,7 +588,7 @@ export default function AdminSchedulesPage() {
                 value={formData.podCode}
                 onChange={(e) => {
                   const code = e.target.value.toUpperCase();
-                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  const port = ports.find((p) => p.code === code);
                   setFormData((p) => ({
                     ...p,
                     podCode: code,
@@ -625,7 +627,7 @@ export default function AdminSchedulesPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="tracking-button bg-[var(--color-primary-500)] hover:bg-[var(--color-accent)] text-white transition-colors"
+                className="tracking-button bg-[var(--color-primary-500)] hover:!bg-[var(--color-accent)] text-white transition-colors"
                 aria-label={editingId ? "Update schedule" : "Create schedule"}
               >
                 {submitting ? "Saving…" : editingId ? "Update" : "Create"}
