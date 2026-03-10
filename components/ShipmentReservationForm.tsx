@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { COMPANY_PORTS } from "@/lib/ports";
 
 const ShipmentReservationForm = () => {
   const [formData, setFormData] = useState({
@@ -151,32 +152,44 @@ const ShipmentReservationForm = () => {
           <label htmlFor="origin" className="block text-neutral mb-2">
             Origin Port *
           </label>
-          <input
-            type="text"
+          <select
             id="origin"
             name="origin"
             value={formData.origin}
             onChange={handleChange}
             required
-            placeholder="e.g., Alexandria, Egypt"
             className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+            aria-label="Origin port"
+          >
+            <option value="">Select origin port</option>
+            {COMPANY_PORTS.map((port) => (
+              <option key={port.code} value={port.name}>
+                {port.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
           <label htmlFor="destination" className="block text-neutral mb-2">
             Destination Port *
           </label>
-          <input
-            type="text"
+          <select
             id="destination"
             name="destination"
             value={formData.destination}
             onChange={handleChange}
             required
-            placeholder="e.g., Novorossiysk, Russia"
             className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+            aria-label="Destination port"
+          >
+            <option value="">Select destination port</option>
+            {COMPANY_PORTS.map((port) => (
+              <option key={port.code} value={port.name}>
+                {port.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

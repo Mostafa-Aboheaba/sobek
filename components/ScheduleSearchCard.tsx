@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { COMPANY_PORTS, formatPortDisplay } from "@/lib/ports";
 
 type ScheduleRow = {
   _id: string;
@@ -172,22 +173,20 @@ const ScheduleSearchCard = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block">
                     <span className="tracking-label">From (Port)</span>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        </svg>
-                      </span>
-                      <input
-                        type="text"
-                        value={fromPort}
-                        onChange={(e) => setFromPort(e.target.value)}
-                        onKeyDown={handleKeyDownSearch}
-                        placeholder="e.g. El Dekheila or EGDEK"
-                        className="tracking-input pl-10"
-                        aria-label="Origin port"
-                      />
-                    </div>
+                    <select
+                      value={fromPort}
+                      onChange={(e) => setFromPort(e.target.value)}
+                      onKeyDown={handleKeyDownSearch}
+                      className="tracking-input"
+                      aria-label="Origin port"
+                    >
+                      <option value="">Select origin port</option>
+                      {COMPANY_PORTS.map((port) => (
+                        <option key={port.code} value={port.code}>
+                          {port.name}
+                        </option>
+                      ))}
+                    </select>
                   </label>
                   <label className="block">
                     <span className="tracking-label">To (Port)</span>
@@ -207,22 +206,20 @@ const ScheduleSearchCard = () => {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                         </svg>
                       </button>
-                      <div className="relative flex-1">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          </svg>
-                        </span>
-                        <input
-                          type="text"
-                          value={toPort}
-                          onChange={(e) => setToPort(e.target.value)}
-                          onKeyDown={handleKeyDownSearch}
-                          placeholder="e.g. Novorossiysk or RUNVS"
-                          className="tracking-input pl-10"
-                          aria-label="Destination port"
-                        />
-                      </div>
+                      <select
+                        value={toPort}
+                        onChange={(e) => setToPort(e.target.value)}
+                        onKeyDown={handleKeyDownSearch}
+                        className="tracking-input flex-1"
+                        aria-label="Destination port"
+                      >
+                        <option value="">Select destination port</option>
+                        {COMPANY_PORTS.map((port) => (
+                          <option key={port.code} value={port.code}>
+                            {port.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </label>
                 </div>
@@ -314,10 +311,10 @@ const ScheduleSearchCard = () => {
                               {row.vesselName}
                             </td>
                             <td className="px-4 py-3 text-gray-700">
-                              {row.pol} ({row.polCode})
+                              {formatPortDisplay(row.pol, row.polCode)}
                             </td>
                             <td className="px-4 py-3 text-gray-700">
-                              {row.pod} ({row.podCode})
+                              {formatPortDisplay(row.pod, row.podCode)}
                             </td>
                             <td className="px-4 py-3 text-gray-700">{formatDate(row.eta)}</td>
                             <td className="px-4 py-3 text-gray-700">{formatDate(row.etd)}</td>

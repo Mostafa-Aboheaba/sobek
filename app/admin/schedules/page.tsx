@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
+import { COMPANY_PORTS, formatPortDisplay } from "@/lib/ports";
 
 const ADMIN_SECRET_KEY = "sobek_admin_secret";
 const SESSION_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes inactivity
@@ -510,22 +511,43 @@ export default function AdminSchedulesPage() {
             </label>
             <label className="block">
               <span className="tracking-label">POL (Port of loading)</span>
-              <input
-                type="text"
-                value={formData.pol}
-                onChange={(e) => setFormData((p) => ({ ...p, pol: e.target.value }))}
-                placeholder="e.g. El Dekheila (EGDEK)"
+              <select
+                value={formData.polCode}
+                onChange={(e) => {
+                  const code = e.target.value;
+                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  if (port) setFormData((p) => ({ ...p, pol: port.name, polCode: port.code }));
+                  else setFormData((p) => ({ ...p, polCode: code }));
+                }}
                 className="tracking-input"
                 required
                 aria-label="Port of loading"
-              />
+              >
+                <option value="">Select port...</option>
+                {COMPANY_PORTS.map((port) => (
+                  <option key={port.code} value={port.code}>
+                    {port.name}
+                  </option>
+                ))}
+                {formData.polCode && !COMPANY_PORTS.some((p) => p.code === formData.polCode) && (
+                  <option value={formData.polCode}>{formData.pol || formData.polCode}</option>
+                )}
+              </select>
             </label>
             <label className="block">
               <span className="tracking-label">POL code</span>
               <input
                 type="text"
                 value={formData.polCode}
-                onChange={(e) => setFormData((p) => ({ ...p, polCode: e.target.value }))}
+                onChange={(e) => {
+                  const code = e.target.value.toUpperCase();
+                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  setFormData((p) => ({
+                    ...p,
+                    polCode: code,
+                    ...(port ? { pol: port.name } : {}),
+                  }));
+                }}
                 placeholder="e.g. EGDEK"
                 className="tracking-input uppercase"
                 required
@@ -534,22 +556,43 @@ export default function AdminSchedulesPage() {
             </label>
             <label className="block">
               <span className="tracking-label">POD (Port of discharge)</span>
-              <input
-                type="text"
-                value={formData.pod}
-                onChange={(e) => setFormData((p) => ({ ...p, pod: e.target.value }))}
-                placeholder="e.g. Novorossiysk (RUNVS)"
+              <select
+                value={formData.podCode}
+                onChange={(e) => {
+                  const code = e.target.value;
+                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  if (port) setFormData((p) => ({ ...p, pod: port.name, podCode: port.code }));
+                  else setFormData((p) => ({ ...p, podCode: code }));
+                }}
                 className="tracking-input"
                 required
                 aria-label="Port of discharge"
-              />
+              >
+                <option value="">Select port...</option>
+                {COMPANY_PORTS.map((port) => (
+                  <option key={port.code} value={port.code}>
+                    {port.name}
+                  </option>
+                ))}
+                {formData.podCode && !COMPANY_PORTS.some((p) => p.code === formData.podCode) && (
+                  <option value={formData.podCode}>{formData.pod || formData.podCode}</option>
+                )}
+              </select>
             </label>
             <label className="block">
               <span className="tracking-label">POD code</span>
               <input
                 type="text"
                 value={formData.podCode}
-                onChange={(e) => setFormData((p) => ({ ...p, podCode: e.target.value }))}
+                onChange={(e) => {
+                  const code = e.target.value.toUpperCase();
+                  const port = COMPANY_PORTS.find((p) => p.code === code);
+                  setFormData((p) => ({
+                    ...p,
+                    podCode: code,
+                    ...(port ? { pod: port.name } : {}),
+                  }));
+                }}
                 placeholder="e.g. RUNVS"
                 className="tracking-input uppercase"
                 required
@@ -582,7 +625,7 @@ export default function AdminSchedulesPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="tracking-button"
+                className="tracking-button bg-[var(--color-primary-500)] hover:bg-[var(--color-accent)] text-white transition-colors"
                 aria-label={editingId ? "Update schedule" : "Create schedule"}
               >
                 {submitting ? "Saving…" : editingId ? "Update" : "Create"}
@@ -671,8 +714,8 @@ export default function AdminSchedulesPage() {
                       className="border-t border-gray-100 hover:bg-gray-50"
                     >
                       <td className="px-4 py-3 font-medium">{row.vesselName}</td>
-                      <td className="px-4 py-3">{row.pol} ({row.polCode})</td>
-                      <td className="px-4 py-3">{row.pod} ({row.podCode})</td>
+                      <td className="px-4 py-3">{formatPortDisplay(row.pol, row.polCode)}</td>
+                      <td className="px-4 py-3">{formatPortDisplay(row.pod, row.podCode)}</td>
                       <td className="px-4 py-3">{formatDate(row.eta)}</td>
                       <td className="px-4 py-3">{formatDate(row.etd)}</td>
                       <td className="px-4 py-3">
