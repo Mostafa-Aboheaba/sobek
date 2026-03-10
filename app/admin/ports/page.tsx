@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useCompanyPorts } from "@/lib/useCompanyPorts";
+import { verifyAdminSecret } from "@/lib/adminAuth";
 
 const ADMIN_SECRET_KEY = "sobek_admin_secret";
 
@@ -16,7 +17,9 @@ const getHeaders = (secret: string) => ({
 export default function AdminPortsPage() {
   const { ports, loading, refetch } = useCompanyPorts();
   const [secret, setSecretState] = useState("");
+  const [verifying, setVerifying] = useState(true);
   const [showSecret, setShowSecret] = useState(false);
+  const [unlockError, setUnlockError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: "", code: "", displayOrder: "" });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -34,14 +37,39 @@ export default function AdminPortsPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const stored = window.sessionStorage.getItem(ADMIN_SECRET_KEY);
-    if (stored) setSecretState(stored);
+    if (!stored) {
+      setVerifying(false);
+      return;
+    }
+    let cancelled = false;
+    verifyAdminSecret(stored).then((valid) => {
+      if (cancelled) return;
+      setVerifying(false);
+      if (valid) {
+        setSecretState(stored);
+      } else {
+        window.sessionStorage.removeItem(ADMIN_SECRET_KEY);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [setSecret]);
 
-  const handleUnlock = (e: React.FormEvent) => {
+  const handleUnlock = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUnlockError(null);
     const input = (e.target as HTMLFormElement).querySelector<HTMLInputElement>('input[name="secret"]');
     const value = input?.value?.trim();
-    if (value) setSecret(value);
+    if (!value) return;
+    setVerifying(true);
+    const valid = await verifyAdminSecret(value);
+    setVerifying(false);
+    if (valid) {
+      setSecret(value);
+    } else {
+      setUnlockError("Invalid secret. Please try again.");
+    }
   };
 
   const handleLogout = () => {
@@ -144,6 +172,16 @@ export default function AdminPortsPage() {
     }
   };
 
+  if (verifying) {
+    return (
+      <main className="min-h-screen bg-[var(--color-beige)] flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
+          <p className="text-gray-600">Checking access…</p>
+        </div>
+      </main>
+    );
+  }
+
   if (!secret) {
     return (
       <main className="min-h-screen bg-[var(--color-beige)] flex items-center justify-center p-4">
@@ -185,7 +223,12 @@ export default function AdminPortsPage() {
                 </button>
               </div>
             </label>
-            <button type="submit" className="tracking-button w-full">
+            {unlockError && (
+              <p className="text-red-600 text-sm" role="alert">
+                {unlockError}
+              </p>
+            )}
+            <button type="submit" className="tracking-button w-full" disabled={verifying}>
               Unlock
             </button>
           </form>
