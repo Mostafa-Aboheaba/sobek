@@ -15,7 +15,9 @@ npm install
 
 ### 2. Set up environment variables
 
-Create a file named `.env.local` in the project root (same folder as `package.json`):
+Create a file named `.env.local` in the project root (same folder as `package.json`).
+
+**Don't have MongoDB yet?** Follow **[MONGODB_ATLAS_SETUP.md](./MONGODB_ATLAS_SETUP.md)** to create a free MongoDB Atlas cluster and get your `MONGODB_URI`. Then come back here.
 
 ```env
 # Required for schedules (and contact/reservations)
@@ -30,7 +32,7 @@ ADMIN_EMAIL=your@email.com
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-- **MONGODB_URI**: Get this from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (free tier is enough). Create a cluster → Database Access → Add user → Network Access → Add IP (or 0.0.0.0 for dev) → Connect → copy the connection string and replace password.
+- **MONGODB_URI**: Get this from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (free tier is enough). **Step-by-step:** see **[MONGODB_ATLAS_SETUP.md](./MONGODB_ATLAS_SETUP.md)**.
 - **ADMIN_SECRET**: Choose any strong password. You’ll use it to unlock the admin page and to run the seed script.
 
 ### 3. Start the dev server

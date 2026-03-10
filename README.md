@@ -44,7 +44,9 @@ A modern, full-stack website for Sobek Shipping Agency, the exclusive agent of R
 
 3. **Set up environment variables**
    
-   Create a `.env.local` file in the root directory:
+   Create a `.env.local` file in the root directory.  
+   **Need a database?** Follow **[MONGODB_ATLAS_SETUP.md](./MONGODB_ATLAS_SETUP.md)** to get a free MongoDB Atlas connection string, then add it below.
+
    ```env
    MONGODB_URI=mongodb://localhost:27017/sobek
    # Or for MongoDB Atlas:
