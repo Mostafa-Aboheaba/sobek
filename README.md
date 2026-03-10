@@ -68,6 +68,15 @@ A modern, full-stack website for Sobek Shipping Agency, the exclusive agent of R
    
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+### Testing the Schedules feature locally
+
+1. Ensure `.env.local` has `MONGODB_URI` and `ADMIN_SECRET` (see [DEPLOYMENT.md](./DEPLOYMENT.md) for details).
+2. Run `npm run dev`, then open [http://localhost:3000/schedule/](http://localhost:3000/schedule/) — use the **Schedules** tab to filter and view sailings.
+3. Open [http://localhost:3000/admin/schedules/](http://localhost:3000/admin/schedules/) — enter your `ADMIN_SECRET` to create, edit, and delete schedules.
+4. Optional: seed sample data with `ADMIN_SECRET=your_secret npm run seed:schedules` (with the dev server running).
+
+For full step-by-step local testing and **production deployment (Vercel + MongoDB Atlas)**, see **[DEPLOYMENT.md](./DEPLOYMENT.md)**.
+
 ## Project Structure
 
 ```
@@ -78,6 +87,8 @@ sobek_v2/
 │   │   ├── schedules/     # Vessel schedules (GET list/filter, POST/PUT/DELETE admin)
 │   │   └── shipment-reservations/  # Reservation endpoints
 │   ├── reservation/       # Reservation page
+│   ├── admin/
+│   │   └── schedules/     # Admin CRUD for vessel schedules (secret-protected)
 │   ├── globals.css        # Global styles
 │   ├── layout.tsx         # Root layout
 │   └── page.tsx           # Homepage
@@ -151,6 +162,11 @@ Place your images in the `public/images/` directory. The design expects:
 Update the image paths in the respective components.
 
 ## Deployment
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for:
+
+- Local testing steps for the schedules feature
+- Production deployment on Vercel (env vars, MongoDB Atlas, and testing)
 
 ### Vercel (Recommended)
 
