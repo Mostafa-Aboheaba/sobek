@@ -1,0 +1,49 @@
+{
+  "common": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "services": "الخدمات",
+    "contact": "اتصل بنا",
+    "readMore": "اقرأ المزيد",
+    "getQuote": "احصل على عرض سعر",
+    "viewOurServices": "عرض خدماتنا",
+    "track": "تتبع",
+    "tracking": "جاري التتبع...",
+    "loading": "جاري التحميل...",
+    "submit": "إرسال",
+    "send": "إرسال",
+    "close": "إغلاق",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "create": "إنشاء",
+    "search": "بحث",
+    "filter": "تصفية",
+    "language": "اللغة"
+  },
+  "header": {
+    "nav": {
+      "home": "الرئيسية",
+      "about": "من نحن",
+      "services": "الخدمات",
+      "contact": "اتصل بنا"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 شركة سوبيك للشحن. جميع الحقوق محفوظة."
+  },
+  "tracking": {
+    "title": "ابحث عن شحنتك",
+    "description": "أدخل رقم الحجز وطريقة الاتصال. سنتابعها ونرسل لك آخر تحديث.",
+    "bookingLabel": "أدخل رقم الحجز أو رقم بوليصة الشحن",
+    "bookingPlaceholder": "مثال: RDEDK/ALYNVS1125001234",
+    "contactLabel": "أدخل رقم الهاتف أو البريد الإلكتروني",
+    "contactPlaceholder": "+201233445566 / user@mail.com",
+    "button": "تتبع",
+    "tracking": "جاري التتبع...",
+    "success": "تم استلام طلب التتبع! سنرسل لك تحديثًا قريبًا.",
+    "error": "فشل تتبع الشحنة. يرجى المحاولة مرة أخرى."
+  }
+}
+

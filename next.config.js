@@ -33,9 +33,19 @@ if (process.env.CI || process.env.GITHUB_ACTIONS) {
 }
 
 const nextConfig = {
-  // Only use static export for GitHub Pages or cPanel builds
-  // For Vercel, don't use static export so API routes work
-  ...(process.env.VERCEL ? {} : { output: 'export' }),
+  // Only use static export for GitHub Pages or cPanel builds when explicitly requested
+  // For Vercel or when CMS dashboard is needed, don't use static export
+  // CMS dashboard requires SSR and API routes, which don't work with static export
+  // Set ENABLE_STATIC_EXPORT=true to force static export (public site only, no CMS)
+  ...(process.env.VERCEL || process.env.ENABLE_CMS ? {} : 
+      process.env.ENABLE_STATIC_EXPORT === 'true' ? { output: 'export' } : {}),
+  
+  // Enable next-intl plugin for i18n (only when CMS is enabled)
+  ...(process.env.ENABLE_CMS === 'true' || process.env.NODE_ENV === 'development' ? {
+    plugins: [
+      require('next-intl/plugin')('./i18n/request.ts')
+    ]
+  } : {}),
   // Only set basePath and assetPrefix when building for GitHub Pages
   // This ensures dev server and local builds work without basePath
   ...(useBasePath ? {

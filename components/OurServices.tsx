@@ -1,6 +1,7 @@
 "use client";
 
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 interface ServiceCardProps {
   service: {
@@ -35,8 +36,11 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
 
 const OurServices = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLDivElement>();
+  const { getSection, getSectionWithFallback } = useCMSContent();
 
-  const services = [
+  // Get services list from CMS (stored as JSON)
+  const servicesJSON = getSection("services-list");
+  const defaultServices = [
     {
       number: "1",
       title: "Cargo Booking & Space Management",
@@ -69,6 +73,22 @@ const OurServices = () => {
     },
   ];
 
+  // Parse services from CMS or use defaults
+  let services = defaultServices;
+  if (servicesJSON) {
+    try {
+      services = JSON.parse(servicesJSON);
+    } catch (e) {
+      console.error("Error parsing services JSON:", e);
+    }
+  }
+
+  const sectionLabel = getSectionWithFallback("services-label", "Our Services");
+  const heading = getSectionWithFallback(
+    "services-heading",
+    "As the <span class=\"text-highlight\">sole representative of Right Line in the region</span>, we manage all <span class=\"text-highlight\">shipping line operations</span> with precision and professionalism."
+  );
+
   return (
     <section id="services" className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -77,11 +97,12 @@ const OurServices = () => {
           className={`text-start mb-12 scroll-animate-up ${sectionVisible ? 'visible' : ''}`}
         >
           <p className="mb-2 section-label">
-            Our Services
+            {sectionLabel}
           </p>
-          <h2 className="mb-4 sm:mb-6 section-heading-lg">
-            As the <span className="text-highlight">sole representative of Right Line in the region</span>, we manage all <span className="text-highlight">shipping line operations</span> with precision and professionalism.
-          </h2>
+          <h2 
+            className="mb-4 sm:mb-6 section-heading-lg"
+            dangerouslySetInnerHTML={{ __html: heading }}
+          />
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">

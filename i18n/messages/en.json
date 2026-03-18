@@ -1,0 +1,49 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact",
+    "readMore": "Read More",
+    "getQuote": "Get Quote",
+    "viewOurServices": "View Our Services",
+    "track": "Track",
+    "tracking": "Tracking...",
+    "loading": "Loading...",
+    "submit": "Submit",
+    "send": "Send",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "language": "Language"
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "contact": "Contact"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 Sobek Shipping Agency. All rights reserved."
+  },
+  "tracking": {
+    "title": "Find Your Cargo",
+    "description": "Drop your Booking number and contact method. We'll track it and send you the latest update.",
+    "bookingLabel": "Enter your Booking number or Bill of lading number",
+    "bookingPlaceholder": "ex: RDEDK/ALYNVS1125001234",
+    "contactLabel": "Enter your Phone number or Email",
+    "contactPlaceholder": "+201233445566 / user@mail.com",
+    "button": "Track",
+    "tracking": "Tracking...",
+    "success": "Tracking request received! We'll send you an update shortly.",
+    "error": "Failed to track shipment. Please try again."
+  }
+}
+

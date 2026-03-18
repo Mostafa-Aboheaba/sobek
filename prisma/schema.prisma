@@ -1,0 +1,146 @@
+// Prisma Schema for CMS Dashboard
+// Using SQLite for MVP - easily upgradeable to Postgres for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and authorization
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String    // Hashed password
+  name          String?
+  role          UserRole  @default(EDITOR)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  pages         Page[]
+  pageSections  PageSection[]
+  siteSettings  SiteSettings[]
+  assets        Asset[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+// Page model - represents website pages
+model Page {
+  id          String        @id @default(cuid())
+  slug        String        @unique // URL slug (e.g., "about", "services")
+  title       String
+  description String?
+  status      PageStatus    @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  userId      String        // Last editor
+  sections    PageSection[]
+  user        User          @relation(fields: [userId], references: [id])
+
+  @@index([slug])
+  @@index([status])
+  @@map("pages")
+}
+
+enum PageStatus {
+  DRAFT
+  PUBLISHED
+}
+
+// PageSection model - flexible content sections within pages
+model PageSection {
+  id          String      @id @default(cuid())
+  pageId      String
+  key         String      // Unique identifier within page (e.g., "hero-title", "intro-text")
+  locale      String      @default("en") // Language code (en, ar, ru, etc.)
+  title       String?
+  content     String      // Markdown or HTML content
+  contentType ContentType @default(MARKDOWN)
+  order       Int         @default(0) // For ordering sections
+  metadata    String?     @default("{}") // JSON for additional data (images, links, etc.)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userId      String      // Last editor
+  page        Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id])
+
+  @@unique([pageId, key, locale]) // Ensure unique keys within a page and locale
+  @@index([pageId])
+  @@index([locale])
+  @@index([pageId, locale])
+  @@map("page_sections")
+}
+
+enum ContentType {
+  MARKDOWN
+  HTML
+  TEXT
+}
+
+// SiteSettings model - site-wide configuration
+model SiteSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique // Setting key (e.g., "site-title", "contact-email")
+  value     String   // Setting value (can be JSON stringified for complex data)
+  type      String   @default("string") // string, number, boolean, json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   // Last editor
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([key])
+  @@map("site_settings")
+}
+
+// Optional: Post model for blog/news (if needed)
+model Post {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  excerpt     String?
+  content     String     // Markdown or HTML
+  status      PageStatus @default(DRAFT)
+  publishedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@map("posts")
+}
+
+// Asset/Media model for managing images and files
+model Asset {
+  id          String   @id @default(cuid())
+  filename    String
+  originalName String
+  path        String   @unique // Storage path/URL
+  mimeType    String   // image/jpeg, image/png, etc.
+  size        Int      // File size in bytes
+  width       Int?     // Image width (if image)
+  height      Int?     // Image height (if image)
+  alt         String?  // Alt text for accessibility
+  title       String?  // Title/tooltip
+  category    String?  // hero, gallery, logo, etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String   // Uploader
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([category])
+  @@index([createdAt])
+  @@map("assets")
+}
+
+// Extend User model to include assets relation
+// (Update existing User model)
+

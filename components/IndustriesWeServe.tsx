@@ -2,6 +2,7 @@
 
 import SafeImage from "./SafeImage";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { useCMSContent } from "./CMSContentProvider";
 
 interface IndustryItemProps {
   industry: string;
@@ -27,7 +28,9 @@ const IndustryItem = ({ industry, index }: IndustryItemProps) => {
 const IndustriesWeServe = () => {
   const { ref: imageRef, isVisible: imageVisible } = useScrollAnimation<HTMLDivElement>();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation<HTMLDivElement>();
-  const industries = [
+  const { getSection, getSectionWithFallback } = useCMSContent();
+
+  const defaultIndustries = [
     "Agriculture & Food Products",
     "Construction Materials",
     "Machinery & Equipment",
@@ -36,6 +39,21 @@ const IndustriesWeServe = () => {
     "Chemicals (non-hazardous)/hazardous",
     "Retail & FMCG",
   ];
+
+  // Parse industries from CMS
+  const industriesJSON = getSection("industries-list");
+  let industries = defaultIndustries;
+  if (industriesJSON) {
+    try {
+      industries = JSON.parse(industriesJSON);
+    } catch (e) {
+      console.error("Error parsing industries JSON:", e);
+    }
+  }
+
+  const sectionLabel = getSectionWithFallback("industries-label", "Industries We Serve");
+  const heading = getSectionWithFallback("industries-heading", "Powering Industries of All Kinds");
+  const imageURL = getSectionWithFallback("industries-image", "/images/industries-container.png");
 
   return (
     <section className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
@@ -47,7 +65,7 @@ const IndustriesWeServe = () => {
             className={`relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] rounded-lg overflow-hidden scroll-animate-left ${imageVisible ? 'visible' : ''}`}
           >
             <SafeImage
-              src="/images/industries-container.png"
+              src={imageURL}
               alt="Shipping containers for various industries"
               fill
               className="object-contain rounded-lg"
@@ -59,9 +77,9 @@ const IndustriesWeServe = () => {
             ref={contentRef}
             className={`scroll-animate-right ${contentVisible ? 'visible' : ''}`}
           >
-            <p className="mb-2 section-label">Industries We Serve</p>
+            <p className="mb-2 section-label">{sectionLabel}</p>
             <h2 className="mb-8 section-heading">
-              Powering Industries of All Kinds
+              {heading}
             </h2>
             <ul>
               {industries.map((industry, index) => (
