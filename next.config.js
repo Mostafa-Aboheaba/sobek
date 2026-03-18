@@ -33,9 +33,10 @@ if (process.env.CI || process.env.GITHUB_ACTIONS) {
 }
 
 const nextConfig = {
-  // Only use static export for GitHub Pages or cPanel builds
-  // For Vercel, don't use static export so API routes work
-  ...(process.env.VERCEL ? {} : { output: 'export' }),
+  // Only use static export for production builds (e.g. GitHub Pages / cPanel).
+  // In development (npm run dev) and on Vercel, do NOT use static export so
+  // dynamic API routes like /api/schedules/[id] work (GET/PUT/DELETE).
+  ...(process.env.VERCEL || process.env.NODE_ENV === 'development' ? {} : { output: 'export' }),
   // Only set basePath and assetPrefix when building for GitHub Pages
   // This ensures dev server and local builds work without basePath
   ...(useBasePath ? {

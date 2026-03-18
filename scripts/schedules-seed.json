@@ -1,0 +1,29 @@
+[
+  {
+    "vesselName": "S. KUZNETSOV",
+    "pol": "El Dekheila (EGDEK)",
+    "polCode": "EGDEK",
+    "pod": "Novorossiysk (RUNVS)",
+    "podCode": "RUNVS",
+    "eta": "2026-01-15",
+    "etd": "2026-01-18"
+  },
+  {
+    "vesselName": "BARENTS",
+    "pol": "El Dekheila (EGDEK)",
+    "polCode": "EGDEK",
+    "pod": "Novorossiysk (RUNVS)",
+    "podCode": "RUNVS",
+    "eta": "2026-01-22",
+    "etd": "2026-01-23"
+  },
+  {
+    "vesselName": "S. KUZNETSOV",
+    "pol": "El Dekheila (EGDEK)",
+    "polCode": "EGDEK",
+    "pod": "Novorossiysk (RUNVS)",
+    "podCode": "RUNVS",
+    "eta": "2026-01-29",
+    "etd": "2026-02-05"
+  }
+]

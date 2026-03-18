@@ -61,6 +61,56 @@ export async function POST(request: NextRequest) {
       status: "pending",
     });
 
+    // Escape HTML for safe inclusion in emails
+    const escapeHtml = (text: string) =>
+      String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    const preferredDateFormatted = new Date(preferredDate).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    // Styled HTML template for admin: New Shipment Reservation
+    const adminEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0; padding:0; background-color:#f0f0f0;">
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <div style="background: linear-gradient(135deg, #012C4E 0%, #2A478B 100%); padding: 28px 24px; text-align: center;">
+      <p style="color: #ffffff; margin: 0 0 4px 0; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
+      <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 600;">New Cargo Reservation</h1>
+      <p style="color: rgba(255,255,255,0.9); margin: 8px 0 0 0; font-size: 14px;">Reserve Your Cargo – submission received</p>
+    </div>
+    <div style="padding: 32px 28px;">
+      <p style="color: #333; font-size: 15px; margin: 0 0 20px 0;">A new cargo space reservation has been submitted from your website.</p>
+      <table style="width: 100%; border-collapse: collapse; border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden;">
+        <tr style="background-color: #f8f9fa;"><td style="padding: 12px 16px; font-weight: 600; color: #012C4E; width: 42%;">Booking number</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(bookingNumber)}</td></tr>
+        <tr><td style="padding: 12px 16px; font-weight: 600; color: #555;">Customer name</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(customerName)}</td></tr>
+        <tr style="background-color: #f8f9fa;"><td style="padding: 12px 16px; font-weight: 600; color: #555;">Email</td><td style="padding: 12px 16px;"><a href="mailto:${escapeHtml(customerEmail)}" style="color: #2A478B; text-decoration: none;">${escapeHtml(customerEmail)}</a></td></tr>
+        <tr><td style="padding: 12px 16px; font-weight: 600; color: #555;">Phone</td><td style="padding: 12px 16px;"><a href="tel:${escapeHtml(customerPhone)}" style="color: #2A478B; text-decoration: none;">${escapeHtml(customerPhone)}</a></td></tr>
+        <tr style="background-color: #f8f9fa;"><td style="padding: 12px 16px; font-weight: 600; color: #555;">Origin</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(origin)}</td></tr>
+        <tr><td style="padding: 12px 16px; font-weight: 600; color: #555;">Destination</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(destination)}</td></tr>
+        <tr style="background-color: #f8f9fa;"><td style="padding: 12px 16px; font-weight: 600; color: #555;">Cargo type</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(cargoType)}</td></tr>
+        ${cargoWeight ? `<tr><td style="padding: 12px 16px; font-weight: 600; color: #555;">Weight</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(String(cargoWeight))}</td></tr>` : ""}
+        ${cargoDescription ? `<tr style="background-color: #f8f9fa;"><td style="padding: 12px 16px; font-weight: 600; color: #555;">Description</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(cargoDescription)}</td></tr>` : ""}
+        <tr${!cargoDescription ? ' style="background-color: #f8f9fa;"' : ""}><td style="padding: 12px 16px; font-weight: 600; color: #555;">Preferred date</td><td style="padding: 12px 16px; color: #333;">${escapeHtml(preferredDateFormatted)}</td></tr>
+      </table>
+      <p style="color: #666; font-size: 13px; margin: 20px 0 0 0;">Please follow up with the customer to confirm the reservation and provide further details.</p>
+    </div>
+    <div style="background-color: #f8f9fa; padding: 16px 28px; text-align: center; border-top: 1px solid #e9ecef;">
+      <p style="color: #999; font-size: 12px; margin: 0;">Sobek Shipping Agency · This email was sent from your website reservation form.</p>
+    </div>
+  </div>
+</body>
+</html>`;
+
     // Send email notification to admin
     const resend = getResend();
     if (process.env.ADMIN_EMAIL && resend) {
@@ -69,23 +119,66 @@ export async function POST(request: NextRequest) {
           from: "noreply@sobek-egy.com",
           to: process.env.ADMIN_EMAIL,
           subject: `New Shipment Reservation - ${bookingNumber}`,
-          html: `
-            <h2>New Shipment Reservation</h2>
-            <p><strong>Booking Number:</strong> ${bookingNumber}</p>
-            <p><strong>Customer:</strong> ${customerName}</p>
-            <p><strong>Email:</strong> ${customerEmail}</p>
-            <p><strong>Phone:</strong> ${customerPhone}</p>
-            <p><strong>Origin:</strong> ${origin}</p>
-            <p><strong>Destination:</strong> ${destination}</p>
-            <p><strong>Cargo Type:</strong> ${cargoType}</p>
-            ${cargoWeight ? `<p><strong>Weight:</strong> ${cargoWeight}</p>` : ""}
-            ${cargoDescription ? `<p><strong>Description:</strong> ${cargoDescription}</p>` : ""}
-            <p><strong>Preferred Date:</strong> ${new Date(preferredDate).toLocaleDateString()}</p>
-          `,
+          html: adminEmailHtml,
         });
       } catch (emailError) {
         console.error("Failed to send email:", emailError);
         // Don't fail the request if email fails
+      }
+    }
+
+    // Send styled confirmation email to customer
+    if (resend && customerEmail) {
+      try {
+        const customerConfirmationHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0; padding:0; background-color:#f0f0f0;">
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
+      <p style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
+    </div>
+    <div style="padding: 40px 30px;">
+      <div style="text-align: center; margin-bottom: 28px;">
+        <h1 style="color: #012C4E; margin: 0 0 10px 0; font-size: 26px; font-weight: 600;">Reservation Received</h1>
+        <p style="color: #666; margin: 0; font-size: 16px;">Booking reference: ${escapeHtml(bookingNumber)}</p>
+      </div>
+      <div style="background-color: #FAF7F0; padding: 24px; border-radius: 8px; margin: 0 0 24px 0; border: 1px solid #e9ecef;">
+        <p style="font-size: 16px; line-height: 1.7; color: #333; margin: 0 0 16px 0;">Dear ${escapeHtml(customerName)},</p>
+        <p style="font-size: 16px; line-height: 1.7; color: #333; margin: 0 0 20px 0;">Thank you for reserving cargo space with Sobek Shipping Agency. We have received your reservation and will contact you shortly to confirm details and provide further information.</p>
+        <div style="background-color: #fff; padding: 20px; border-left: 4px solid #A6823A; border-radius: 4px;">
+          <p style="margin: 0 0 10px 0; font-weight: 600; color: #012C4E; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Reservation summary</p>
+          <p style="margin: 6px 0; color: #333; font-size: 15px;"><strong>Booking number:</strong> ${escapeHtml(bookingNumber)}</p>
+          <p style="margin: 6px 0; color: #333; font-size: 15px;"><strong>Route:</strong> ${escapeHtml(origin)} → ${escapeHtml(destination)}</p>
+          <p style="margin: 6px 0; color: #333; font-size: 15px;"><strong>Cargo:</strong> ${escapeHtml(cargoType)}${cargoWeight ? ` · ${escapeHtml(String(cargoWeight))}` : ""}</p>
+          <p style="margin: 6px 0; color: #333; font-size: 15px;"><strong>Preferred date:</strong> ${escapeHtml(preferredDateFormatted)}</p>
+        </div>
+        <p style="font-size: 15px; line-height: 1.7; color: #555; margin: 20px 0 0 0;">If you have any questions in the meantime, please contact us.</p>
+      </div>
+      <div style="border-top: 2px solid #e9ecef; padding-top: 24px;">
+        <p style="margin: 0 0 8px 0; color: #333; font-size: 15px; font-weight: 600;">Best regards,</p>
+        <p style="margin: 0 0 16px 0; color: #2A478B; font-size: 16px; font-weight: 600;">Sobek Shipping Agency</p>
+        <div style="background-color: #f8f9fa; padding: 14px; border-radius: 6px;">
+          <p style="margin: 6px 0; color: #555; font-size: 14px;"><strong>Phone:</strong> <a href="tel:+201016078688" style="color: #2A478B; text-decoration: none;">+20 10 1607 8688</a></p>
+          <p style="margin: 6px 0; color: #555; font-size: 14px;"><strong>Email:</strong> <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a></p>
+        </div>
+      </div>
+    </div>
+    <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-top: 1px solid #e9ecef;">
+      <p style="color: #999; font-size: 12px; margin: 0; line-height: 1.6;">This is an automated confirmation. For inquiries, contact <a href="mailto:info@sobek-egy.com" style="color: #2A478B; text-decoration: none;">info@sobek-egy.com</a></p>
+    </div>
+  </div>
+</body>
+</html>`;
+        await resend.emails.send({
+          from: "noreply@sobek-egy.com",
+          to: customerEmail,
+          subject: `Cargo reservation received – ${bookingNumber}`,
+          html: customerConfirmationHtml,
+        });
+      } catch (customerEmailError) {
+        console.error("Failed to send customer confirmation email:", customerEmailError);
       }
     }
 
@@ -136,8 +229,6 @@ export async function GET(request: NextRequest) {
 
     const resend = getResend();
     const adminEmail = "info@sobek-egy.com";
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sobekegy.com';
-    const logoUrl = `${siteUrl}/logo/sobek.png`;
     
     // Helper function to escape HTML
     const escapeHtml = (text: string) => {
@@ -176,9 +267,9 @@ export async function GET(request: NextRequest) {
             subject: `Cargo Tracking Request Received - ${escapeHtml(bookingNumber)}`,
             html: `
               <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
-                <!-- Header with Logo -->
+                <!-- Header -->
                 <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                  <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
+                  <p style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
                 </div>
                 
                 <!-- Main Content -->
@@ -251,9 +342,9 @@ export async function GET(request: NextRequest) {
               subject: `Cargo Tracking Request Received - ${escapeHtml(bookingNumber)}`,
               html: `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 0; background-color: #ffffff;">
-                  <!-- Header with Logo -->
+                  <!-- Header -->
                   <div style="background: linear-gradient(135deg, #2A478B 0%, #1a3366 100%); padding: 30px 20px; text-align: center;">
-                    <img src="${logoUrl}" alt="Sobek Shipping Agency" style="max-width: 200px; height: auto; margin-bottom: 15px; display: block; margin-left: auto; margin-right: auto;" />
+                    <p style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em;">Sobek Shipping Agency</p>
                   </div>
                   
                   <!-- Main Content -->
