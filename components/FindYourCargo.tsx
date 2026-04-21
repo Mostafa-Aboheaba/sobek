@@ -23,8 +23,15 @@ const FindYourCargo = () => {
     setTrackingResult(null);
 
     try {
+      const params = new URLSearchParams({
+        bookingNumber: bookingNumber,
+      });
+      if (contactInfo) {
+        params.append('contactInfo', contactInfo);
+      }
+      
       const response = await fetch(
-        `/api/shipment-reservations?bookingNumber=${encodeURIComponent(bookingNumber)}`
+        `/api/shipment-reservations?${params.toString()}`
       );
 
       const data = await response.json();
@@ -33,18 +40,12 @@ const FindYourCargo = () => {
         throw new Error(data.error || "Failed to track shipment");
       }
 
-      if (data) {
-        setTrackingResult({
-          found: true,
-          data,
-          message: `Status: ${data.status.toUpperCase()}`,
-        });
-      } else {
-        setTrackingResult({
-          found: false,
-          message: "No reservation found with this booking number.",
-        });
-      }
+      // Success - emails have been sent
+      setTrackingResult({
+        found: true,
+        data,
+        message: data.message || "Tracking request received! We'll send you an update shortly.",
+      });
     } catch (error: any) {
       setTrackingResult({
         found: false,
@@ -58,7 +59,7 @@ const FindYourCargo = () => {
   return (
     <section id="tracking" className="py-12 sm:py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-end">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-start md:items-end">
           {/* Left Side - Form */}
           <div 
             ref={formRef}
@@ -115,13 +116,9 @@ const FindYourCargo = () => {
                       : "bg-yellow-100 text-yellow-800"
                   }`}
                 >
-                  {trackingResult.message}
-                  {trackingResult.found && trackingResult.data && (
-                    <div className="mt-2 text-sm">
-                      <p>Origin: {trackingResult.data.origin}</p>
-                      <p>Destination: {trackingResult.data.destination}</p>
-                      <p>Cargo Type: {trackingResult.data.cargoType}</p>
-                    </div>
+                  <p className="font-semibold">{trackingResult.message}</p>
+                  {trackingResult.found && trackingResult.data?.note && (
+                    <p className="mt-2 text-sm opacity-90">{trackingResult.data.note}</p>
                   )}
                 </div>
               )}
@@ -135,7 +132,6 @@ const FindYourCargo = () => {
             style={{ 
               borderRadius: '40px',
               overflow: 'hidden',
-              minHeight: '250px'
             }}
           >
             <SafeImage
@@ -144,7 +140,7 @@ const FindYourCargo = () => {
               width={600}
               height={400}
               className="w-full h-auto object-contain"
-              style={{ borderRadius: '40px' }}
+              style={{ borderRadius: '40px', display: 'block' }}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>

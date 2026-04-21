@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useCompanyPorts } from "@/lib/useCompanyPorts";
 
 const ShipmentReservationForm = () => {
+  const { ports } = useCompanyPorts();
   const [formData, setFormData] = useState({
     bookingNumber: "",
     customerName: "",
@@ -151,32 +153,44 @@ const ShipmentReservationForm = () => {
           <label htmlFor="origin" className="block text-neutral mb-2">
             Origin Port *
           </label>
-          <input
-            type="text"
+          <select
             id="origin"
             name="origin"
             value={formData.origin}
             onChange={handleChange}
             required
-            placeholder="e.g., Alexandria, Egypt"
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
+            aria-label="Origin port"
+          >
+            <option value="">Select origin port</option>
+            {ports.map((port) => (
+              <option key={port.code} value={port.name}>
+                {port.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
           <label htmlFor="destination" className="block text-neutral mb-2">
             Destination Port *
           </label>
-          <input
-            type="text"
+          <select
             id="destination"
             name="destination"
             value={formData.destination}
             onChange={handleChange}
             required
-            placeholder="e.g., Novorossiysk, Russia"
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
+            aria-label="Destination port"
+          >
+            <option value="">Select destination port</option>
+            {ports.map((port) => (
+              <option key={port.code} value={port.name}>
+                {port.name}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -191,7 +205,7 @@ const ShipmentReservationForm = () => {
             value={formData.cargoType}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-3 border border-neutral-lighter rounded focus:outline-none focus:ring-2 focus:ring-primary select-dropdown-icon"
           >
             <option value="">Select cargo type</option>
             <option value="Agriculture & Food Products">Agriculture & Food Products</option>
