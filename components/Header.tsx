@@ -43,7 +43,7 @@ const Header = () => {
           
           {/* Right Line Logo */}
           <a 
-            href="https://vr-tamozhnya.ru/" 
+            href="https://right-line.ru" 
             target="_blank" 
             rel="noopener noreferrer"
             className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105 cursor-pointer"

@@ -419,7 +419,7 @@ const GetInTouch = () => {
                     style={{ borderRadius: '12px' }}
                   />
                   <a 
-                    href="https://vr-tamozhnya.ru/" 
+                    href="https://right-line.ru" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="transition-transform duration-300 hover:scale-105 cursor-pointer"
