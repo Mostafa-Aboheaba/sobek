@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import NvoccPromo from "@/components/NvoccPromo";
 import AboutSobek from "@/components/AboutSobek";
 import WhyChooseSobek from "@/components/WhyChooseSobek";
 import AboutRightLine from "@/components/AboutRightLine";
@@ -13,6 +14,7 @@ export default function Home() {
     <main className="min-h-screen">
       <Header />
       <Hero />
+      <NvoccPromo />
       <AboutSobek />
       <WhyChooseSobek />
       <AboutRightLine />

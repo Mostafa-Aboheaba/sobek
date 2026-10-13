@@ -1,12 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useScrollAnimation } from "@/lib/useScrollAnimation";
+import { nvoccPath } from "@/lib/nvocc";
 
 interface ServiceCardProps {
   service: {
     number: string;
     title: string;
     description: string;
+    href?: string;
+    badge?: string;
+    highlighted?: boolean;
   };
   index: number;
 }
@@ -17,11 +22,25 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
   return (
     <div
       ref={ref}
-      className={`scroll-animate-up feature-card ${isVisible ? 'visible' : ''}`}
+      className={`scroll-animate-up feature-card relative ${service.highlighted ? "ring-2 ring-accent" : ""} ${isVisible ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 0.1}s` }}
     >
-      <div className="service-number">
-        {service.number}.
+      {service.href && (
+        <Link
+          href={service.href}
+          className="absolute inset-0 z-10 rounded-[24px]"
+          aria-label={service.title}
+        />
+      )}
+      <div className="flex items-start justify-between gap-3">
+        <div className="service-number">
+          {service.number}.
+        </div>
+        {service.badge && (
+          <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">
+            {service.badge}
+          </span>
+        )}
       </div>
       <div className="service-card-content-wrapper">
         <h3 className="service-card-heading text-accent">
@@ -39,31 +58,40 @@ const OurServices = () => {
   const services = [
     {
       number: "1",
+      title: "NVOCC Carrier Services",
+      description:
+        "Ship FCL and LCL from Alexandria under one Sobek bill of lading, with vessel space arranged through leading carriers.",
+      href: nvoccPath,
+      badge: "New Service",
+      highlighted: true,
+    },
+    {
+      number: "2",
       title: "Cargo Booking & Space Management",
       description: "Fast, accurate booking processes and guaranteed space allocation on Right Line vessels.",
     },
     {
-      number: "2",
+      number: "3",
       title: "Port & Vessel Operations",
       description: "Comprehensive port agency support, including berthing arrangements, stevedoring coordination, and documentation handling.",
     },
     {
-      number: "3",
+      number: "4",
       title: "Container Services",
       description: "Full support for dry, reefer, and special containers, including tracking, storage, and maintenance coordination.",
     },
     {
-      number: "4",
+      number: "5",
       title: "Customs Documentation & Support",
       description: "Expert assistance in customs, regulatory compliance, and required shipping documentation.",
     },
     {
-      number: "5",
+      number: "6",
       title: "Freight Forwarding Support",
       description: "Integrated logistics solutions, combining sea transport with inland delivery options.",
     },
     {
-      number: "6",
+      number: "7",
       title: "Captain Receipt",
       description: "We rely on our dedicated Captain Receipt Delivery Service to ensure all documents and letters reach their destinations securely and without delay.",
     },

@@ -443,6 +443,7 @@ const GetInTouch = () => {
                       { name: "Home", path: "/" },
                       { name: "About", path: "/about" },
                       { name: "Services", path: "/services" },
+                      { name: "NVOCC", path: "/services/nvocc/" },
                       { name: "Contact", path: "/contact" },
                     ].map((link) => (
                       <li key={link.name}>
@@ -467,6 +468,7 @@ const GetInTouch = () => {
                       { name: "Home", path: "/" },
                       { name: "About", path: "/about" },
                       { name: "Services", path: "/services" },
+                      { name: "NVOCC", path: "/services/nvocc/" },
                       { name: "Contact", path: "/contact" },
                     ].map((link) => (
                       <li key={link.name}>

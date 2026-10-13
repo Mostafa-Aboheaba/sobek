@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FocusEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SafeImage from "./SafeImage";
+import NvoccAnnouncementBar from "./NvoccAnnouncementBar";
+import { nvoccPath } from "@/lib/nvocc";
 
 const Header = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   const isActive = (path: string) => {
     if (path === "/") {
@@ -22,10 +26,19 @@ const Header = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+    setIsMobileServicesOpen(false);
+  };
+
+  const handleServicesBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setIsServicesOpen(false);
+    }
   };
 
   return (
-    <header className="bg-white text-neutral-dark px-4 sm:px-6 py-4 sticky top-0 z-50 shadow-sm animate-fade-in">
+    <>
+      <NvoccAnnouncementBar />
+    <header className="sticky top-[var(--nvocc-bar-height,0px)] z-50 bg-white text-neutral-dark px-4 sm:px-6 py-4 shadow-sm animate-fade-in">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Left Side - Logos */}
         <div className="flex items-center gap-1 sm:gap-2 md:gap-6 flex-shrink-0">
@@ -78,13 +91,61 @@ const Header = () => {
           >
             About
           </Link>
+          <div
+            className="relative"
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+            onFocus={() => setIsServicesOpen(true)}
+            onBlur={handleServicesBlur}
+          >
+            <button
+              type="button"
+              className={`inline-flex items-center gap-1 transition-all duration-300 font-medium hover:scale-105 ${
+                isActive("/services") ? "text-accent" : "text-neutral-dark hover:text-accent"
+              }`}
+              aria-expanded={isServicesOpen}
+              aria-haspopup="true"
+              aria-controls="services-menu"
+              onClick={() => setIsServicesOpen(true)}
+            >
+              Services
+              <span aria-hidden="true" className="text-xs">
+                ▾
+              </span>
+            </button>
+            {isServicesOpen && (
+              <div id="services-menu" role="menu" className="absolute left-0 top-full pt-3">
+                <div className="min-w-[240px] rounded-2xl bg-white shadow-lg border border-gray-100 py-2">
+                  <Link
+                    href="/services"
+                    role="menuitem"
+                    onClick={() => setIsServicesOpen(false)}
+                    className="block px-4 py-2.5 text-sm font-medium text-neutral-dark hover:bg-background hover:text-accent"
+                  >
+                    All Services
+                  </Link>
+                  <Link
+                    href={nvoccPath}
+                    role="menuitem"
+                    onClick={() => setIsServicesOpen(false)}
+                    className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm font-medium text-neutral-dark hover:bg-background hover:text-accent"
+                  >
+                    NVOCC Services
+                    <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+                      NEW
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
           <Link 
-            href="/services" 
+            href="/gallery" 
             className={`transition-all duration-300 font-medium hover:scale-105 ${
-              isActive("/services") ? "text-accent" : "text-neutral-dark hover:text-accent"
+              isActive("/gallery") ? "text-accent" : "text-neutral-dark hover:text-accent"
             }`}
           >
-            Services
+            Gallery
           </Link>
           <Link 
             href="/schedule" 
@@ -180,14 +241,46 @@ const Header = () => {
             >
               About
             </Link>
-            <Link 
-              href="/services" 
-              onClick={closeMobileMenu}
-              className={`transition-all duration-300 font-medium py-2 ${
+            <button
+              type="button"
+              onClick={() => setIsMobileServicesOpen((open) => !open)}
+              className={`flex items-center justify-between text-left transition-all duration-300 font-medium py-2 ${
                 isActive("/services") ? "text-accent" : "text-neutral-dark hover:text-accent"
               }`}
+              aria-expanded={isMobileServicesOpen}
             >
               Services
+              <span aria-hidden="true">{isMobileServicesOpen ? "▴" : "▾"}</span>
+            </button>
+            {isMobileServicesOpen && (
+              <div className="flex flex-col gap-1 pl-3">
+                <Link
+                  href="/services"
+                  onClick={closeMobileMenu}
+                  className="py-2 text-sm font-medium text-neutral-dark hover:text-accent"
+                >
+                  All Services
+                </Link>
+                <Link
+                  href={nvoccPath}
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-2 py-2 text-sm font-medium text-neutral-dark hover:text-accent"
+                >
+                  NVOCC Services
+                  <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-semibold tracking-wide text-white">
+                    NEW
+                  </span>
+                </Link>
+              </div>
+            )}
+            <Link 
+              href="/gallery" 
+              onClick={closeMobileMenu}
+              className={`transition-all duration-300 font-medium py-2 ${
+                isActive("/gallery") ? "text-accent" : "text-neutral-dark hover:text-accent"
+              }`}
+            >
+              Gallery
             </Link>
             <Link 
               href="/schedule" 
@@ -211,6 +304,7 @@ const Header = () => {
         </nav>
       )}
     </header>
+    </>
   );
 };
 

@@ -41,6 +41,36 @@ body {
   font-family: var(--font-poppins), sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes nvocc-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.nvocc-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: nvocc-ticker 28s linear infinite;
+}
+
+.nvocc-ticker:hover .nvocc-ticker-track,
+.nvocc-ticker:focus-within .nvocc-ticker-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nvocc-ticker-track {
+    animation: none;
+  }
+}
+
 body {
   color: #212121;
   background: #FFFFFF;

@@ -34,6 +34,11 @@ const SafeImage = ({
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
+    setImgSrc(src);
+    setHasError(false);
+  }, [src]);
+
+  useEffect(() => {
     setIsMounted(true);
     // Detect basePath from current URL or use default for GitHub Pages
     // Only run on client-side after mount to avoid hydration issues
