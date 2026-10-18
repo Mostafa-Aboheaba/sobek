@@ -12,9 +12,9 @@ export const nvoccValueProps = [
       "Full containers and part-loads are booked, consolidated, and followed through from origin to delivery by the same team.",
   },
   {
-    title: "Our own bill of lading",
+    title: "Exclusive Ocean Rates & Optimized Local Charges",
     description:
-      "One Sobek bill of lading, one contract, and one contact, with clear tracking from Alexandria to the destination port.",
+      "Special rates & local charges at both PODs Access exclusive ocean freight rates and discounted destination local charges at both ports of discharge, ensuring total cost efficiency for your trade lanes.",
   },
 ] as const;
 
