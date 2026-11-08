@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-// Set this to false and redeploy when the site should come back.
+// Production (including Vercel) serves the holding page.
+// Delete this file, or change SITE_DOWN to false, then redeploy to bring the site back.
 const SITE_DOWN = process.env.NODE_ENV === "production";
 
 const downPage = `<!DOCTYPE html>
