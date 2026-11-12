@@ -78,7 +78,7 @@ const Testimonials = () => {
     },
     {
       rating: 4.5,
-      quote: "Professional handling of our shipments to Russian ports. Very satisfied with their expertise and attention to detail.",
+      quote: "Professional handling of our export shipments. Very satisfied with their expertise and attention to detail.",
       name: "Nour El-Din",
       title: "Export Manager, Oriental Weavers",
     },
@@ -96,7 +96,7 @@ const Testimonials = () => {
     },
     {
       rating: 4.6,
-      quote: "The direct route to Russian ports saves us time and money. Highly recommend their services for anyone shipping to Russia.",
+      quote: "Clear schedules and careful cargo handling save us time and money. Highly recommend their services.",
       name: "Layla Mahmoud",
       title: "Logistics Specialist, Ezz Steel",
     },

@@ -27,7 +27,7 @@ const Hero = () => {
       <div className="relative z-10 w-full h-full flex items-center justify-center sm:items-start sm:justify-start">
         <div className="w-[343px] sm:w-full max-w-2xl flex flex-col gap-6 sm:gap-3 md:gap-4 lg:gap-5 hero-content items-center sm:items-start text-center sm:text-left pr-4 pb-12 pl-4 sm:pr-0 sm:pb-0 sm:pl-0">
           <h1 className="text-white hero-heading animate-fade-in-up leading-tight">
-            Right Line Sails,<br />
+            From Alexandria,<br />
             Sobek Delivers
           </h1>
           <p className="text-white hero-tagline animate-fade-in-up delay-200 leading-tight">
@@ -57,7 +57,7 @@ const Hero = () => {
           </div>
           
           <p className="text-white w-full max-w-xl mt-2 sm:mt-1 md:mt-2 lg:mt-3 hero-paragraph animate-fade-in-up delay-400">
-            We provide reliable, efficient, and cost-effective global maritime and logistics solutions, services that ensure smooth vessel operations and seamless cargo movement across international waters, of deep sea to Russian Ports.
+            We provide reliable, efficient, and cost-effective maritime and logistics services, from vessel operations and cargo booking to delivery across international trade lanes.
           </p>
         </div>
       </div>

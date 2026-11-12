@@ -68,7 +68,7 @@ const OurServices = () => {
     {
       number: "2",
       title: "Cargo Booking & Space Management",
-      description: "Fast, accurate booking processes and guaranteed space allocation on Right Line vessels.",
+      description: "Fast, accurate booking and space arranged with leading ocean carriers.",
     },
     {
       number: "3",
@@ -108,7 +108,7 @@ const OurServices = () => {
             Our Services
           </p>
           <h2 className="mb-4 sm:mb-6 section-heading-lg">
-            As the <span className="text-highlight">sole representative of Right Line in the region</span>, we manage all <span className="text-highlight">shipping line operations</span> with precision and professionalism.
+            We manage <span className="text-highlight">booking, port calls, and cargo operations</span> with <span className="text-highlight">precision and professionalism</span>.
           </h2>
         </div>
 

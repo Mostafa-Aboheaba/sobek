@@ -53,24 +53,6 @@ const Header = () => {
               priority
             />
           </Link>
-          
-          {/* Right Line Logo */}
-          <a 
-            href="https://right-line.ru" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="relative h-6 sm:h-8 md:h-12 w-auto transition-transform duration-300 hover:scale-105 cursor-pointer"
-            aria-label="Visit Right Line website"
-          >
-            <SafeImage
-              src="/logo/right.png"
-              alt="Right Line Logo"
-              width={120}
-              height={48}
-              className="h-full w-auto object-contain"
-              priority
-            />
-          </a>
         </div>
 
         {/* Center - Navigation (Desktop) */}

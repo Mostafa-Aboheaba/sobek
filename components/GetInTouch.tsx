@@ -418,22 +418,6 @@ const GetInTouch = () => {
                     className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-full h-auto flex-shrink-0"
                     style={{ borderRadius: '12px' }}
                   />
-                  <a 
-                    href="https://right-line.ru" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-                    aria-label="Visit Right Line website"
-                  >
-                    <SafeImage
-                      src="/logo/right-white.png"
-                      alt="Right Line Logo"
-                      width={202}
-                      height={92}
-                      className="object-contain max-w-[120px] sm:max-w-[150px] md:max-w-[180px] lg:max-w-full h-auto flex-shrink-0"
-                      style={{ borderRadius: '12px' }}
-                    />
-                  </a>
                 </div>
 
                 {/* Navigation Links - Vertical on small & medium screens, hidden on large */}

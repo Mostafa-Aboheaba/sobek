@@ -17,8 +17,8 @@ const manjari = Manjari({
 });
 
 export const metadata: Metadata = {
-  title: "Sobek Shipping Agency - Exclusive Agent of Right Line",
-  description: "Fast, reliable sea freight solutions. Sobek Shipping Agency is the exclusive agent of Right Line - Russian Shipping Line, providing global maritime and logistics services.",
+  title: "Sobek Shipping Agency",
+  description: "Fast, reliable sea freight from Alexandria. Sobek Shipping Agency provides maritime agency, NVOCC, and logistics services.",
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

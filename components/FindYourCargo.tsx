@@ -80,7 +80,7 @@ const FindYourCargo = () => {
                   id="booking"
                   value={bookingNumber}
                   onChange={(e) => setBookingNumber(e.target.value)}
-                  placeholder="ex: RDEDK/ALYNVS1125001234"
+                  placeholder="ex: SBK-2026-001234"
                   className="tracking-input"
                 />
               </div>
