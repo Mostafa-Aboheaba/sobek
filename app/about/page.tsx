@@ -1,14 +1,13 @@
 import Header from "@/components/Header";
 import AboutHero from "@/components/AboutHero";
 import AboutSobek from "@/components/AboutSobek";
-import AboutRightLine from "@/components/AboutRightLine";
 import WhyChooseSobek from "@/components/WhyChooseSobek";
 import GetInTouch from "@/components/GetInTouch";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us - Sobek Shipping Agency",
-  description: "Learn about Sobek Shipping Agency, the exclusive agent of Right Line - Russian Shipping Line.",
+  description: "Learn about Sobek Shipping Agency, a maritime and logistics partner based in Alexandria.",
 };
 
 export default function AboutPage() {
@@ -23,9 +22,6 @@ export default function AboutPage() {
 
       {/* About Sobek Section */}
       <AboutSobek showImage={false} />
-
-      {/* About Right Line Section */}
-      <AboutRightLine showImage={false} />
 
       {/* Why Choose Sobek Section */}
       <WhyChooseSobek />

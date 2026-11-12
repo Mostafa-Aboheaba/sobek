@@ -1,6 +1,6 @@
 # Sobek Shipping Agency Website
 
-A modern, full-stack website for Sobek Shipping Agency, the exclusive agent of Right Line - Russian Shipping Line. Built with Next.js 14, TypeScript, Tailwind CSS, and MongoDB.
+A modern, full-stack website for Sobek Shipping Agency. Built with Next.js 14, TypeScript, Tailwind CSS, and MongoDB.
 
 ## Features
 
@@ -101,7 +101,6 @@ sobek_v2/
 │   ├── Hero.tsx
 │   ├── AboutSobek.tsx
 │   ├── WhyChooseSobek.tsx
-│   ├── AboutRightLine.tsx
 │   ├── OurServices.tsx
 │   ├── FindYourCargo.tsx
 │   ├── IndustriesWeServe.tsx
@@ -168,8 +167,7 @@ To seed sample data (dev server running): `ADMIN_SECRET=your_secret node scripts
 
 Place your images in the `public/images/` directory. The design expects:
 - Hero section background image
-- About Sobek ship image
-- Right Line containers image
+- About Sobek image
 - Tracking section image
 - Industries section image
 

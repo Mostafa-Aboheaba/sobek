@@ -26,7 +26,7 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
               >
                 <SafeImage
                   src="/images/right-line-containers.png"
-                  alt="Right Line shipping containers"
+                  alt="Shipping containers"
                   fill
                   className="object-fill rounded-lg"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -40,10 +40,10 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
               >
                 <p className="mb-2 section-label">About Sobek</p>
                 <h2 className="mb-4 sm:mb-6 section-heading">
-                  Sobek Shipping Agency, <span className="text-highlight">The Exclusive Agent of Right Line</span> – Russian Shipping Line, Your Trusted Partner in Global Maritime Logistics.
+                  Sobek Shipping Agency, <span className="text-highlight">Your Trusted Partner</span> in Global Maritime Logistics.
                 </h2>
                 <p className="text-neutral-dark mb-6 leading-relaxed">
-                  At Sobek, we offer more than just shipping services, we build bridges of trust and efficiency across global markets. We are your dependable logistics partner, connecting you to the world through precise, secure, and fast shipping lines, with a special focus on major Russian ports.
+                  At Sobek, we offer more than just shipping services, we build bridges of trust and efficiency across global markets. We are your dependable logistics partner, connecting Alexandria to the world through precise, secure, and fast shipping services.
                 </p>
                 <Link
                   href="/about"
@@ -62,7 +62,7 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
               >
                 <p className="mb-2 section-label">About Sobek</p>
                 <h2 className="mb-4 sm:mb-6 section-heading">
-                  Sobek Shipping Agency, <span className="text-highlight">The Exclusive Agent of Right Line</span> – Russian Shipping Line, Your Trusted Partner in Global Maritime Logistics.
+                  Sobek Shipping Agency, <span className="text-highlight">Your Trusted Partner</span> in Global Maritime Logistics.
                 </h2>
               </div>
 
@@ -75,7 +75,7 @@ const AboutSobek = ({ showImage = true }: AboutSobekProps) => {
                   Sobek Shipping Agency is a leading maritime service provider dedicated to delivering reliable, efficient, and cost-effective shipping solutions across key international trade routes. With a commitment to operational excellence and customer-focused service, we support importers, exporters, and logistics partners with end-to-end maritime expertise.
                 </p>
                 <p className="text-neutral-dark mb-6 leading-relaxed">
-                  As the exclusive agent for Right Line, a distinguished Russian shipping line, Sobek Shipping Agency provides direct access to high-performance liner services, competitive transit times, and seamless cargo handling across major ports.
+                  From Alexandria, Sobek arranges liner space with leading carriers, coordinates port and vessel operations, and handles cargo from booking through delivery across major trade lanes.
                 </p>
                 <p className="text-neutral-dark leading-relaxed">
                   Our goal is simple: To move your cargo safely, efficiently, and on schedule—every time.

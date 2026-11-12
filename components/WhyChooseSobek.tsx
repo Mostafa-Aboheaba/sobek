@@ -77,7 +77,7 @@ const WhyChooseSobek = () => {
         </svg>
       ),
       title: "Fast & Reliable",
-      description: "Direct Egypt - Russia service in just 5 - 7 days.",
+      description: "Dependable schedules and space on the trade lanes you ship.",
     },
     {
       icon: (
@@ -96,7 +96,7 @@ const WhyChooseSobek = () => {
         </svg>
       ),
       title: "Quality & Safety",
-      description: "A Brand new 2025 fleet ready to sail.",
+      description: "Careful handling for dry, reefer, and special cargo.",
     },
     {
       icon: (
@@ -131,8 +131,8 @@ const WhyChooseSobek = () => {
             Why Choose Sobek Shipping Agency?
           </p>
           <h2 className="mb-4 sm:mb-6 section-heading-lg">
-            We are the only authorized agent for <span className="text-highlight">Right Line</span>, ensuring clients receive <span className="text-highlight">genuine,</span><br />
-            <span className="text-highlight">direct shipping</span> services with no intermediaries.
+            One Sobek team for <span className="text-highlight">booking, port operations, and cargo care</span>, so every shipment is handled <span className="text-highlight">directly</span><br />
+            <span className="text-highlight">from Alexandria to delivery</span>.
           </h2>
         </div>
 
